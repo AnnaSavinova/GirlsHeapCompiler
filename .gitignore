@@ -26,3 +26,18 @@
 *.exe
 *.out
 *.app
+
+# Build results
+Debug/
+DebugPublic/
+Release/
+Releases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+!win_flex.exe
+!win_bison.exe
