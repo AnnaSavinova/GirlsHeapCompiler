@@ -99,6 +99,13 @@ void yyerror( int*, const char* str );
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+/* Line 387 of yacc.c  */
+#line 13 "tokens.y"
+#include "common.h"
+
+/* Line 387 of yacc.c  */
+#line 109 "tokens.tab.cpp"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -135,14 +142,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 17 "tokens.y"
+#line 18 "tokens.y"
 
 	int ival;
 	char sval[255];
 
 
 /* Line 387 of yacc.c  */
-#line 146 "tokens.tab.cpp"
+#line 153 "tokens.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -170,7 +177,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 174 "tokens.tab.cpp"
+#line 181 "tokens.tab.cpp"
 
 #ifdef short
 # undef short
@@ -458,7 +465,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59
+       0,    60,    60
 };
 #endif
 
@@ -1357,7 +1364,7 @@ yyreduce:
     {
       
 /* Line 1792 of yacc.c  */
-#line 1361 "tokens.tab.cpp"
+#line 1368 "tokens.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1589,7 +1596,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 60 "tokens.y"
+#line 61 "tokens.y"
 
 
 /* Функция обработки ошибки. */

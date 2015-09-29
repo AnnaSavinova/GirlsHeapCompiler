@@ -10,6 +10,7 @@ void yyerror( int*, const char* str );
 /* Этот код будет помещен до определения Union
 Обычно используется для описания классов, реализующих синтаксическое дерево. */
 
+%code requires {#include "common.h"}
 /* Параметры функции парсера. */
 %parse-param { int* hasError }
 

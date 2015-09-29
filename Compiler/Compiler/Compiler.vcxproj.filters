@@ -39,5 +39,8 @@
     <ClInclude Include="tokens.tab.hpp">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

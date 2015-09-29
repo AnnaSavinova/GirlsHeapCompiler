@@ -2,7 +2,7 @@
 
 %{
 	#pragma once
-	#include <iostream>
+	#include "common.h"
 	#define YY_DECL extern "C" int yylex()
 %}
 
@@ -12,106 +12,133 @@ LETTER ([a-zA-Z])
 DIGIT ([0-9])
 ID ({LETTER})({LETTER}|{DIGIT}|_)*
 INTEGER (-?{DIGIT}+)
-BINOP ([-+*/])
-COMMENT_CLOSE (\*\/)
+BINOP ([-+=*/]|(==))
 COMMENT ((\/\*(([^*\n]*)|([^/\n]*)|(([^*\n]*\*+[^*/\n]+[^*\n]*)*)|([^*\n]*\*+))\*\/)|(\/\/.*))
 
 %%
 
-{INTEGER}	{
-		std::cout << "INTEGER" << std::endl;		
-	}
-
-"class"		{
-		std::cout << "class" << std::endl; 
-	}
-
-"public"	{
-		std::cout << "public" << std::endl;
-	}
-
-"static"	{
-		std::cout << "static" << std::endl;
-	}
-
-"void"		{
-		std::cout << "void" << std::endl;
-	}
-
-"main"		{
-		std::cout << "main" << std::endl;
-	}
-
-"extends"	{
-		std::cout << "extends" << std::endl;	
+{INTEGER} {
+	yylval.ival = atoi( yytext );
+	std::cout << yytext << std::endl;
+	return INTEGER_LITERAL;
 }
 
-"return"	{
-		std::cout << "return" << std::endl;
-	}
+"class"	{
+	std::cout << "class" << std::endl; 
+	return CLASS;
+}
 
-"int"		{
-		std::cout << "int" << std::endl;
-	}
+"public" {
+	std::cout << "public" << std::endl;
+	return PUBLIC;
+}
 
-"boolean"	{
-		std::cout << "boolean" << std::endl;
-	}
+"static" {
+	std::cout << "static" << std::endl;
+	return STATIC;
+}
 
-"if"		{
-		std::cout << "if" << std::endl;
-	}
+"void" {
+	std::cout << "void" << std::endl;
+	return VOID;
+}
 
-"else"		{
-		std::cout << "else" << std::endl;
-	}
+"main" {
+	std::cout << "main" << std::endl;
+	return MAIN;
+}
 
-"while"		{
-		std::cout << "while" << std::endl;
-	}
+"extends" {
+	std::cout << "extends" << std::endl;
+	return EXTENDS;
+}
+
+"return" {
+	std::cout << "return" << std::endl;
+	return RETURN;
+}
+
+"int" {
+	std::cout << "int" << std::endl;
+	return INT;
+}
+
+"boolean" {
+	std::cout << "boolean" << std::endl;
+	return BOOLEAN;
+}
+
+"if" {
+	std::cout << "if" << std::endl;
+	return IF;
+}
+
+"else" {
+	std::cout << "else" << std::endl;
+	return ELSE;
+}
+
+"while" {
+	std::cout << "while" << std::endl;
+	return WHILE;
+}
+
+"String" {
+	std::cout << "String" << std::endl;
+	return STRING;
+}
 
 "System.out.println" {
-		std::cout << "System.out.println" << std::endl;
-	}
-
-"length"	{
-		std::cout << "length" << std::endl;
-	}
-
-"true"		{
-		std::cout << "true" << std::endl;
-	}
-
-"false"		{
-		std::cout << "false" << std::endl;
-	}
-
-"this"		{
-		std::cout << "this" << std::endl;
-	}
-
-"new int"	{
-		std::cout << "new int" << std::endl;
-	}
-
-"new"		{
-		std::cout << "new" << std::endl;
-	}
-
-{COMMENT}	{
-		std::cout << "COMMENT" << std::endl;
+	std::cout << "System.out.println" << std::endl;
+	return PRINT;
 }
 
-{BINOP}		{
-		std::cout << "BINOP" << std::endl;
+"length" {
+	std::cout << "length" << std::endl;
+	return LENGTH;
 }
 
-{ID}		{
-		std::cout << "ID" << std::endl;
-	}
+"true" {
+	std::cout << "true" << std::endl;
+	return TRUE;
+}
 
-.	{
-		std::cout << "PANIC!!" << std::endl;
-	};
+"false" {
+	std::cout << "false" << std::endl;
+	return FALSE;
+}
+
+"this" {
+	std::cout << "this" << std::endl;
+	return THIS;
+}
+
+"new" {
+	std::cout << "new" << std::endl;
+	return NEW;
+}
+
+{COMMENT} {
+	std::cout << "COMMENT" << std::endl;
+}
+
+{BINOP} {
+	std::cout << "BINOP" << std::endl;
+}
+
+{ID} {
+	strcpy_s(yylval.sval, yytext);
+	std::cout << "ID" << std::endl;
+	return ID;
+}
+
+[ \t] {} /*ignore*/
+[\n] {
+	++yylineno;
+}
+
+. {
+	std::cout << "PANIC!!" << std::endl;
+};
 %%
 int YYtext();
