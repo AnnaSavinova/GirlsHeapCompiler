@@ -46,34 +46,27 @@ extern int yydebug;
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     TYPE = 258,
-     INT = 259,
-     STRING = 260,
-     LE = 261,
-     GE = 262,
-     NEQ = 263,
-     EQ = 264,
-     AND = 265,
-     OR = 266,
-     ID = 267,
-     PROGRAM = 268,
-     END = 269,
-     FUNCTION = 270,
-     SUBROUTINE = 271,
-     DOUBLE_DOTS = 272,
-     DO = 273,
-     IF = 274,
-     THEN = 275,
-     ELSE = 276,
-     WHILE = 277,
-     BREAK = 278,
-     RETURN = 279,
-     CALL = 280,
-     READ = 281,
-     WRITE = 282,
-     GT = 283,
-     LT = 284,
-     NOT = 285
+     CLASS = 258,
+     PUBLIC = 259,
+     STATIC = 260,
+     VOID = 261,
+     MAIN = 262,
+     STRING = 263,
+     EXTENDS = 264,
+     RETURN = 265,
+     INT = 266,
+     BOOLEAN = 267,
+     IF = 268,
+     ELSE = 269,
+     WHILE = 270,
+     PRINT = 271,
+     LENGTH = 272,
+     TRUE = 273,
+     FALSE = 274,
+     THIS = 275,
+     NEW = 276,
+     INTEGER_LITERAL = 277,
+     ID = 278
    };
 #endif
 
@@ -82,25 +75,14 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 13 "tokens.y"
+#line 17 "tokens.y"
 
-	method_t * method;
-	expression_t * expr;
-	method_signature_t * args;
-	argument_t * arg;
-	statement_list_t * stmts;
-	statement_t * stmt;
-	read_arguments_t * read_args;
-	write_arguments_t * write_args;
-	parameter_list_t * params;
-	variable_type type;
-	operation op;
-	variant_t value;
-	char word[256];
+	int ival;
+	char sval[255];
 
 
 /* Line 2058 of yacc.c  */
-#line 104 "tokens.tab.hpp"
+#line 86 "tokens.tab.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -117,7 +99,7 @@ int yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int yyparse (void);
+int yyparse (int* hasError);
 #else
 int yyparse ();
 #endif

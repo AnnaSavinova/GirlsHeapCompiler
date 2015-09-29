@@ -4,11 +4,12 @@
 %{
 #include <iostream>
 extern "C" int yylex();
+void yyerror( int*, const char* str );
 %}
 
 /* Этот код будет помещен до определения Union
 Обычно используется для описания классов, реализующих синтаксическое дерево. */
-%code requires { #include <common.h> }
+
 /* Параметры функции парсера. */
 %parse-param { int* hasError }
 
@@ -25,9 +26,29 @@ extern "C" int yylex();
 %left '-'
 
 /* Определение токенов. Можно задать ассоциируемый с токеном тип из Union. */
-%token <ival> INTEGER_LITERAL
+
+%token CLASS
+%token PUBLIC
+%token STATIC
+%token VOID
+%token MAIN
 %token STRING
+%token EXTENDS
+%token RETURN
 %token INT
+%token BOOLEAN
+%token IF
+%token ELSE
+%token WHILE
+%token PRINT
+%token LENGTH
+%token TRUE
+%token FALSE
+%token THIS
+%token NEW
+
+%token <ival> INTEGER_LITERAL
+%token <sval> ID
 
 /* Связываем тип из union и символ парсера. */
 %type<program> Program
@@ -35,10 +56,7 @@ extern "C" int yylex();
 
 /* Секция с описанием правил парсера. */
 %%
-Program: 
-	MainClass { /* Здесь выполняемый в случае совпадения код */ }
-	| MainClass ClassDecls { /* Здесь выполняемый в случае совпадения код */ }
-	;
+Program: ;
 %%
 
 /* Функция обработки ошибки. */
