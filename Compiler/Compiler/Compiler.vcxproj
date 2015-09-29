@@ -70,6 +70,18 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tokens.flex.cpp" />
+    <ClCompile Include="tokens.tab.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="tokens.y">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\win_bison.exe -o"tokens.tab.cpp" tokens.y -v –d</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling bison</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">tokens.tab.cpp;tokens.tab.hpp;tokens.output</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tokens.tab.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
