@@ -72,8 +72,9 @@ extern int yydebug;
      FALSE = 274,
      THIS = 275,
      NEW = 276,
-     INTEGER_LITERAL = 277,
-     ID = 278
+     BINOP = 277,
+     INTEGER_LITERAL = 278,
+     ID = 279
    };
 #endif
 
@@ -89,7 +90,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 93 "tokens.tab.hpp"
+#line 94 "tokens.tab.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
