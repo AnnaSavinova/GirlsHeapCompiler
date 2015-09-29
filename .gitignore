@@ -1,3 +1,17 @@
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
 # Compiled Object files
 *.slo
 *.lo
@@ -38,6 +52,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+.vs/
 
 !win_flex.exe
 !win_bison.exe
