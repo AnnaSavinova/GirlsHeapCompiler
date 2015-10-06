@@ -62,7 +62,7 @@ Program:
 	MainClass
 	| MainClass ClassDecls
 ClassDecls: ClassDecl
-	| ClassDecl ClassDecls
+	| ClassDecls ClassDecl
 MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statement '}' '}'
 ClassDecl: CLASS ID '{' VarDecls MethodDecls '}'
 	| CLASS ID '{' MethodDecls '}'
@@ -73,21 +73,21 @@ ClassDecl: CLASS ID '{' VarDecls MethodDecls '}'
 	| CLASS ID EXTENDS ID '{' VarDecls '}'
 	| CLASS ID EXTENDS ID '{' '}'
 VarDecls: VarDecl
-	| VarDecl VarDecls
+	| VarDecls VarDecl
 MethodDecls: MethodDecl
-	| MethodDecl MethodDecls
+	| MethodDecls MethodDecl
 VarDecl: Type ID ';'
 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp ';' '}'
 	| PUBLIC Type ID '(' FormalList ')' '{' Statements RETURN Exp ';' '}'
 	| PUBLIC Type ID '(' FormalList ')' '{' VarDecls RETURN Exp ';' '}'
 	| PUBLIC Type ID '(' FormalList ')' '{' RETURN Exp ';' '}'
 Statements: Statement
-	| Statement Statements
+	| Statements Statement
 FormalList: /*epsilon*/
 	| Type ID FormalRests
 	| Type ID
 FormalRests: FormalRest
-	| FormalRest FormalRests
+	| FormalRests FormalRest
 FormalRest: ',' Type ID
 Type: INT '[' ']'
 	| BOOLEAN
@@ -117,7 +117,7 @@ ExpList: /*epsilon*/
 	| Exp 
 	| Exp ExpRests
 ExpRests: ExpRest
-	| ExpRest ExpRests
+	| ExpRests ExpRest
 ExpRest: ',' Exp
 %%
 

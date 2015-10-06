@@ -3,7 +3,6 @@ Terminals unused in grammar
    '-'
 
 
-State 24 conflicts: 1 shift/reduce
 State 101 conflicts: 3 shift/reduce
 State 120 conflicts: 3 shift/reduce
 
@@ -16,7 +15,7 @@ Grammar
     2        | MainClass ClassDecls
 
     3 ClassDecls: ClassDecl
-    4           | ClassDecl ClassDecls
+    4           | ClassDecls ClassDecl
 
     5 MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '[' ']' ID ')' '{' Statement '}' '}'
 
@@ -30,10 +29,10 @@ Grammar
    13          | CLASS ID EXTENDS ID '{' '}'
 
    14 VarDecls: VarDecl
-   15         | VarDecl VarDecls
+   15         | VarDecls VarDecl
 
    16 MethodDecls: MethodDecl
-   17            | MethodDecl MethodDecls
+   17            | MethodDecls MethodDecl
 
    18 VarDecl: Type ID ';'
 
@@ -43,14 +42,14 @@ Grammar
    22           | PUBLIC Type ID '(' FormalList ')' '{' RETURN Exp ';' '}'
 
    23 Statements: Statement
-   24           | Statement Statements
+   24           | Statements Statement
 
    25 FormalList: /* empty */
    26           | Type ID FormalRests
    27           | Type ID
 
    28 FormalRests: FormalRest
-   29            | FormalRest FormalRests
+   29            | FormalRests FormalRest
 
    30 FormalRest: ',' Type ID
 
@@ -86,7 +85,7 @@ Grammar
    57        | Exp ExpRests
 
    58 ExpRests: ExpRest
-   59         | ExpRest ExpRests
+   59         | ExpRests ExpRest
 
    60 ExpRest: ',' Exp
 
@@ -243,21 +242,20 @@ State 6
 State 7
 
     2 Program: MainClass ClassDecls .
+    4 ClassDecls: ClassDecls . ClassDecl
+
+    CLASS  shift, and go to state 6
 
     $default  reduce using rule 2 (Program)
+
+    ClassDecl  go to state 11
 
 
 State 8
 
     3 ClassDecls: ClassDecl .
-    4           | ClassDecl . ClassDecls
-
-    CLASS  shift, and go to state 6
 
     $default  reduce using rule 3 (ClassDecls)
-
-    ClassDecls  go to state 11
-    ClassDecl   go to state 8
 
 
 State 9
@@ -284,7 +282,7 @@ State 10
 
 State 11
 
-    4 ClassDecls: ClassDecl ClassDecls .
+    4 ClassDecls: ClassDecls ClassDecl .
 
     $default  reduce using rule 4 (ClassDecls)
 
@@ -392,49 +390,43 @@ State 22
 
     6 ClassDecl: CLASS ID '{' VarDecls . MethodDecls '}'
     8          | CLASS ID '{' VarDecls . '}'
+   15 VarDecls: VarDecls . VarDecl
 
-    PUBLIC  shift, and go to state 17
-    '}'     shift, and go to state 31
+    PUBLIC   shift, and go to state 17
+    INT      shift, and go to state 18
+    BOOLEAN  shift, and go to state 19
+    ID       shift, and go to state 20
+    '}'      shift, and go to state 31
 
     MethodDecls  go to state 32
+    VarDecl      go to state 33
     MethodDecl   go to state 25
+    Type         go to state 26
 
 
 State 23
 
     7 ClassDecl: CLASS ID '{' MethodDecls . '}'
+   17 MethodDecls: MethodDecls . MethodDecl
 
-    '}'  shift, and go to state 33
+    PUBLIC  shift, and go to state 17
+    '}'     shift, and go to state 34
+
+    MethodDecl  go to state 35
 
 
 State 24
 
    14 VarDecls: VarDecl .
-   15         | VarDecl . VarDecls
 
-    INT      shift, and go to state 18
-    BOOLEAN  shift, and go to state 19
-    ID       shift, and go to state 20
-
-    ID        [reduce using rule 14 (VarDecls)]
     $default  reduce using rule 14 (VarDecls)
-
-    VarDecls  go to state 34
-    VarDecl   go to state 24
-    Type      go to state 26
 
 
 State 25
 
    16 MethodDecls: MethodDecl .
-   17            | MethodDecl . MethodDecls
-
-    PUBLIC  shift, and go to state 17
 
     $default  reduce using rule 16 (MethodDecls)
-
-    MethodDecls  go to state 35
-    MethodDecl   go to state 25
 
 
 State 26
@@ -498,27 +490,31 @@ State 31
 State 32
 
     6 ClassDecl: CLASS ID '{' VarDecls MethodDecls . '}'
+   17 MethodDecls: MethodDecls . MethodDecl
 
-    '}'  shift, and go to state 43
+    PUBLIC  shift, and go to state 17
+    '}'     shift, and go to state 43
+
+    MethodDecl  go to state 35
 
 
 State 33
+
+   15 VarDecls: VarDecls VarDecl .
+
+    $default  reduce using rule 15 (VarDecls)
+
+
+State 34
 
     7 ClassDecl: CLASS ID '{' MethodDecls '}' .
 
     $default  reduce using rule 7 (ClassDecl)
 
 
-State 34
-
-   15 VarDecls: VarDecl VarDecls .
-
-    $default  reduce using rule 15 (VarDecls)
-
-
 State 35
 
-   17 MethodDecls: MethodDecl MethodDecls .
+   17 MethodDecls: MethodDecls MethodDecl .
 
     $default  reduce using rule 17 (MethodDecls)
 
@@ -548,19 +544,29 @@ State 39
 
    10 ClassDecl: CLASS ID EXTENDS ID '{' VarDecls . MethodDecls '}'
    12          | CLASS ID EXTENDS ID '{' VarDecls . '}'
+   15 VarDecls: VarDecls . VarDecl
 
-    PUBLIC  shift, and go to state 17
-    '}'     shift, and go to state 46
+    PUBLIC   shift, and go to state 17
+    INT      shift, and go to state 18
+    BOOLEAN  shift, and go to state 19
+    ID       shift, and go to state 20
+    '}'      shift, and go to state 46
 
     MethodDecls  go to state 47
+    VarDecl      go to state 33
     MethodDecl   go to state 25
+    Type         go to state 26
 
 
 State 40
 
    11 ClassDecl: CLASS ID EXTENDS ID '{' MethodDecls . '}'
+   17 MethodDecls: MethodDecls . MethodDecl
 
-    '}'  shift, and go to state 48
+    PUBLIC  shift, and go to state 17
+    '}'     shift, and go to state 48
+
+    MethodDecl  go to state 35
 
 
 State 41
@@ -611,8 +617,12 @@ State 46
 State 47
 
    10 ClassDecl: CLASS ID EXTENDS ID '{' VarDecls MethodDecls . '}'
+   17 MethodDecls: MethodDecls . MethodDecl
 
-    '}'  shift, and go to state 51
+    PUBLIC  shift, and go to state 17
+    '}'     shift, and go to state 51
+
+    MethodDecl  go to state 35
 
 
 State 48
@@ -745,21 +755,20 @@ State 59
 State 60
 
    26 FormalList: Type ID FormalRests .
+   29 FormalRests: FormalRests . FormalRest
+
+    ','  shift, and go to state 59
 
     $default  reduce using rule 26 (FormalList)
+
+    FormalRest  go to state 73
 
 
 State 61
 
    28 FormalRests: FormalRest .
-   29            | FormalRest . FormalRests
-
-    ','  shift, and go to state 59
 
     $default  reduce using rule 28 (FormalRests)
-
-    FormalRests  go to state 73
-    FormalRest   go to state 61
 
 
 State 62
@@ -836,42 +845,45 @@ State 68
 
 State 69
 
+   15 VarDecls: VarDecls . VarDecl
    19 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls . Statements RETURN Exp ';' '}'
    21           | PUBLIC Type ID '(' FormalList ')' '{' VarDecls . RETURN Exp ';' '}'
 
-    RETURN  shift, and go to state 92
-    IF      shift, and go to state 64
-    WHILE   shift, and go to state 65
-    PRINT   shift, and go to state 66
-    ID      shift, and go to state 89
-    '{'     shift, and go to state 68
+    RETURN   shift, and go to state 92
+    INT      shift, and go to state 18
+    BOOLEAN  shift, and go to state 19
+    IF       shift, and go to state 64
+    WHILE    shift, and go to state 65
+    PRINT    shift, and go to state 66
+    ID       shift, and go to state 67
+    '{'      shift, and go to state 68
 
+    VarDecl     go to state 33
     Statements  go to state 93
+    Type        go to state 26
     Statement   go to state 71
 
 
 State 70
 
    20 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' Statements . RETURN Exp ';' '}'
+   24 Statements: Statements . Statement
 
     RETURN  shift, and go to state 94
+    IF      shift, and go to state 64
+    WHILE   shift, and go to state 65
+    PRINT   shift, and go to state 66
+    ID      shift, and go to state 89
+    '{'     shift, and go to state 68
+
+    Statement  go to state 95
 
 
 State 71
 
    23 Statements: Statement .
-   24           | Statement . Statements
-
-    IF     shift, and go to state 64
-    WHILE  shift, and go to state 65
-    PRINT  shift, and go to state 66
-    ID     shift, and go to state 89
-    '{'    shift, and go to state 68
 
     $default  reduce using rule 23 (Statements)
-
-    Statements  go to state 95
-    Statement   go to state 71
 
 
 State 72
@@ -883,7 +895,7 @@ State 72
 
 State 73
 
-   29 FormalRests: FormalRest FormalRests .
+   29 FormalRests: FormalRests FormalRest .
 
     $default  reduce using rule 29 (FormalRests)
 
@@ -1083,9 +1095,17 @@ State 90
 
 State 91
 
+   24 Statements: Statements . Statement
    35 Statement: '{' Statements . '}'
 
-    '}'  shift, and go to state 111
+    IF     shift, and go to state 64
+    WHILE  shift, and go to state 65
+    PRINT  shift, and go to state 66
+    ID     shift, and go to state 89
+    '{'    shift, and go to state 68
+    '}'    shift, and go to state 111
+
+    Statement  go to state 95
 
 
 State 92
@@ -1107,8 +1127,16 @@ State 92
 State 93
 
    19 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements . RETURN Exp ';' '}'
+   24 Statements: Statements . Statement
 
     RETURN  shift, and go to state 113
+    IF      shift, and go to state 64
+    WHILE   shift, and go to state 65
+    PRINT   shift, and go to state 66
+    ID      shift, and go to state 89
+    '{'     shift, and go to state 68
+
+    Statement  go to state 95
 
 
 State 94
@@ -1129,7 +1157,7 @@ State 94
 
 State 95
 
-   24 Statements: Statement Statements .
+   24 Statements: Statements Statement .
 
     $default  reduce using rule 24 (Statements)
 
@@ -1740,21 +1768,20 @@ State 151
 State 152
 
    57 ExpList: Exp ExpRests .
+   59 ExpRests: ExpRests . ExpRest
+
+    ','  shift, and go to state 151
 
     $default  reduce using rule 57 (ExpList)
+
+    ExpRest  go to state 158
 
 
 State 153
 
    58 ExpRests: ExpRest .
-   59         | ExpRest . ExpRests
-
-    ','  shift, and go to state 151
 
     $default  reduce using rule 58 (ExpRests)
-
-    ExpRests  go to state 158
-    ExpRest   go to state 153
 
 
 State 154
@@ -1795,6 +1822,6 @@ State 157
 
 State 158
 
-   59 ExpRests: ExpRest ExpRests .
+   59 ExpRests: ExpRests ExpRest .
 
     $default  reduce using rule 59 (ExpRests)
