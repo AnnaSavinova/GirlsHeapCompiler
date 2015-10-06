@@ -12,11 +12,16 @@ LETTER ([a-zA-Z])
 DIGIT ([0-9])
 ID ({LETTER})({LETTER}|{DIGIT}|_)*
 INTEGER (-?{DIGIT}+)
-BINOP ([-+=*/]|(==))
 COMMENT ((\/\*(([^*\n]*)|([^/\n]*)|(([^*\n]*\*+[^*/\n]+[^*\n]*)*)|([^*\n]*\*+))\*\/)|(\/\/.*))
 BRACKETS [\[\](){}]
+OPERANDS [-+*/!.,;:=<]
 
 %%
+"&&" {
+	std::cout << "&&" << std::endl;
+	return '&';
+}
+
 {BRACKETS} {
 	std::cout << yytext << std::endl;
 	return *yytext;
@@ -128,9 +133,9 @@ BRACKETS [\[\](){}]
 	std::cout << "COMMENT" << std::endl;
 }
 
-{BINOP} {
+{OPERANDS} {
+	std::cout << "OPERAND" << std::endl;
 	return *yytext;
-	std::cout << "BINOP" << std::endl;
 }
 
 {ID} {

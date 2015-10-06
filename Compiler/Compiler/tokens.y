@@ -23,9 +23,12 @@ void yyerror( int*, const char* str );
 /* Определение лево-ассоцитивности. Аналогично есть %right.
 Порядок объявление важен - чем позже объявлен оператор, тем больше его приоритет.
 В данном случае оба оператора лево-ассоциативные, но - имеет более высокий приоритет, чем & и |. */
-%left '-'
+%left '+''-'
+%left '*''/'
 %left '['']'
-
+%left '('')'
+%left '.'
+%left '!''&''<'
 /* Определение токенов. Можно задать ассоциируемый с токеном тип из Union. */
 
 %token CLASS
@@ -47,13 +50,11 @@ void yyerror( int*, const char* str );
 %token FALSE
 %token THIS
 %token NEW
-%token BINOP
 
 %token <ival> INTEGER_LITERAL
 %token <sval> ID
 
 /* Связываем тип из union и символ парсера. */
-%type<program> Program
 
 
 /* Секция с описанием правил парсера. */
@@ -100,7 +101,12 @@ Statement: '{' Statements '}'
 	| PRINT '(' Exp ')' ';'
 	| ID '=' Exp ';'
 	| ID '[' Exp ']' '=' Exp ';'
-Exp: Exp BINOP Exp
+Exp: Exp '+' Exp
+	| Exp '<' Exp
+	| Exp '&' Exp
+	| Exp '-' Exp
+	| Exp '*' Exp
+	| Exp '/' Exp
 	| Exp '[' Exp ']'
 	| Exp '.' LENGTH
 	| Exp '.' ID '(' ExpList ')'
