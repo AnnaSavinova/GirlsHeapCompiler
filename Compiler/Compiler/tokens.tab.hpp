@@ -53,27 +53,28 @@ extern int yydebug;
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     CLASS = 258,
-     PUBLIC = 259,
-     STATIC = 260,
-     VOID = 261,
-     MAIN = 262,
-     STRING = 263,
-     EXTENDS = 264,
-     RETURN = 265,
-     INT = 266,
-     BOOLEAN = 267,
-     IF = 268,
-     ELSE = 269,
-     WHILE = 270,
-     PRINT = 271,
-     LENGTH = 272,
-     TRUE = 273,
-     FALSE = 274,
-     THIS = 275,
-     NEW = 276,
-     INTEGER_LITERAL = 277,
-     ID = 278
+     UMINUS = 258,
+     CLASS = 259,
+     PUBLIC = 260,
+     STATIC = 261,
+     VOID = 262,
+     MAIN = 263,
+     STRING = 264,
+     EXTENDS = 265,
+     RETURN = 266,
+     INT = 267,
+     BOOLEAN = 268,
+     IF = 269,
+     ELSE = 270,
+     WHILE = 271,
+     PRINT = 272,
+     LENGTH = 273,
+     TRUE = 274,
+     FALSE = 275,
+     THIS = 276,
+     NEW = 277,
+     INTEGER_LITERAL = 278,
+     ID = 279
    };
 #endif
 
@@ -89,7 +90,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 93 "tokens.tab.hpp"
+#line 94 "tokens.tab.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

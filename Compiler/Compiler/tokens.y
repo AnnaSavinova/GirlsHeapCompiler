@@ -25,6 +25,7 @@ void yyerror( int*, const char* str );
 ¬ данном случае оба оператора лево-ассоциативные, но - имеет более высокий приоритет, чем & и |. */
 %left '+''-'
 %left '*''/'
+%left UMINUS
 %left '['']'
 %left '('')'
 %left '.'
@@ -101,7 +102,8 @@ Statement: '{' Statements '}'
 	| PRINT '(' Exp ')' ';'
 	| ID '=' Exp ';'
 	| ID '[' Exp ']' '=' Exp ';'
-Exp: Exp '+' Exp
+Exp: '-' Exp %prec UMINUS
+	| Exp '+' Exp
 	| Exp '<' Exp
 	| Exp '&' Exp
 	| Exp '-' Exp
