@@ -14,8 +14,14 @@ ID ({LETTER})({LETTER}|{DIGIT}|_)*
 INTEGER (-?{DIGIT}+)
 BINOP ([-+=*/]|(==))
 COMMENT ((\/\*(([^*\n]*)|([^/\n]*)|(([^*\n]*\*+[^*/\n]+[^*\n]*)*)|([^*\n]*\*+))\*\/)|(\/\/.*))
+BRACKETS [\[\](){}]
 
 %%
+{BRACKETS} {
+	std::cout << yytext << std::endl;
+	return *yytext;
+}
+
 
 {INTEGER} {
 	yylval.ival = atoi( yytext );
@@ -123,6 +129,7 @@ COMMENT ((\/\*(([^*\n]*)|([^/\n]*)|(([^*\n]*\*+[^*/\n]+[^*\n]*)*)|([^*\n]*\*+))\
 }
 
 {BINOP} {
+	return *yytext;
 	std::cout << "BINOP" << std::endl;
 }
 

@@ -23,8 +23,8 @@ void yyerror( int*, const char* str );
 /* Определение лево-ассоцитивности. Аналогично есть %right.
 Порядок объявление важен - чем позже объявлен оператор, тем больше его приоритет.
 В данном случае оба оператора лево-ассоциативные, но - имеет более высокий приоритет, чем & и |. */
-/*%left '&',\'|'
-%left '-'*/
+%left '-'
+%left '['']'
 
 /* Определение токенов. Можно задать ассоциируемый с токеном тип из Union. */
 
@@ -59,22 +59,34 @@ void yyerror( int*, const char* str );
 /* Секция с описанием правил парсера. */
 %%
 Program: 
-	MainClass ClassDecls
-ClassDecls: /* epsilon */
+	MainClass
+	| MainClass ClassDecls
+ClassDecls: ClassDecl
 	| ClassDecl ClassDecls
 MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statement '}' '}'
 ClassDecl: CLASS ID '{' VarDecls MethodDecls '}'
-VarDecls: /*epsilon*/
+	| CLASS ID '{' MethodDecls '}'
+	| CLASS ID '{' VarDecls '}'
+	| CLASS ID '{' '}'
+	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}'
+	| CLASS ID EXTENDS ID '{' MethodDecls '}'
+	| CLASS ID EXTENDS ID '{' VarDecls '}'
+	| CLASS ID EXTENDS ID '{' '}'
+VarDecls: VarDecl
 	| VarDecl VarDecls
-MethodDecls: /*epsilon*/
+MethodDecls: MethodDecl
 	| MethodDecl MethodDecls
 VarDecl: Type ID ';'
 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp ';' '}'
-Statements: /*epsilon*/
+	| PUBLIC Type ID '(' FormalList ')' '{' Statements RETURN Exp ';' '}'
+	| PUBLIC Type ID '(' FormalList ')' '{' VarDecls RETURN Exp ';' '}'
+	| PUBLIC Type ID '(' FormalList ')' '{' RETURN Exp ';' '}'
+Statements: Statement
 	| Statement Statements
 FormalList: /*epsilon*/
 	| Type ID FormalRests
-FormalRests: /*epsilon*/
+	| Type ID
+FormalRests: FormalRest
 	| FormalRest FormalRests
 FormalRest: ',' Type ID
 Type: INT '[' ']'
@@ -82,6 +94,7 @@ Type: INT '[' ']'
 	| INT
 	| ID
 Statement: '{' Statements '}'
+	| '{' '}'
 	| IF '(' Exp ')' Statement ELSE Statement
 	| WHILE '(' Exp ')' Statement
 	| PRINT '(' Exp ')' ';'
@@ -101,8 +114,9 @@ Exp: Exp BINOP Exp
 	| '!' Exp
 	| '(' Exp ')'
 ExpList: /*epsilon*/
+	| Exp 
 	| Exp ExpRests
-ExpRests: /*epsilon*/
+ExpRests: ExpRest
 	| ExpRest ExpRests
 ExpRest: ',' Exp
 %%
