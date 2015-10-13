@@ -2,100 +2,105 @@
 
 class IVisitor;
 
+class IHost
+{
+	virtual void Accept( IVisitor* ) const = 0;
+};
+
 // Корневой интерфейс программы
-class IProgram {
+class IProgram : public IHost
+{
 public:
-    virtual ~IProgram() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IProgram() {}
 };
 
 // Главный класс
-class IMainClass {
+class IMainClass : public IHost
+{
 public:
-    virtual ~IMainClass() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IMainClass() {}
 };
 
 // Список классов
-class IClassDeclList {
+class IClassDeclList : public IHost
+{
 public:
-    virtual ~IClassDeclList() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IClassDeclList() {}
 };
 
 // Описание класса
-class IClassDecl {
+class IClassDecl : public IHost
+{
 public:
-    virtual ~IClassDecl() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IClassDecl() {}
 };
 
 // Список объявлений переменных
-class IVarDeclList {
+class IVarDeclList : public IHost
+{
 public:
-    virtual ~IVarDeclList() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IVarDeclList() {}
 };
 
 // Объявление переменной
-class IVarDecl {
+class IVarDecl : public IHost
+{
 public:
-    virtual ~IVarDecl() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IVarDecl() {}
 };
 
 // Список методов класса
-class IMethodDeclList {
+class IMethodDeclList : public IHost
+{
 public:
-    virtual ~IMethodDeclList() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IMethodDeclList() {}
 };
 
 // Метод класса
-class IMethodDecl {
+class IMethodDecl : public IHost
+{
 public:
-    virtual ~IMethodDecl() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IMethodDecl() {}
 };
 
 // Список параметров
-class IFormalList {
+class IFormalList : public IHost
+{
 public:
-    virtual ~IFormalList() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IFormalList() {}
 };
 
 // Тип
-class IType {
+class IType : public IHost
+{
 public:
-    virtual ~IType() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IType() {}
 };
 
 // Последовательность команд
-class IStatementList {
+class IStatementList : public IHost
+{
 public:
-    virtual ~IStatementList() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IStatementList() {}
 };
 
 // Одна команда (или блок)
-class IStatement {
+class IStatement : public IHost
+{
 public:
-    virtual ~IStatement() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IStatement() {}
 };
 
 // Последовательность выражений (аргументы функции)
-class IExpList {
+class IExpList : public IHost
+{
 public:
-    virtual ~IExpList() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IExpList() {}
 };
 
 // Арифметическое выражение
-class IExp {
+class IExp : public IHost
+{
 public:
-    virtual ~IExp() {}
-    virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IExp() {}
 };
