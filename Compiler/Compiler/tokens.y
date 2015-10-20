@@ -18,6 +18,7 @@ void yyerror( int*, const char* str );
 %union{
 	int ival;
 	char sval[255];
+	CProgram* program;
 }
 
 /* Определение лево-ассоцитивности. Аналогично есть %right.
@@ -56,7 +57,7 @@ void yyerror( int*, const char* str );
 %token <sval> ID
 
 /* Связываем тип из union и символ парсера. */
-
+%type<program> Program
 
 /* Секция с описанием правил парсера. */
 %%

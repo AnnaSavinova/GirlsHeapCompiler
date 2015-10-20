@@ -4,6 +4,7 @@ class IVisitor;
 
 class CHost
 {
+public:
 	virtual void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );
