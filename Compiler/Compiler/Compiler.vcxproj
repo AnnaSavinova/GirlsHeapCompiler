@@ -68,12 +68,21 @@
     <Flex Include="tokens.l" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AssignmentStatement.cpp" />
+    <ClCompile Include="BinExp.cpp" />
+    <ClCompile Include="FormalList.cpp" />
+    <ClCompile Include="FormalRest.cpp" />
+    <ClCompile Include="FormalRestList.cpp" />
+    <ClCompile Include="MethodDecl.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PrintStatement.cpp" />
+    <ClCompile Include="StatementList.cpp" />
     <ClCompile Include="tokens.flex.cpp" />
     <ClCompile Include="tokens.tab.cpp" />
+    <ClCompile Include="UnExp.cpp" />
+    <ClCompile Include="VarDecl.cpp" />
     <ClCompile Include="WhileStatement.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -85,12 +94,23 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssignmentStatement.h" />
+    <ClInclude Include="BinExp.h" />
+    <ClInclude Include="ClassDeclList.h" />
+    <ClInclude Include="FormalList.h" />
+    <ClInclude Include="FormalRest.h" />
+    <ClInclude Include="FormalRestList.h" />
+    <ClInclude Include="MainClass.h" />
+    <ClInclude Include="MethodDecl.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="IfStatement.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Grammar.h" />
     <ClInclude Include="PrintStatement.h" />
+    <ClInclude Include="StatementList.h" />
     <ClInclude Include="tokens.tab.hpp" />
+    <ClInclude Include="UnExp.h" />
+    <ClInclude Include="VarDecl.h" />
     <ClInclude Include="WhileStatement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
