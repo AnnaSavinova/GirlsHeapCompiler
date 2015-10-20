@@ -4,12 +4,12 @@
 class CClassDecl : public IClassDecl
 {
 public:
-	CClassDecl( CSymbol*, CSymbol*, IVarDeclList*,  IMethodDecls* );
+	CClassDecl( CSymbol*, CSymbol*, IVarDeclList*,  IMethodDeclList* );
 	~CClassDecl();
 	void Accept( IVisitor* ) const;
 
 private:
 	CSymbol* id, parentId; // parentId can be null
-	IVarDeclList* varDecls;
-	IMethodDecls* methodDecls;
+	IVarDeclList* varDecls; // can be null
+	IMethodDeclList* methodDecls; // can be null
 };
