@@ -1,161 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Файлы исходного кода">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Заголовочные файлы">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="AssignmentStatement.cpp" />
+    <ClCompile Include="BinExp.cpp" />
+    <ClCompile Include="ExpList.cpp" />
+    <ClCompile Include="FormalList.cpp" />
+    <ClCompile Include="FormalRest.cpp" />
+    <ClCompile Include="FormalRestList.cpp" />
+    <ClCompile Include="LengthExp.cpp" />
+    <ClCompile Include="MethodDecl.cpp" />
+    <ClCompile Include="NewClass.cpp" />
+    <ClCompile Include="NewInt.cpp" />
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="IfStatement.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PrintStatement.cpp" />
+    <ClCompile Include="StatementList.cpp" />
+    <ClCompile Include="tokens.flex.cpp" />
+    <ClCompile Include="tokens.tab.cpp" />
+    <ClCompile Include="UnExp.cpp" />
+    <ClCompile Include="VarDecl.cpp" />
+    <ClCompile Include="WhileStatement.cpp" />
+    <ClCompile Include="MainClass.cpp" />
+    <ClCompile Include="MethodDeclList.cpp" />
+    <ClCompile Include="ClassDecl.cpp" />
+    <ClCompile Include="ClassDeclList.cpp" />
+    <ClCompile Include="VarDeclList.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Flex Include="tokens.l">
-      <Filter>Файлы ресурсов</Filter>
-    </Flex>
+    <ClInclude Include="AssignmentStatement.h" />
+    <ClInclude Include="BinExp.h" />
+    <ClInclude Include="ClassDeclList.h" />
+    <ClInclude Include="classes.h" />
+    <ClInclude Include="ExpList.h" />
+    <ClInclude Include="FormalList.h" />
+    <ClInclude Include="FormalRest.h" />
+    <ClInclude Include="FormalRestList.h" />
+    <ClInclude Include="LengthExp.h" />
+    <ClInclude Include="MainClass.h" />
+    <ClInclude Include="MethodDecl.h" />
+    <ClInclude Include="NewClass.h" />
+    <ClInclude Include="NewInt.h" />
+    <ClInclude Include="Program.h" />
+    <ClInclude Include="IfStatement.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="Grammar.h" />
+    <ClInclude Include="PrintStatement.h" />
+    <ClInclude Include="StatementList.h" />
+    <ClInclude Include="tokens.tab.hpp" />
+    <ClInclude Include="UnExp.h" />
+    <ClInclude Include="VarDecl.h" />
+    <ClInclude Include="WhileStatement.h" />
+    <ClInclude Include="MethodDeclList.h" />
+    <ClInclude Include="ClassDecl.h" />
+    <ClInclude Include="VarDeclList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tokens.flex.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="tokens.tab.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="Program.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="IfStatement.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="PrintStatement.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="WhileStatement.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="AssignmentStatement.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="BinExp.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="FormalList.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="FormalRest.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="FormalRestList.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodDecl.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="StatementList.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="UnExp.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="VarDecl.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="LengthExp.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="NewInt.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="NewClass.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="ExpList.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
+    <CustomBuild Include="tokens.y" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="tokens.y">
-      <Filter>Файлы ресурсов</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="tokens.tab.hpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Grammar.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Program.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="IfStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="PrintStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="WhileStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="AssignmentStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="BinExp.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="ClassDeclList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="FormalList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="FormalRest.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="FormalRestList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="MainClass.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="MethodDecl.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="StatementList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="UnExp.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="VarDecl.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="LengthExp.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="NewInt.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="NewClass.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="classes.h">
-=======
-    <ClInclude Include="ExpList.h">
->>>>>>> 7631ac3fd60f5c4ea3129f6133593ef32c15e32a
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
+    <Flex Include="tokens.l" />
   </ItemGroup>
 </Project>

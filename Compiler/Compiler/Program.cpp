@@ -5,8 +5,7 @@ CProgram::CProgram( IMainClass* _mainClass, IClassDeclList* _classDeclList ) :
 	mainClass( _mainClass ),
 	classDeclList( _classDeclList )
 {
-	assert( _mainClass );
-	assert( _classDeclList );
+	assert( _mainClass != nullptr );
 }
 
 CProgram::~CProgram()

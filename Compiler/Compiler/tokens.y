@@ -3,6 +3,7 @@
 /* Секция с кодом, который попадет в парсер.*/
 %{
 #include <iostream>
+#include "classes.h"
 extern "C" int yylex();
 void yyerror( int*, const char* str );
 %}
@@ -19,6 +20,9 @@ void yyerror( int*, const char* str );
 	int ival;
 	char sval[255];
 	CProgram* program;
+	CMainClass* mainClass;
+	CClassDecl* classDecl;
+	CClassDeclList* classDecls;
 }
 
 /* Определение лево-ассоцитивности. Аналогично есть %right.
@@ -58,14 +62,17 @@ void yyerror( int*, const char* str );
 
 /* Связываем тип из union и символ парсера. */
 %type<program> Program
+%type<mainClass> MainClass
+%type<classDecl> ClassDecl
+%type<classDeclList> ClassDecls
 
 /* Секция с описанием правил парсера. */
 %%
 Program: 
-	MainClass
-	| MainClass ClassDecls
+	MainClass { $$ = new CProgramm($1, nullptr);}
+	| MainClass ClassDecls { $$ = new CProgramm($1, $2);}
 ClassDecls: ClassDecl
-	| ClassDecls ClassDecl
+	| ClassDecls ClassDecl { $$ = }
 MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statement '}' '}'
 ClassDecl: CLASS ID '{' VarDecls MethodDecls '}'
 	| CLASS ID '{' MethodDecls '}'

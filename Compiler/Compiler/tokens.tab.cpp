@@ -66,11 +66,12 @@
 #line 4 "tokens.y"
 
 #include <iostream>
+#include "classes.h"
 extern "C" int yylex();
 void yyerror( int*, const char* str );
 
 /* Line 371 of yacc.c  */
-#line 74 "tokens.tab.cpp"
+#line 75 "tokens.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -101,11 +102,11 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 387 of yacc.c  */
-#line 13 "tokens.y"
+#line 14 "tokens.y"
 #include "common.h"
 
 /* Line 387 of yacc.c  */
-#line 109 "tokens.tab.cpp"
+#line 110 "tokens.tab.cpp"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -143,14 +144,18 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 18 "tokens.y"
+#line 19 "tokens.y"
 
 	int ival;
 	char sval[255];
+	CProgram* program;
+	CMainClass* mainClass;
+	CClassDecl* classDecl;
+	CClassDeclList* classDecls;
 
 
 /* Line 387 of yacc.c  */
-#line 154 "tokens.tab.cpp"
+#line 159 "tokens.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -178,7 +183,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 182 "tokens.tab.cpp"
+#line 187 "tokens.tab.cpp"
 
 #ifdef short
 # undef short
@@ -502,13 +507,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    64,    64,    65,    66,    67,    68,    69,    70,    71,
-      72,    73,    74,    75,    76,    77,    78,    79,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
-      92,    93,    94,    95,    96,    97,    98,    99,   100,   101,
-     102,   103,   104,   105,   106,   107,   108,   109,   110,   111,
-     112,   113,   114,   115,   116,   117,   118,   119,   120,   121,
-     122,   123,   124,   125,   126,   127,   128,   129
+       0,    71,    71,    72,    73,    74,    75,    76,    77,    78,
+      79,    80,    81,    82,    83,    84,    85,    86,    87,    88,
+      89,    90,    91,    92,    93,    94,    95,    96,    97,    98,
+      99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
+     109,   110,   111,   112,   113,   114,   115,   116,   117,   118,
+     119,   120,   121,   122,   123,   124,   125,   126,   127,   128,
+     129,   130,   131,   132,   133,   134,   135,   136
 };
 #endif
 
@@ -1551,9 +1556,21 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
+        case 2:
 /* Line 1792 of yacc.c  */
-#line 1557 "tokens.tab.cpp"
+#line 71 "tokens.y"
+    { (yyval.program) = new CProgramm((yyvsp[(1) - (1)].mainClass), nullptr);}
+    break;
+
+  case 3:
+/* Line 1792 of yacc.c  */
+#line 72 "tokens.y"
+    { (yyval.program) = new CProgramm((yyvsp[(1) - (2)].mainClass), (yyvsp[(2) - (2)].classDeclList));}
+    break;
+
+
+/* Line 1792 of yacc.c  */
+#line 1574 "tokens.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1785,7 +1802,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 130 "tokens.y"
+#line 137 "tokens.y"
 
 
 /* Функция обработки ошибки. */
