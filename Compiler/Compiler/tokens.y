@@ -3,7 +3,6 @@
 /* Секция с кодом, который попадет в парсер.*/
 %{
 #include <iostream>
-#include "classes.h"
 extern "C" int yylex();
 void yyerror( int*, const char* str );
 %}
@@ -11,7 +10,8 @@ void yyerror( int*, const char* str );
 /* Этот код будет помещен до определения Union
 Обычно используется для описания классов, реализующих синтаксическое дерево. */
 
-%code requires {#include "common.h"}
+%code requires {#include "common.h" 
+#include "classes.h"}
 /* Параметры функции парсера. */
 %parse-param { int* hasError }
 
