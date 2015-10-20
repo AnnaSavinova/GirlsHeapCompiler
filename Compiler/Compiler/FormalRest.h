@@ -1,12 +1,13 @@
 #pragma once
 #include "common.h"
 
-class FormalRest : public IFormalRest
+class CFormalRest : public IFormalRest
 {
 public:
-	FormalRest( IType* _type, std::string _id );
-	~FormalRest();
-//	void Accept( IVisitor* ) const;
+	CFormalRest( IType* _type, std::string _id );
+	~CFormalRest();
+	void Accept( IVisitor* ) const;
+
 private:
 	IType* type;
 	std::string id;

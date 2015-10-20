@@ -1,13 +1,14 @@
 #pragma once
 #include "common.h"
 
-class FormalList : public IFormalList
+class ÑFormalList : public IFormalList
 {
 public:
-	FormalList( IType* _type, std::string _id,
+	ÑFormalList( IType* _type, std::string _id,
 		IFormalRestList* _formalRestList );
-	~FormalList();
-//	void Accept( IVisitor* ) const;
+	~ÑFormalList();
+	void Accept( IVisitor* ) const;
+
 private:
 	IType* type;
 	std::string id;

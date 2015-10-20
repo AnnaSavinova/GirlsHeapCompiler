@@ -1,6 +1,10 @@
 #pragma once
 
-class IVisitor;
+class IVisitor
+{
+public:
+	virtual void Visit( const CHost* host );
+};
 
 class CHost
 {

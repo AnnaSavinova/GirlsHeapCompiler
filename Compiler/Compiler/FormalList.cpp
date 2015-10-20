@@ -1,6 +1,6 @@
 #include "FormalList.h"
 
-FormalList::FormalList( IType * _type, std::string _id, IFormalRestList * _formalRestList )
+ÑFormalList::ÑFormalList( IType * _type, std::string _id, IFormalRestList * _formalRestList )
 {
 	assert( _type != nullptr );
 	assert( !_id.empty() );
@@ -10,7 +10,7 @@ FormalList::FormalList( IType * _type, std::string _id, IFormalRestList * _forma
 	formalRestList = _formalRestList;
 }
 
-FormalList::~FormalList()
+ÑFormalList::~ÑFormalList()
 {
 	if( type != nullptr ) {
 		delete type;

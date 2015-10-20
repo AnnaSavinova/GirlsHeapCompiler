@@ -1,6 +1,6 @@
 #include "FormalRest.h"
 
-FormalRest::FormalRest( IType * _type, std::string _id )
+ÑFormalRest::ÑFormalRest( IType * _type, std::string _id )
 {
 	assert( _type != nullptr );
 	assert( !_id.empty() );
@@ -8,7 +8,7 @@ FormalRest::FormalRest( IType * _type, std::string _id )
 	id = _id;
 }
 
-FormalRest::~FormalRest()
+ÑFormalRest::~ÑFormalRest()
 {
 	if( type != nullptr ) {
 		delete type;

@@ -1,13 +1,13 @@
 #pragma once
 #include "common.h"
 
-class CVarDeclList : public IVarDeclList
+class CMethodDeclList : public IMethodDeclList
 {
 public:
-	CVarDeclList( std::vector<IVarDecl*> &_varDeclList );
-	~CVarDeclList();
+	CMethodDeclList( std::vector<IMethodDecl*> &_methodDeclList );
+	~CMethodDeclList();
 	void Accept( IVisitor* ) const;
 
 private:
-	std::vector<IVarDecl*> varDeclList;
+	std::vector<IMethodDecl*> methodDeclList;
 };

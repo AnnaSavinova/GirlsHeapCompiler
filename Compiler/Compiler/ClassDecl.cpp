@@ -5,7 +5,6 @@ CClassDecl::CClassDecl( CSymbol* _id, CSymbol* _parentId, IVarDeclList* _varDecl
 	parentId( _parentId ),
 	varDecls( _varDecls ),
 	methodDecls( _methodDecls )
-
 {
 	assert( _id != nullptr );
 }
