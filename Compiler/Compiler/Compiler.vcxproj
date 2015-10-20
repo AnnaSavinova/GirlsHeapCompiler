@@ -68,6 +68,7 @@
     <Flex Include="tokens.l" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PrintStatement.cpp" />
@@ -84,6 +85,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Program.h" />
     <ClInclude Include="IfStatement.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Grammar.h" />
