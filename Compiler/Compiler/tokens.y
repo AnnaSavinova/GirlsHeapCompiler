@@ -23,6 +23,20 @@ void yyerror( int*, const char* str );
 	CMainClass* mainClass;
 	CClassDecl* classDecl;
 	CClassDeclList* classDecls;
+	CExpList* expList;
+	CFormalList* formalList;
+	CIfStatement* ifStatement;
+	CLengthExp* lengthExp;
+	CMethodDecl* methodDecl;
+	CMethodDeclList* methodDecls;
+	CNewClass* newClass;
+	CNewInt* newInt;
+	CPrintStatement* printStatement;
+	CStatementList* statements;
+	CUnExp* unExp;
+	CVarDecl* varDecl;
+	CVarDeclList* varDecls;
+	CWhileStatement* whileStatements;
 }
 
 /* Определение лево-ассоцитивности. Аналогично есть %right.
@@ -65,6 +79,10 @@ void yyerror( int*, const char* str );
 %type<mainClass> MainClass
 %type<classDecl> ClassDecl
 %type<classDeclList> ClassDecls
+%type<classDecl> ClassDecl
+%type<varDecls> VarDecls
+%type<methodDecls> MethodDecls
+%type<
 
 /* Секция с описанием правил парсера. */
 %%
