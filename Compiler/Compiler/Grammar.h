@@ -2,116 +2,119 @@
 
 class IVisitor;
 
-class IHost
+class CHost
 {
-	virtual void Accept( IVisitor* ) const = 0;
+	virtual void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 };
 
 // Корневой интерфейс программы
-class IProgram : public IHost
+class IProgram : public CHost
 {
 public:
 	virtual ~IProgram() {}
 };
 
 // Главный класс
-class IMainClass : public IHost
+class IMainClass : public CHost
 {
 public:
 	virtual ~IMainClass() {}
 };
 
 // Список классов
-class IClassDeclList : public IHost
+class IClassDeclList : public CHost
 {
 public:
 	virtual ~IClassDeclList() {}
 };
 
 // Описание класса
-class IClassDecl : public IHost
+class IClassDecl : public CHost
 {
 public:
 	virtual ~IClassDecl() {}
 };
 
 // Список объявлений переменных
-class IVarDeclList : public IHost
+class IVarDeclList : public CHost
 {
 public:
 	virtual ~IVarDeclList() {}
 };
 
 // Объявление переменной
-class IVarDecl : public IHost
+class IVarDecl : public CHost
 {
 public:
 	virtual ~IVarDecl() {}
 };
 
 // Список методов класса
-class IMethodDeclList : public IHost
+class IMethodDeclList : public CHost
 {
 public:
 	virtual ~IMethodDeclList() {}
 };
 
 // Метод класса
-class IMethodDecl : public IHost
+class IMethodDecl : public CHost
 {
 public:
 	virtual ~IMethodDecl() {}
 };
 
 // Список параметров
-class IFormalList : public IHost
+class IFormalList : public CHost
 {
 public:
 	virtual ~IFormalList() {}
 };
 
 // Тип
-class IType : public IHost
+class IType : public CHost
 {
 public:
 	virtual ~IType() {}
 };
 
 // Последовательность команд
-class IStatementList : public IHost
+class IStatementList : public CHost
 {
 public:
 	virtual ~IStatementList() {}
 };
 
 // Одна команда (или блок)
-class IStatement : public IHost
+class IStatement : public CHost
 {
 public:
 	virtual ~IStatement() {}
 };
 
 // Последовательность выражений (аргументы функции)
-class IExpList : public IHost
+class IExpList : public CHost
 {
 public:
 	virtual ~IExpList() {}
 };
 
 // Арифметическое выражение
-class IExp : public IHost
+class IExp : public CHost
 {
 public:
 	virtual ~IExp() {}
 };
 
-class IFormalRest : public IHost
+class IFormalRest : public CHost
 {
 public:
 	virtual ~IFormalRest() {}
 };
 
-class IFormalRestList : public IHost
+class IFormalRestList : public CHost
 {
 public:
 	virtual ~IFormalRestList() {}

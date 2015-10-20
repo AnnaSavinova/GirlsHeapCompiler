@@ -73,7 +73,10 @@
     <ClCompile Include="FormalList.cpp" />
     <ClCompile Include="FormalRest.cpp" />
     <ClCompile Include="FormalRestList.cpp" />
+    <ClCompile Include="LengthExp.cpp" />
     <ClCompile Include="MethodDecl.cpp" />
+    <ClCompile Include="NewClass.cpp" />
+    <ClCompile Include="NewInt.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="main.cpp" />
@@ -100,8 +103,11 @@
     <ClInclude Include="FormalList.h" />
     <ClInclude Include="FormalRest.h" />
     <ClInclude Include="FormalRestList.h" />
+    <ClInclude Include="LengthExp.h" />
     <ClInclude Include="MainClass.h" />
     <ClInclude Include="MethodDecl.h" />
+    <ClInclude Include="NewClass.h" />
+    <ClInclude Include="NewInt.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="IfStatement.h" />
     <ClInclude Include="common.h" />

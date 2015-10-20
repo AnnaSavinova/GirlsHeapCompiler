@@ -8,7 +8,7 @@ public:
 		IVarDeclList* _varDeclList, IStatementList* _statementList,
 		IExp* _exp );
 	~CMethodDecl();
-	void Accept( IVisitor* ) const;
+//	void Accept( IVisitor* ) const;
 private:
 	IType* type;
 	std::string id;
