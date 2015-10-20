@@ -1,18 +1,13 @@
 #pragma once
 #include "common.h"
 
-class CClassDeclList : IProgram
+class CClassDeclList : public IClassDeclList
 {
 public:
-	CClassDeclList( IClassDecl** );
+	CClassDeclList( std::vector<IClassDecl*> &_classDeclList );
 	~CClassDeclList();
-
-	const IMainClass* MainClass() const;
-	const IClassDeclList* ClassDeclList() const;
-	const IVarDeclList* VarDeclList() const;
+	void Accept( IVisitor* ) const;
 
 private:
-	IMainClass* mainClass;
-	IClassDeclList* classDeclList;
-	IVarDeclList* varDeclList;
+	std::vector<IClassDecl*> classDeclList;
 };
