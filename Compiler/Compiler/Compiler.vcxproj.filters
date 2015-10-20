@@ -77,6 +77,9 @@
     <ClCompile Include="NewClass.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="ExpList.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="tokens.y">
@@ -147,7 +150,11 @@
     <ClInclude Include="NewClass.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="classes.h">
+=======
+    <ClInclude Include="ExpList.h">
+>>>>>>> 7631ac3fd60f5c4ea3129f6133593ef32c15e32a
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

@@ -70,6 +70,7 @@
   <ItemGroup>
     <ClCompile Include="AssignmentStatement.cpp" />
     <ClCompile Include="BinExp.cpp" />
+    <ClCompile Include="ExpList.cpp" />
     <ClCompile Include="FormalList.cpp" />
     <ClCompile Include="FormalRest.cpp" />
     <ClCompile Include="FormalRestList.cpp" />
@@ -100,7 +101,11 @@
     <ClInclude Include="AssignmentStatement.h" />
     <ClInclude Include="BinExp.h" />
     <ClInclude Include="ClassDeclList.h" />
+<<<<<<< HEAD
     <ClInclude Include="classes.h" />
+=======
+    <ClInclude Include="ExpList.h" />
+>>>>>>> 7631ac3fd60f5c4ea3129f6133593ef32c15e32a
     <ClInclude Include="FormalList.h" />
     <ClInclude Include="FormalRest.h" />
     <ClInclude Include="FormalRestList.h" />

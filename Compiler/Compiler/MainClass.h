@@ -4,16 +4,13 @@
 class CMainClass : IMainClass
 {
 public:
-	CMainClass( IClassDeclList*, IVarDeclList*, IMethodDeclList* );
+	CMainClass( CSymbol*, IStatement* );
 	~CMainClass();
 
-	const IClassDeclList* ClassDeclList() const;
-	const IVarDeclList* VarDeclList() const;
-	const IMethodDeclList* MethodDeclList() const;
+	const CSymbol* Id() const;
+	const IStatement* Statement() const;
 
 private:
-	IMainClass* mainClass;
-	IClassDeclList* classDeclList;
-	IVarDeclList* varDeclList;
-	IMethodDeclList* methodDeclList;
+	CSymbol* id;
+	IStatement* statement;
 };
