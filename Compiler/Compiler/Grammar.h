@@ -104,3 +104,15 @@ class IExp : public IHost
 public:
 	virtual ~IExp() {}
 };
+
+class IFormalRest : public IHost
+{
+public:
+	virtual ~IFormalRest() {}
+};
+
+class IFormalRestList : public IHost
+{
+public:
+	virtual ~IFormalRestList() {}
+};
