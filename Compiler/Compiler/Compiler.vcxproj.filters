@@ -74,6 +74,9 @@
     <ClCompile Include="WhileStatement.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
+    <ClCompile Include="PrettyPrinter.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tokens.tab.hpp" />
@@ -150,6 +153,9 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="WhileStatement.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="PrettyPrinter.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

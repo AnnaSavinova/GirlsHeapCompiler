@@ -1,23 +1,23 @@
 #include "ClassDecl.h"
 
-CClassDecl::CClassDecl( CSymbol* _id, CSymbol* _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls ) :
+CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls ) :
 	id( _id ),
 	parentId( _parentId ),
 	varDecls( _varDecls ),
 	methodDecls( _methodDecls )
 {
-	assert( _id != nullptr );
+	// assert( _id != nullptr );
 }
 
 CClassDecl::~CClassDecl()
 {
-	if ( id != nullptr ) {
-		delete id;
-	}
+	//if ( id != nullptr ) {
+	//	delete id;
+	//}
 
-	if ( parentId != nullptr ) {
-		delete parentId;
-	}
+	//if ( parentId != nullptr ) {
+	//	delete parentId;
+	//}
 
 	if ( varDecls != nullptr ) {
 		delete varDecls;
@@ -28,8 +28,23 @@ CClassDecl::~CClassDecl()
 	}
 }
 
-//void CClassDecl::Accept( IVisitor* visitor ) const
-//{
-//	visitor->Visit( this );
-//}
+const std::string CClassDecl::Id() const
+{
+	return id;
+}
+
+const std::string CClassDecl::ParentId() const
+{
+	return parentId;
+}
+
+const IVarDeclList* CClassDecl::VarDeclList() const
+{
+	return varDecls;
+}
+
+const IMethodDeclList* CClassDecl::MethodDeclList() const
+{
+	return methodDecls;
+}
 

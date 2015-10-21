@@ -4,12 +4,16 @@
 class CClassDecl : public IClassDecl
 {
 public:
-	CClassDecl( CSymbol*, CSymbol*, IVarDeclList*,  IMethodDeclList* );
+	CClassDecl( std::string, std::string, IVarDeclList*,  IMethodDeclList* );
 	~CClassDecl();
-	void Accept( IVisitor* ) const;
+
+	const std::string Id() const;
+	const std::string ParentId() const;
+	const IVarDeclList* VarDeclList() const;
+	const IMethodDeclList* MethodDeclList() const;
 
 private:
-	CSymbol* id, parentId; // parentId can be null
+	std::string id, parentId; // parentId can be null
 	IVarDeclList* varDecls; // can be null
 	IMethodDeclList* methodDecls; // can be null
 };

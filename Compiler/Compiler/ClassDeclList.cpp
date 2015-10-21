@@ -17,4 +17,9 @@ CClassDeclList::~CClassDeclList()
 	}
 }
 
+const std::vector<IClassDecl*>* CClassDeclList::ClassDeclList() const
+{
+	return &classDeclList;
+}
+
 

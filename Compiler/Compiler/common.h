@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "tokens.tab.hpp"
-#include <string.h>
+#include <string>
 #include <stdio.h>
 #include <vector>
 #include <memory>

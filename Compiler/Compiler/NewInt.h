@@ -6,6 +6,8 @@ public:
     CNewInt( IExp* );
     ~CNewInt();
 
+	const IExp* Expression() const;
+
 private:
     IExp* expression;
 };

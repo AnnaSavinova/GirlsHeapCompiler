@@ -8,6 +8,8 @@ public:
 	~CClassDeclList();
 	void Accept( IVisitor* ) const;
 
+	const std::vector<IClassDecl*>* ClassDeclList() const;
+
 private:
 	std::vector<IClassDecl*> classDeclList;
 };

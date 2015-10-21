@@ -4,13 +4,13 @@
 class CMainClass : IMainClass
 {
 public:
-	CMainClass( CSymbol*, IStatement* );
+	CMainClass( std::string, IStatement* );
 	~CMainClass();
 
-	const CSymbol* Id() const;
-	const IStatement* Statement() const;
+	const std::string Id() const;
+	const IStatementList* Statements() const;
 
 private:
-	CSymbol* id;
-	IStatement* statement;
+	std::string id;
+	IStatementList* statements;
 };

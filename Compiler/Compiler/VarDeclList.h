@@ -4,10 +4,12 @@
 class CVarDeclList : public IVarDeclList
 {
 public:
-	CVarDeclList( std::vector<IStatement*> &_varDeclList );
+	CVarDeclList( std::vector<IVarDecl*> &_varDeclList );
 	~CVarDeclList();
 	void Accept( IVisitor* ) const;
 
+	const std::vector<IVarDecl*>* VarDeclList() const;
+
 private:
-	std::vector<IStatement*> varDeclList;
+	std::vector<IVarDecl*> varDeclList;
 };

@@ -10,5 +10,8 @@ CUnExp::CUnExp( IExp* exp, std::string op ) : expression(exp), operation(op)
 
 CUnExp::~CUnExp()
 {
-    delete expression;
+	if ( expression != nullptr ) {
+		delete expression;
+	}
 }
+

@@ -8,6 +8,8 @@ public:
 	~CMethodDeclList();
 	void Accept( IVisitor* ) const;
 
+	const std::vector<IMethodDecl*>* MethodDeclList() const;
+
 private:
 	std::vector<IMethodDecl*> methodDeclList;
 };

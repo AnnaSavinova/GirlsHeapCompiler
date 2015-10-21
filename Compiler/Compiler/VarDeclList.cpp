@@ -1,6 +1,6 @@
 #include "VarDeclList.h"
 
-CVarDeclList::CVarDeclList( std::vector<IStatement*>& _varDeclList )
+CVarDeclList::CVarDeclList( std::vector<IVarDecl*>& _varDeclList )
 {
 	for( size_t i = 0; i < _varDeclList.size(); i++ ) {
 		assert( _varDeclList[i] );
@@ -17,4 +17,8 @@ CVarDeclList::~CVarDeclList()
 	}
 }
 
+const std::vector<IVarDecl*>* CVarDeclList::VarDeclList() const
+{
+	return &varDeclList;
+}
 

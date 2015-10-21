@@ -1,26 +1,26 @@
 #include "MainClass.h"
 
 
-CMainClass::CMainClass( CSymbol* _id, IStatement* _statement ) :
+CMainClass::CMainClass( std::string _id, IStatement* _statement ) :
 	id( _id ),
 	statement( _statement )
 {
-	assert( _id );
+	// assert( _id );
 	assert( _statement );
 }
 
 CMainClass::~CMainClass()
 {
-	delete id;
+	// delete id;
 	delete statement;
 }
 
-const IMainClass* CMainClass::Id() const
+const std::string CMainClass::Id() const
 {
 	return id;
 }
 
-const IClassDeclList* CMainClass::Statement() const
+const IStatementList* CMainClass::Statements() const
 {
-	return statement;
+	return statements;
 }

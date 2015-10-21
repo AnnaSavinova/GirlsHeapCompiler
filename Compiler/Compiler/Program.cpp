@@ -10,8 +10,13 @@ CProgram::CProgram( IMainClass* _mainClass, IClassDeclList* _classDeclList ) :
 
 CProgram::~CProgram()
 {
-	delete mainClass;
-	delete classDeclList;
+	if ( mainClass != nullptr ) {
+		delete mainClass;
+	}
+
+	if ( classDeclList != nullptr ) {
+		delete classDeclList;
+	}
 }
 
 const IMainClass* CProgram::MainClass() const

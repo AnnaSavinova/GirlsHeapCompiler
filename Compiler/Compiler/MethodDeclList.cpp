@@ -17,4 +17,9 @@ CMethodDeclList::~CMethodDeclList()
 	}
 }
 
+const std::vector<IMethodDecl*>* CMethodDeclList::MethodDeclList() const
+{
+	return &methodDeclList;
+}
+
 

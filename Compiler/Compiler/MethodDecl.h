@@ -8,7 +8,14 @@ public:
 		IVarDeclList* _varDeclList, IStatementList* _statementList,
 		IExp* _exp );
 	~CMethodDecl();
-//	void Accept( IVisitor* ) const;
+	
+	const IType* Type() const;
+	const std::string Id() const;
+	const IFormalList* FormalList() const;
+	const IVarDeclList* VarDeclList() const;
+	const IStatementList* StatementList() const;
+	const IExp* Expression() const;
+
 private:
 	IType* type;
 	std::string id;

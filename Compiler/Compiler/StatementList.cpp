@@ -17,4 +17,9 @@ CStatementList::~CStatementList()
 	}
 }
 
+const std::vector<IStatement*>* CStatementList::StatementList() const
+{
+	return &statementList;
+}
+
 
