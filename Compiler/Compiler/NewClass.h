@@ -6,6 +6,8 @@ public:
     CNewClass( std::string );
     ~CNewClass();
 
+	const std::string Id() const;
+
 private:
     std::string id;
 };

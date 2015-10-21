@@ -2,7 +2,11 @@
 
 void CPrettyPrinter::Visit( const CAssignmentStatement* assigmentStatement )
 {
-	// TODO
+	std::cout << assigmentStatement->Id() << " = ";
+	if ( assigmentStatement->Expression() != nullptr ) {
+		assigmentStatement->Expression()->Accept( this );
+	}
+	std::cout << ";";
 }
 
 void CPrettyPrinter::Visit( const CBinExp* binExp )
@@ -62,12 +66,28 @@ void CPrettyPrinter::Visit( const CFormalRest* formalRest )
 
 void CPrettyPrinter::Visit( const CIfStatement* ifStatement )
 {
-	// TODO
+	std::cout << "if ( ";
+	if ( ifStatement->Expression() != nullptr ) {
+		ifStatement->Expression()->Accept( this );
+	}
+	std::cout << " )" << std::endl;
+
+	if ( ifStatement->ThenStatement() != nullptr ) {
+		ifStatement->ThenStatement()->Accept( this );
+	}
+
+	if ( ifStatement->ElseStatement() != nullptr ) {
+		std::cout << "else " << std::endl;
+		ifStatement->ElseStatement()->Accept( this );
+	}
 }
 
 void CPrettyPrinter::Visit( const CLengthExp* lengthExp )
 {
-	// TODO
+	if ( lengthExp->Expression() != nullptr ) {
+		lengthExp->Expression()->Accept( this );
+		std::cout << ".length" << std::endl;
+	}
 }
 
 void CPrettyPrinter::Visit( const CMainClass* mainClass )
@@ -120,7 +140,7 @@ void CPrettyPrinter::Visit( const CMethodDeclList* methodDecls )
 
 void CPrettyPrinter::Visit( const CNewClass* newClass )
 {
-	// TODO
+	std::cout << "new " << newClass->Id() << std::endl;
 }
 
 void CPrettyPrinter::Visit( const CNewInt* newInt )

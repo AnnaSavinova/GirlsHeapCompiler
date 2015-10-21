@@ -82,7 +82,6 @@ void yyerror( int*, const char* str );
 %type<classDecl> ClassDecl
 %type<varDecls> VarDecls
 %type<methodDecls> MethodDecls
-%type<
 
 /* Секция с описанием правил парсера. */
 %%
