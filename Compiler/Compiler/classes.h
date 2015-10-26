@@ -15,6 +15,7 @@
 #include "PrintStatement.h"
 #include "Program.h"
 #include "StatementList.h"
+#include "Type.h"
 #include "UnExp.h"
 #include "VarDecl.h"
 #include "VarDeclList.h"
