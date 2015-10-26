@@ -12,3 +12,8 @@ CLengthExp::~CLengthExp()
 {
     delete expression;
 }
+
+const IExp* CLengthExp::Expression() const
+{
+	return expression;
+}
