@@ -108,10 +108,18 @@ ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::stri
 	| CLASS ID EXTENDS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, dynamic_cast<IMethodDeclList*>($6) ); }
 	| CLASS ID EXTENDS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), dynamic_cast<IVarDeclList*>($6), nullptr ); }
 	| CLASS ID EXTENDS ID '{' '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, nullptr ); }
-VarDecls: VarDecl
-	| VarDecls VarDecl
-MethodDecls: MethodDecl
-	| MethodDecls MethodDecl
+VarDecls: VarDecl { $$ = new CVarDeclList( dynamic_cast< IVarDecl* >($1) ); }
+	| VarDecls VarDecl { 
+		std::vector< IVarDecl* > decls = dynamic_cast<CVarDeclList*>($1)->VarDeclList();
+		decls.push_back(dynamic_cast<IVarDecl*>($2));
+		$$ = new CVarDeclList(decls); 
+	}
+MethodDecls: MethodDecl { $$ = new CMethodDeclList( dynamic_cast<IMethodDecl*>($1) ); }
+	| MethodDecls MethodDecl { 
+		std::vector< IMethodDecl* > decls = dynamic_cast<CMethodDeclList*>($1)->MethodDeclList();
+		decls.push_back(dynamic_cast<IMethodDecl*>($2));
+		$$ = new CMethodDeclList(decls); 
+	}
 VarDecl: Type ID ';'
 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp ';' '}'
 	| PUBLIC Type ID '(' FormalList ')' '{' Statements RETURN Exp ';' '}'

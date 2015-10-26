@@ -8,6 +8,11 @@ CVarDeclList::CVarDeclList( std::vector<IVarDecl*>& _varDeclList )
 	varDeclList = _varDeclList;
 }
 
+CVarDeclList::CVarDeclList( IVarDecl* _varDecl )
+{
+    varDeclList.push_back( _varDecl );
+}
+
 CVarDeclList::~CVarDeclList()
 {
 	for( size_t i = 0; i < varDeclList.size(); i++ ) {
@@ -17,8 +22,8 @@ CVarDeclList::~CVarDeclList()
 	}
 }
 
-const std::vector<IVarDecl*>* CVarDeclList::VarDeclList() const
+const std::vector<IVarDecl*>& CVarDeclList::VarDeclList() const
 {
-	return &varDeclList;
+	return varDeclList;
 }
 

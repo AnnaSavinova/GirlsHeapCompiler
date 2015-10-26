@@ -135,8 +135,8 @@ void CPrettyPrinter::Visit( const CMethodDecl* methodDecl )
 
 void CPrettyPrinter::Visit( const CMethodDeclList* methodDecls )
 {
-	for ( size_t i = 0; i < methodDecls->MethodDeclList()->size(); i++ ) {
-		( *( methodDecls->MethodDeclList() ) )[i]->Accept( this );
+	for ( size_t i = 0; i < methodDecls->MethodDeclList().size(); i++ ) {
+		methodDecls->MethodDeclList()[i]->Accept( this );
 		std::cout << std::endl;
 	}
 }
@@ -184,8 +184,8 @@ void CPrettyPrinter::Visit( const CVarDecl* varDecl )
 
 void CPrettyPrinter::Visit( const CVarDeclList* varDecls )
 {
-	for ( size_t i = 0; i < varDecls->VarDeclList()->size(); i++ ) {
-		( *( varDecls->VarDeclList() ) )[i]->Accept( this );
+	for ( size_t i = 0; i < varDecls->VarDeclList().size(); i++ ) {
+		varDecls->VarDeclList()[i]->Accept( this );
 		std::cout << std::endl;
 	}
 }

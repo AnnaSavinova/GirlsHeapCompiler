@@ -523,12 +523,12 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    94,    94,    95,    96,    97,   102,   103,   104,   105,
-     106,   107,   108,   109,   110,   111,   112,   113,   114,   115,
-     116,   117,   118,   119,   120,   121,   122,   123,   124,   125,
-     126,   127,   128,   129,   130,   131,   132,   133,   134,   135,
-     136,   137,   138,   139,   140,   141,   142,   143,   144,   145,
-     146,   147,   148,   149,   150,   151,   152,   153,   154,   155,
-     156,   157,   158,   159,   160,   161,   162,   163
+     106,   107,   108,   109,   110,   111,   112,   117,   118,   123,
+     124,   125,   126,   127,   128,   129,   130,   131,   132,   133,
+     134,   135,   136,   137,   138,   139,   140,   141,   142,   143,
+     144,   145,   146,   147,   148,   149,   150,   151,   152,   153,
+     154,   155,   156,   157,   158,   159,   160,   161,   162,   163,
+     164,   165,   166,   167,   168,   169,   170,   171
 };
 #endif
 
@@ -1653,9 +1653,41 @@ yyreduce:
     { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (6)].sval)), std::string((yyvsp[(4) - (6)].sval)), nullptr, nullptr ); }
     break;
 
+  case 15:
+/* Line 1792 of yacc.c  */
+#line 111 "tokens.y"
+    { (yyval.varDecls) = new CVarDeclList( dynamic_cast< IVarDecl* >((yyvsp[(1) - (1)].varDecl)) ); }
+    break;
+
+  case 16:
+/* Line 1792 of yacc.c  */
+#line 112 "tokens.y"
+    { 
+		std::vector< IVarDecl* > decls = dynamic_cast<CVarDeclList*>((yyvsp[(1) - (2)].varDecls))->VarDeclList();
+		decls.push_back(dynamic_cast<IVarDecl*>((yyvsp[(2) - (2)].varDecl)));
+		(yyval.varDecls) = new CVarDeclList(decls); 
+	}
+    break;
+
+  case 17:
+/* Line 1792 of yacc.c  */
+#line 117 "tokens.y"
+    { (yyval.methodDecls) = new CMethodDeclList( dynamic_cast<IMethodDecl*>((yyvsp[(1) - (1)].methodDecl)) ); }
+    break;
+
+  case 18:
+/* Line 1792 of yacc.c  */
+#line 118 "tokens.y"
+    { 
+		std::vector< IMethodDecl* > decls = dynamic_cast<CMethodDeclList*>((yyvsp[(1) - (2)].methodDecls))->MethodDeclList();
+		decls.push_back(dynamic_cast<IMethodDecl*>((yyvsp[(2) - (2)].methodDecl)));
+		(yyval.methodDecls) = new CMethodDeclList(decls); 
+	}
+    break;
+
 
 /* Line 1792 of yacc.c  */
-#line 1659 "tokens.tab.cpp"
+#line 1691 "tokens.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1887,7 +1919,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 164 "tokens.y"
+#line 172 "tokens.y"
 
 
 /* Функция обработки ошибки. */

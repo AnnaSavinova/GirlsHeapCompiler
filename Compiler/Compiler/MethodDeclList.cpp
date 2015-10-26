@@ -1,6 +1,11 @@
 #include "MethodDeclList.h"
 
-CMethodDeclList::CMethodDeclList( std::vector<IMethodDecl*>& _methodDeclList )
+CMethodDeclList::CMethodDeclList( IMethodDecl* _methodDecl )
+{
+    methodDeclList.push_back( _methodDecl );
+}
+
+CMethodDeclList::CMethodDeclList( const std::vector<IMethodDecl*>& _methodDeclList )
 {
 	for( size_t i = 0; i < _methodDeclList.size(); i++ ) {
 		assert( _methodDeclList[i] );
@@ -17,9 +22,9 @@ CMethodDeclList::~CMethodDeclList()
 	}
 }
 
-const std::vector<IMethodDecl*>* CMethodDeclList::MethodDeclList() const
+const std::vector<IMethodDecl*> CMethodDeclList::MethodDeclList() const
 {
-	return &methodDeclList;
+	return methodDeclList;
 }
 
 
