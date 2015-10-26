@@ -9,7 +9,10 @@ public:
 	~CClassDeclList();
 
 	const std::vector<IClassDecl*>& ClassDeclList() const;
-
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 private:
 	std::vector<IClassDecl*> classDeclList;
 };

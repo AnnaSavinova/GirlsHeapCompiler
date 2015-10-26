@@ -7,8 +7,10 @@ public:
 	CMethodDeclList( const std::vector<IMethodDecl*>& _methodDeclList );
 
 	~CMethodDeclList();
-	void Accept( IVisitor* ) const;
-
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 	const std::vector<IMethodDecl*> MethodDeclList() const;
 
 private:

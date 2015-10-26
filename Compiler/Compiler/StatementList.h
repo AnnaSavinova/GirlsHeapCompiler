@@ -5,8 +5,10 @@ class CStatementList : public IStatementList
 public:
 	CStatementList( std::vector<IStatement*> &_statementList );
 	~CStatementList();
-	void Accept( IVisitor* ) const;
-
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 	const std::vector<IStatement*>* StatementList() const;
 
 private:
