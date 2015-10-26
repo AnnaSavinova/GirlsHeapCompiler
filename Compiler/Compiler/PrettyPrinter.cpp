@@ -43,6 +43,12 @@ void CPrettyPrinter::Visit( const CClassDeclList* classDecls )
 	}
 }
 
+void CPrettyPrinter::Visit( const CConstructor* constructor )
+{
+    std::cout << "new" << constructor->Id() << "()" << std::endl;
+
+}
+
 void CPrettyPrinter::Visit( const CExpList* expList )
 {
 	for ( size_t i = 0; i < expList->Expressions().size(); i++ ) {
@@ -65,6 +71,11 @@ void CPrettyPrinter::Visit( const ÑFormalList* formalList )
 	if ( formalList->List().size() ) {
 		formalList->List()[formalList->List().size() - 1]->Accept( this );
 	}
+}
+
+void CPrettyPrinter::Visit( const CId* id )
+{
+    std::cout << id->Id();
 }
 
 void CPrettyPrinter::Visit( const CIfStatement* ifStatement )
@@ -105,6 +116,14 @@ void CPrettyPrinter::Visit( const CMainClass* mainClass )
 	std::cout << "}" << std::endl;
 
 	std::cout << "}" << std::endl;
+}
+
+void CPrettyPrinter::Visit( const CMethodCall* methodCall )
+{
+    methodCall->Exp()->Accept( this );
+    std::cout << "." << methodCall->Id() << "(";
+    methodCall->Args()->Accept( this );
+    std::cout << ")" << std::endl;
 }
 
 void CPrettyPrinter::Visit( const CMethodDecl* methodDecl )
@@ -151,6 +170,11 @@ void CPrettyPrinter::Visit( const CNewInt* newInt )
 	std::cout << "new int[";
 	newInt->Expression()->Accept( this );
 	std::cout << "]";
+}
+
+void CPrettyPrinter::Visit( const CNumber* number )
+{
+    std::cout << number->Number();
 }
 
 void CPrettyPrinter::Visit( const CPrintStatement* printStatement )
@@ -215,4 +239,11 @@ void CPrettyPrinter::Visit( const CProgram* program )
 	if ( program->ClassDeclList() != nullptr ) {
 		program->ClassDeclList()->Accept( this );
 	}
+}
+
+void CPrettyPrinter::Visit( const CStatementBlock* statementBlock )
+{
+    std::cout << "{" << std::endl;
+    statementBlock->Statements()->Accept( this );
+    std::cout << "}" << std::endl;
 }

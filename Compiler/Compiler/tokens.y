@@ -189,7 +189,7 @@ Type: INT '[' ']' { $$ = new CType( "int[]"); }
 	| BOOLEAN { $$ = new CType( "boolean"); }
 	| INT { $$ = new CType( "int"); }
 	| ID { $$ = new CType( "id"); }
-Statement: '{' Statements '}' { std::cout << "{Statements}" << std::endl;}
+Statement: '{' Statements '}' { $$ = new CStatementBlock($2); }
 	| '{' '}' { $$ = nullptr; }
 	| IF '(' Exp ')' Statement ELSE Statement { $$ = new CIfStatement( $3, $5, $7 ); }
 	| WHILE '(' Exp ')' Statement { $$ = new CWhileStatement( $3, $5 ); }
@@ -205,17 +205,17 @@ Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-" ); }
 	| Exp '/' Exp { $$ = new CBinExp( $1, $3, "/" ); }
 	| Exp '[' Exp ']' { $$ = new CBinExp( $1, $3, "[]" ); }
 	| Exp '.' LENGTH { $$ = new CLengthExp( $1 ); }
-	| Exp '.' ID '(' ExpList ')' { std::cout << "Method call" << std::endl; }
-	| INTEGER_LITERAL { std::cout << "INTEGER_LITERAL" << std::endl; }
-	| TRUE
-	| FALSE
-	| ID
-	| THIS
-	| NEW INT '[' Exp ']'
-	| NEW ID '(' ')'
+	| Exp '.' ID '(' ExpList ')' { $$ = new CMethodCall( $1, $3, $5 ); }
+	| INTEGER_LITERAL { $$ = new CNumber($1); }
+	| TRUE { $$ = new CNumber(1); }
+	| FALSE { $$ = new CNumber(0); }
+	| ID { $$ = new CId($1); }
+	| THIS { $$ = new CId("this"); }
+	| NEW INT '[' Exp ']' { $$ = new CNewInt( $4 ); }
+	| NEW ID '(' ')' { $$ = new CConstructor( $2 ); }
 	| '!' Exp { $$ = new CUnExp( $2, "!" ); }
 	| '(' Exp ')' { $$ = $2; }
-ExpList: /*epsilon*/
+ExpList: /*epsilon*/ { $$ = nullptr; }
 	| Exp  { $$ = new CExpList( $1 ); }
 	| Exp ExpRests { 
 		std::vector< IExp* > exps = dynamic_cast<CExpList*>($2)->Expressions();

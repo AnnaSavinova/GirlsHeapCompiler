@@ -74,6 +74,24 @@
     <ClCompile Include="Type.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
+    <ClCompile Include="ElementAssignment.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
+    <ClCompile Include="Number.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
+    <ClCompile Include="Id.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodCall.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
+    <ClCompile Include="StatementBlock.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tokens.tab.hpp" />
@@ -147,6 +165,24 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="PrettyPrinter.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementAssignment.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Number.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Constructor.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Id.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodCall.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="StatementBlock.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

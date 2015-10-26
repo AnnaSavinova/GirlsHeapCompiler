@@ -1835,7 +1835,13 @@ yyreduce:
   case 36:
 /* Line 1792 of yacc.c  */
 #line 192 "tokens.y"
-    { std::cout << "{Statements}" << std::endl;}
+    { (yyval.statement) = new CStatementBlock((yyvsp[(2) - (3)].statements)); }
+    break;
+
+  case 37:
+/* Line 1792 of yacc.c  */
+#line 193 "tokens.y"
+    { (yyval.statement) = nullptr; }
     break;
 
   case 38:
@@ -1865,7 +1871,7 @@ yyreduce:
   case 42:
 /* Line 1792 of yacc.c  */
 #line 198 "tokens.y"
-    { std::cout << "ID[]" << std::endl; }
+    { (yyval.statement) = new CElementAssignment( std::string((yyvsp[(1) - (7)].sval)), (yyvsp[(3) - (7)].exp), (yyvsp[(6) - (7)].exp) ); }
     break;
 
   case 43:
@@ -1925,13 +1931,49 @@ yyreduce:
   case 52:
 /* Line 1792 of yacc.c  */
 #line 208 "tokens.y"
-    { std::cout << "Method call" << std::endl; }
+    { (yyval.exp) = new CMethodCall( (yyvsp[(1) - (6)].exp), (yyvsp[(3) - (6)].sval), (yyvsp[(5) - (6)].expList) ); }
     break;
 
   case 53:
 /* Line 1792 of yacc.c  */
 #line 209 "tokens.y"
-    { std::cout << "INTEGER_LITERAL" << std::endl; }
+    { (yyval.exp) = new CNumber((yyvsp[(1) - (1)].ival)); }
+    break;
+
+  case 54:
+/* Line 1792 of yacc.c  */
+#line 210 "tokens.y"
+    { (yyval.exp) = new CNumber(1); }
+    break;
+
+  case 55:
+/* Line 1792 of yacc.c  */
+#line 211 "tokens.y"
+    { (yyval.exp) = new CNumber(0); }
+    break;
+
+  case 56:
+/* Line 1792 of yacc.c  */
+#line 212 "tokens.y"
+    { (yyval.exp) = new CId((yyvsp[(1) - (1)].sval)); }
+    break;
+
+  case 57:
+/* Line 1792 of yacc.c  */
+#line 213 "tokens.y"
+    { (yyval.exp) = new CId("this"); }
+    break;
+
+  case 58:
+/* Line 1792 of yacc.c  */
+#line 214 "tokens.y"
+    { (yyval.exp) = new CNewInt( (yyvsp[(4) - (5)].exp) ); }
+    break;
+
+  case 59:
+/* Line 1792 of yacc.c  */
+#line 215 "tokens.y"
+    { (yyval.exp) = new CConstructor( (yyvsp[(2) - (4)].sval) ); }
     break;
 
   case 60:
@@ -1944,6 +1986,12 @@ yyreduce:
 /* Line 1792 of yacc.c  */
 #line 217 "tokens.y"
     { (yyval.exp) = (yyvsp[(2) - (3)].exp); }
+    break;
+
+  case 62:
+/* Line 1792 of yacc.c  */
+#line 218 "tokens.y"
+    { (yyval.expList) = nullptr; }
     break;
 
   case 63:
@@ -1986,7 +2034,7 @@ yyreduce:
 
 
 /* Line 1792 of yacc.c  */
-#line 1990 "tokens.tab.cpp"
+#line 2038 "tokens.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
