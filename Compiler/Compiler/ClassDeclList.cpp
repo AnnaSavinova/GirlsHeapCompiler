@@ -8,6 +8,12 @@ CClassDeclList::CClassDeclList( std::vector<IClassDecl*>& _classDeclList )
 	classDeclList = _classDeclList;
 }
 
+CClassDeclList::CClassDeclList( IClassDecl* _classDecl )
+{    
+    assert( _classDecl );
+    classDeclList.push_back( _classDecl );
+}
+
 CClassDeclList::~CClassDeclList()
 {
 	for( size_t i = 0; i < classDeclList.size(); i++ ) {

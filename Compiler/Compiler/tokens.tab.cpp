@@ -66,12 +66,11 @@
 #line 4 "tokens.y"
 
 #include <iostream>
-#include "classes.h"
 extern "C" int yylex();
 void yyerror( int*, const char* str );
 
 /* Line 371 of yacc.c  */
-#line 75 "tokens.tab.cpp"
+#line 74 "tokens.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -102,11 +101,13 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 387 of yacc.c  */
-#line 14 "tokens.y"
+#line 13 "tokens.y"
 #include "common.h"
+#include "Grammar.h"
+#include "classes.h"
 
 /* Line 387 of yacc.c  */
-#line 110 "tokens.tab.cpp"
+#line 111 "tokens.tab.cpp"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -144,7 +145,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 19 "tokens.y"
+#line 20 "tokens.y"
 
 	int ival;
 	char sval[255];
@@ -152,10 +153,24 @@ typedef union YYSTYPE
 	CMainClass* mainClass;
 	CClassDecl* classDecl;
 	CClassDeclList* classDecls;
+	CExpList* expList;
+	CFormalList* formalList;
+	CIfStatement* ifStatement;
+	CLengthExp* lengthExp;
+	CMethodDecl* methodDecl;
+	CMethodDeclList* methodDecls;
+	CNewClass* newClass;
+	CNewInt* newInt;
+	CPrintStatement* printStatement;
+	CStatementList* statements;
+	CUnExp* unExp;
+	CVarDecl* varDecl;
+	CVarDeclList* varDecls;
+	CWhileStatement* whileStatements;
 
 
 /* Line 387 of yacc.c  */
-#line 159 "tokens.tab.cpp"
+#line 174 "tokens.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -183,7 +198,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 187 "tokens.tab.cpp"
+#line 202 "tokens.tab.cpp"
 
 #ifdef short
 # undef short
@@ -507,13 +522,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    71,    71,    72,    73,    74,    75,    76,    77,    78,
-      79,    80,    81,    82,    83,    84,    85,    86,    87,    88,
-      89,    90,    91,    92,    93,    94,    95,    96,    97,    98,
-      99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
-     109,   110,   111,   112,   113,   114,   115,   116,   117,   118,
-     119,   120,   121,   122,   123,   124,   125,   126,   127,   128,
-     129,   130,   131,   132,   133,   134,   135,   136
+       0,    94,    94,    95,    96,    97,   102,   103,   104,   105,
+     106,   107,   108,   109,   110,   111,   112,   113,   114,   115,
+     116,   117,   118,   119,   120,   121,   122,   123,   124,   125,
+     126,   127,   128,   129,   130,   131,   132,   133,   134,   135,
+     136,   137,   138,   139,   140,   141,   142,   143,   144,   145,
+     146,   147,   148,   149,   150,   151,   152,   153,   154,   155,
+     156,   157,   158,   159,   160,   161,   162,   163
 };
 #endif
 
@@ -1558,19 +1573,35 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 71 "tokens.y"
-    { (yyval.program) = new CProgramm((yyvsp[(1) - (1)].mainClass), nullptr);}
+#line 94 "tokens.y"
+    { (yyval.program) = new CProgram((yyvsp[(1) - (1)].mainClass), nullptr); }
     break;
 
   case 3:
 /* Line 1792 of yacc.c  */
-#line 72 "tokens.y"
-    { (yyval.program) = new CProgramm((yyvsp[(1) - (2)].mainClass), (yyvsp[(2) - (2)].classDeclList));}
+#line 95 "tokens.y"
+    { (yyval.program) = new CProgram((yyvsp[(1) - (2)].mainClass), (yyvsp[(2) - (2)].classDecls)); }
+    break;
+
+  case 4:
+/* Line 1792 of yacc.c  */
+#line 96 "tokens.y"
+    { (yyval.classDecls) = new CClassDeclList((yyvsp[(1) - (1)].classDecl)); }
+    break;
+
+  case 5:
+/* Line 1792 of yacc.c  */
+#line 97 "tokens.y"
+    { 
+	std::vector<IClassDecl*> decls = (yyvsp[(1) - (2)].classDecls).ClassDeclList();
+	decls.push_back((yyvsp[(2) - (2)].classDecl));
+	(yyval.classDecls) = new CClassDeclList(decls); 
+	}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1574 "tokens.tab.cpp"
+#line 1605 "tokens.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1802,7 +1833,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 137 "tokens.y"
+#line 164 "tokens.y"
 
 
 /* Функция обработки ошибки. */

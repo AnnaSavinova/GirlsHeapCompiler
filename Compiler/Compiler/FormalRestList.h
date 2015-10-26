@@ -1,6 +1,6 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-
 class FormalRestList : public IFormalRestList
 {
 public:

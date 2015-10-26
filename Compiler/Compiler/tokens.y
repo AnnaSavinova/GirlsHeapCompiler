@@ -10,7 +10,8 @@ void yyerror( int*, const char* str );
 /* Этот код будет помещен до определения Union
 Обычно используется для описания классов, реализующих синтаксическое дерево. */
 
-%code requires {#include "common.h" 
+%code requires {#include "common.h"
+#include "Grammar.h"
 #include "classes.h"}
 /* Параметры функции парсера. */
 %parse-param { int* hasError }
@@ -78,18 +79,26 @@ void yyerror( int*, const char* str );
 %type<program> Program
 %type<mainClass> MainClass
 %type<classDecl> ClassDecl
-%type<classDeclList> ClassDecls
-%type<classDecl> ClassDecl
-%type<varDecls> VarDecls
-%type<methodDecls> MethodDecls
+%type<classDecls> ClassDecls
+%type<expList> ExpList;
+%type<formalList> FormalList;
+%type<methodDecl> MethodDecl;
+%type<methodDecls> MethodDecls;
+%type<statements> Statements;
+%type<varDecl> VarDecl;
+%type<varDecls> VarDecls;
 
 /* Секция с описанием правил парсера. */
 %%
-Program: 
-	MainClass { $$ = new CProgramm($1, nullptr);}
-	| MainClass ClassDecls { $$ = new CProgramm($1, $2);}
-ClassDecls: ClassDecl
-	| ClassDecls ClassDecl { $$ = }
+Program: /* empty */
+	MainClass { $$ = new CProgram($1, nullptr); }
+	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
+ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
+	| ClassDecls ClassDecl { 
+	std::vector<IClassDecl*> decls = $1.ClassDeclList();
+	decls.push_back($2);
+	$$ = new CClassDeclList(decls); 
+	}
 MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statement '}' '}'
 ClassDecl: CLASS ID '{' VarDecls MethodDecls '}'
 	| CLASS ID '{' MethodDecls '}'

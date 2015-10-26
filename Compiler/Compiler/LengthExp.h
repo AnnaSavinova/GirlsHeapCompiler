@@ -1,7 +1,7 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-class CLengthExp :
-    public IExp {
+class CLengthExp : public IExp {
 public:
     CLengthExp( IExp* );
     ~CLengthExp();

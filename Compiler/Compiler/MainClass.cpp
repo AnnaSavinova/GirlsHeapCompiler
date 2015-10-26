@@ -1,18 +1,18 @@
 #include "MainClass.h"
 
 
-CMainClass::CMainClass( std::string _id, IStatement* _statement ) :
+CMainClass::CMainClass( std::string _id, IStatementList* _statements ) :
 	id( _id ),
-	statement( _statement )
+    statements( _statements )
 {
 	// assert( _id );
-	assert( _statement );
+	assert( _statements );
 }
 
 CMainClass::~CMainClass()
 {
 	// delete id;
-	delete statement;
+	delete statements;
 }
 
 const std::string CMainClass::Id() const

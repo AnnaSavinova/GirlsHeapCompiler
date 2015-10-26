@@ -1,10 +1,10 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-
 class CMainClass : IMainClass
 {
 public:
-	CMainClass( std::string, IStatement* );
+	CMainClass( std::string, IStatementList* );
 	~CMainClass();
 
 	const std::string Id() const;

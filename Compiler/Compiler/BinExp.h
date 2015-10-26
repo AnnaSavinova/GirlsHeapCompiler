@@ -1,7 +1,7 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-class CBinExp :
-    public IExp {
+class CBinExp : public IExp {
 public:
     CBinExp( IExp*, IExp*, std::string );
     ~CBinExp();

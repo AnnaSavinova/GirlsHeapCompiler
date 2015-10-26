@@ -1,6 +1,6 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-
 class ÑFormalList : public IFormalList
 {
 public:

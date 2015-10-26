@@ -1,7 +1,8 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-class CExpList :
-    public IExpList {
+#include <vector>
+class CExpList : public IExpList {
 public:
     CExpList( const std::vector<IExp*>& );
     ~CExpList();

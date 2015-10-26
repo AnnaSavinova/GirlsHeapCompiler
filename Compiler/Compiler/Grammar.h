@@ -1,9 +1,11 @@
 #pragma once
 
+class CHost;
+
 class IVisitor
 {
 public:
-	virtual void Visit( const CHost* host );
+	virtual void Visit( const CHost* host ) = 0;
 };
 
 class CHost

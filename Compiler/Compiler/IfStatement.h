@@ -1,7 +1,7 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
-
-class CIfStatement : IStatement {
+class CIfStatement : public IStatement {
 public:
     CIfStatement( IExp*, IStatement*, IStatement* );
     ~CIfStatement();

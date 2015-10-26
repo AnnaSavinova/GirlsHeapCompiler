@@ -1,4 +1,4 @@
-#include "common.h"
+#include "Grammar.h"
 #include "WhileStatement.h"
 
 CWhileStatement::CWhileStatement( IExp * _expression, IStatement * _statement ) : expression(_expression), statement(_statement)

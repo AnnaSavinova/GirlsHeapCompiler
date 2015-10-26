@@ -41,11 +41,13 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 2058 of yacc.c  */
-#line 14 "tokens.y"
+#line 13 "tokens.y"
 #include "common.h"
+#include "Grammar.h"
+#include "classes.h"
 
 /* Line 2058 of yacc.c  */
-#line 49 "tokens.tab.hpp"
+#line 51 "tokens.tab.hpp"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -83,7 +85,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 19 "tokens.y"
+#line 20 "tokens.y"
 
 	int ival;
 	char sval[255];
@@ -91,10 +93,24 @@ typedef union YYSTYPE
 	CMainClass* mainClass;
 	CClassDecl* classDecl;
 	CClassDeclList* classDecls;
+	CExpList* expList;
+	CFormalList* formalList;
+	CIfStatement* ifStatement;
+	CLengthExp* lengthExp;
+	CMethodDecl* methodDecl;
+	CMethodDeclList* methodDecls;
+	CNewClass* newClass;
+	CNewInt* newInt;
+	CPrintStatement* printStatement;
+	CStatementList* statements;
+	CUnExp* unExp;
+	CVarDecl* varDecl;
+	CVarDeclList* varDecls;
+	CWhileStatement* whileStatements;
 
 
 /* Line 2058 of yacc.c  */
-#line 98 "tokens.tab.hpp"
+#line 114 "tokens.tab.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

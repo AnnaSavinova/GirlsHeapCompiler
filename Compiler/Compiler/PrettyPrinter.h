@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "Grammar.h"
 #include "classes.h"
 
 class CPrettyPrinter : public IVisitor

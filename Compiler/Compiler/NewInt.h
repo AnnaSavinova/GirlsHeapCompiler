@@ -1,4 +1,5 @@
 #pragma once
+#include "Grammar.h"
 #include "common.h"
 class CNewInt :
     public IExp {
