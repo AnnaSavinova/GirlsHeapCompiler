@@ -88,6 +88,7 @@
     <ClCompile Include="StatementList.cpp" />
     <ClCompile Include="tokens.flex.cpp" />
     <ClCompile Include="tokens.tab.cpp" />
+    <ClCompile Include="Type.cpp" />
     <ClCompile Include="UnExp.cpp" />
     <ClCompile Include="VarDecl.cpp" />
     <ClCompile Include="VarDeclList.cpp" />

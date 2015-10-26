@@ -37,3 +37,33 @@ CMethodDecl::~CMethodDecl()
 	}
 }
 
+const IType* CMethodDecl::Type() const
+{
+	return type;
+}
+
+const std::string CMethodDecl::Id() const
+{
+	return id;
+}
+
+const IFormalList* CMethodDecl::FormalList() const
+{
+	return formalList;
+}
+
+const IVarDeclList* CMethodDecl::VarDeclList() const
+{
+	return varDeclList;
+}
+
+const IStatementList* CMethodDecl::StatementList() const
+{
+	return statementList;
+}
+
+const IExp* CMethodDecl::Expression() const
+{
+	return exp;
+}
+
