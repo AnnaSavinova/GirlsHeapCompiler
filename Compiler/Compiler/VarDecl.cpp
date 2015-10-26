@@ -15,6 +15,16 @@ CVarDecl::~CVarDecl()
 	}
 }
 
+const IType* CVarDecl::Type() const
+{
+	return type;
+}
+
+const std::string CVarDecl::Id() const
+{
+	return id;
+}
+
 //void CVarDecl::Accept( IVisitor* visitor ) const
 //{
 //	visitor->Visit( this );
