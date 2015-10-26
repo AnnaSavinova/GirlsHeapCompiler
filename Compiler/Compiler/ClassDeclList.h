@@ -1,7 +1,5 @@
 #pragma once
-#include "Grammar.h"
 #include "common.h"
-#include <vector>
 class CClassDeclList : public IClassDeclList
 {
 public:

@@ -2,7 +2,7 @@
 
 %{
 	#pragma once
-	#include "common.h"
+	#include "tokens.tab.hpp"
 	#define YY_DECL extern "C" int yylex()
 %}
 

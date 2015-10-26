@@ -72,6 +72,10 @@
     <ClCompile Include="BinExp.cpp" />
     <ClCompile Include="ClassDecl.cpp" />
     <ClCompile Include="ClassDeclList.cpp" />
+    <ClCompile Include="common.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">common.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="ExpList.cpp" />
     <ClCompile Include="FormalList.cpp" />
     <ClCompile Include="LengthExp.cpp" />

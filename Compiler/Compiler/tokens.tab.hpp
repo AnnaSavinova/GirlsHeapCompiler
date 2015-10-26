@@ -42,9 +42,9 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 /* Line 2058 of yacc.c  */
 #line 13 "tokens.y"
-#include "common.h"
-#include "Grammar.h"
+
 #include "classes.h"
+
 
 /* Line 2058 of yacc.c  */
 #line 51 "tokens.tab.hpp"
@@ -94,7 +94,7 @@ typedef union YYSTYPE
 	CClassDecl* classDecl;
 	CClassDeclList* classDecls;
 	CExpList* expList;
-	CFormalList* formalList;
+	ÑFormalList* formalList;
 	CIfStatement* ifStatement;
 	CLengthExp* lengthExp;
 	CMethodDecl* methodDecl;

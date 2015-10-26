@@ -1,5 +1,4 @@
 #pragma once
-#include "Grammar.h"
 #include "classes.h"
 
 class CPrettyPrinter : public IVisitor
@@ -19,7 +18,6 @@ class CPrettyPrinter : public IVisitor
 	void Visit( const CNewInt* newInt );
 	void Visit( const CPrintStatement* printStatement );
 	void Visit( const CProgram* program );
-	void Visit( const CPrintStatement* printStatement );
 	void Visit( const CStatementList* statementList );
 	void Visit( const CUnExp* unExp );
 	void Visit( const CVarDecl* varDecl );

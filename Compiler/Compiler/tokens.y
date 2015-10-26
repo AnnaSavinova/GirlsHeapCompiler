@@ -10,9 +10,9 @@ void yyerror( int*, const char* str );
 /* Этот код будет помещен до определения Union
 Обычно используется для описания классов, реализующих синтаксическое дерево. */
 
-%code requires {#include "common.h"
-#include "Grammar.h"
-#include "classes.h"}
+%code requires {
+#include "classes.h"
+}
 /* Параметры функции парсера. */
 %parse-param { int* hasError }
 
@@ -25,7 +25,7 @@ void yyerror( int*, const char* str );
 	CClassDecl* classDecl;
 	CClassDeclList* classDecls;
 	CExpList* expList;
-	CFormalList* formalList;
+	СFormalList* formalList;
 	CIfStatement* ifStatement;
 	CLengthExp* lengthExp;
 	CMethodDecl* methodDecl;

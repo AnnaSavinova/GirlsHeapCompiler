@@ -562,7 +562,7 @@ char *yytext;
 #line 1 "tokens.l"
 #line 4 "tokens.l"
 	#pragma once
-	#include "common.h"
+	#include "tokens.tab.hpp"
 	#define YY_DECL extern "C" int yylex()
 #line 568 "tokens.flex.cpp"
 

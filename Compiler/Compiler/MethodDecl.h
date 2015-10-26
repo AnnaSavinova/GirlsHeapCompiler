@@ -1,5 +1,4 @@
 #pragma once
-#include "Grammar.h"
 #include "common.h"
 class CMethodDecl : public IMethodDecl
 {

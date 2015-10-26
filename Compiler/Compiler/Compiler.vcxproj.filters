@@ -71,6 +71,9 @@
     <ClCompile Include="PrettyPrinter.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tokens.tab.hpp" />
