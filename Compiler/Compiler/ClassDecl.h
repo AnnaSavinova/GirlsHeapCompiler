@@ -11,6 +11,11 @@ public:
 	const std::string ParentId() const;
 	const IVarDeclList* VarDeclList() const;
 	const IMethodDeclList* MethodDeclList() const;
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
+
 
 private:
 	std::string id, parentId; // parentId can be null

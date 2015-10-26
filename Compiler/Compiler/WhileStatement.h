@@ -8,6 +8,10 @@ public:
 
     const IExp* Expression() const;
     const IStatement* Statement() const;
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 
 private:
     IExp* expression;

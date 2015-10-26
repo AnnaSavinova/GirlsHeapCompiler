@@ -4,6 +4,11 @@ class CBinExp : public IExp {
 public:
     CBinExp( IExp*, IExp*, std::string );
     ~CBinExp();
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
+
 
 private:
     IExp* expression1;

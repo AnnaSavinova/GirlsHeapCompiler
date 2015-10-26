@@ -14,6 +14,10 @@ public:
 	const IVarDeclList* VarDeclList() const;
 	const IStatementList* StatementList() const;
 	const IExp* Expression() const;
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 
 private:
 	IType* type;

@@ -6,7 +6,10 @@ class CVarDecl : public IVarDecl
 public:
 	CVarDecl( IType* _type, std::string _id  );
 	~CVarDecl();
-	void Accept( IVisitor* ) const;
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 
 	const IType* Type() const;
 	const std::string Id() const;

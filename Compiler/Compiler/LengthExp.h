@@ -6,6 +6,10 @@ public:
     ~CLengthExp();
 
 	const IExp* Expression() const;
+	void Accept( IVisitor* visitor ) const
+	{
+		visitor->Visit( this );
+	}
 
 private:
     IExp* expression;
