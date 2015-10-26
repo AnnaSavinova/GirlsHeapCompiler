@@ -56,12 +56,15 @@ void CPrettyPrinter::Visit( const CExpList* expList )
 
 void CPrettyPrinter::Visit( const ÑFormalList* formalList )
 {
-	// TODO
-}
+	formalList->Type()->Accept( this );
+	
+	for ( int i = 0; i < formalList->IdList().size() - 1; ++i ) {
+		std::cout << formalList->IdList()[i] << ", ";
+	}
 
-void CPrettyPrinter::Visit( const CFormalRest* formalRest )
-{
-	// TODO
+	if ( formalList->IdList().size() ) {
+		std::cout << formalList->IdList()[formalList->IdList().size()];
+	}
 }
 
 void CPrettyPrinter::Visit( const CIfStatement* ifStatement )

@@ -10,7 +10,6 @@ class CPrettyPrinter : public IVisitor
 	void Visit( const CClassDeclList* classDecls );
 	void Visit( const CExpList* expList );
 	void Visit( const ÑFormalList* formalList );
-	void Visit( const CFormalRest* formalRest );
 	void Visit( const CIfStatement* ifStatement );
 	void Visit( const CLengthExp* lengthExp );
 	void Visit( const CMainClass* mainClass );

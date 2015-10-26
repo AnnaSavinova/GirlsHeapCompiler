@@ -20,12 +20,6 @@
     <ClCompile Include="FormalList.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
-    <ClCompile Include="FormalRest.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="FormalRestList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
     <ClCompile Include="IfStatement.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
@@ -102,12 +96,6 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="FormalList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="FormalRest.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="FormalRestList.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="Grammar.h">

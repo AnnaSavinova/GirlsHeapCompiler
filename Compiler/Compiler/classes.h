@@ -5,7 +5,6 @@
 #include "ClassDeclList.h"
 #include "ExpList.h"
 #include "FormalList.h"
-#include "FormalRest.h"
 #include "IfStatement.h"
 #include "LengthExp.h"
 #include "MainClass.h"

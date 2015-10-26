@@ -74,8 +74,6 @@
     <ClCompile Include="ClassDeclList.cpp" />
     <ClCompile Include="ExpList.cpp" />
     <ClCompile Include="FormalList.cpp" />
-    <ClCompile Include="FormalRest.cpp" />
-    <ClCompile Include="FormalRestList.cpp" />
     <ClCompile Include="LengthExp.cpp" />
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="MethodDecl.cpp" />
@@ -111,8 +109,6 @@
     <ClInclude Include="classes.h" />
     <ClInclude Include="ExpList.h" />
     <ClInclude Include="FormalList.h" />
-    <ClInclude Include="FormalRest.h" />
-    <ClInclude Include="FormalRestList.h" />
     <ClInclude Include="LengthExp.h" />
     <ClInclude Include="MainClass.h" />
     <ClInclude Include="MethodDecl.h" />
