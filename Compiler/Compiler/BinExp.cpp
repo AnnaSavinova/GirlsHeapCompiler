@@ -14,3 +14,18 @@ CBinExp::~CBinExp()
     delete expression1;
     delete expression2;
 }
+
+const IExp* CBinExp::Expression1() const
+{
+	return expression1;
+}
+
+const IExp* CBinExp::Expression2() const
+{
+	return expression2;
+}
+
+const std::string CBinExp::Operation() const
+{
+	return operation;
+}

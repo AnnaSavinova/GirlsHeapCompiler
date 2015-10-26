@@ -3,16 +3,14 @@
 class ÑFormalList : public IFormalList
 {
 public:
-	ÑFormalList( IType* _type, std::vector<std::string>& _idList );
+	ÑFormalList::ÑFormalList( std::vector<IVarDecl*>& _list );
 	~ÑFormalList();
 	void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );
 	}
-	const IType* Type() const;
-	const std::vector<std::string>& IdList() const;
+	const std::vector<IVarDecl*>& List() const;
 
 private:
-	IType* type;
-	std::vector<std::string> idList;
+	std::vector<IVarDecl*> list;
 };

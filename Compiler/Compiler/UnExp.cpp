@@ -15,3 +15,13 @@ CUnExp::~CUnExp()
 	}
 }
 
+const IExp* CUnExp::Expression() const
+{
+	return expression;
+}
+
+const std::string CUnExp::Operation() const
+{
+	return operation;
+}
+
