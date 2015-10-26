@@ -11,3 +11,13 @@ CAssignmentStatement::~CAssignmentStatement()
 {
     delete expression;
 }
+
+const std::string CAssignmentStatement::Id() const
+{
+	return id;
+}
+
+const IExp* CAssignmentStatement::Expression() const
+{
+	return expression;
+}
