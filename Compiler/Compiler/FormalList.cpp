@@ -1,5 +1,10 @@
 #include "FormalList.h"
 
+ÑFormalList::ÑFormalList( IVarDecl* _decl )
+{
+    list.push_back( _decl );
+}
+
 ÑFormalList::ÑFormalList( std::vector<IVarDecl*>& _list )
 {
 	list = _list;

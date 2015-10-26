@@ -88,10 +88,12 @@ void yyerror( int*, const char* str );
 %type<expList> ExpRests;
 %type<exp> ExpRest;
 %type<type> Type;
+%type<formalList> FormalRests;
+%type<varDecl> FormalRest;
 
 /* Ñåêöèÿ ñ îïèñàíèåì ïðàâèë ïàðñåðà. */
 %%
-Program: /* empty */
+Program:
 	MainClass { $$ = new CProgram($1, nullptr); }
 	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
 ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
@@ -100,8 +102,8 @@ ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
 		decls.push_back($2);
 		$$ = new CClassDeclList(decls); 
 	}
-MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass(std::string($2), $15); }
-ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", $4, $5 ); }
+MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass( std::string($2), $15 ); }
+ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl( std::string($2), "", $4, $5 ); }
 	| CLASS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", nullptr, $4 ); }
 	| CLASS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), "", $4, nullptr ); }
 	| CLASS ID '{' '}' { $$ = new CClassDecl(std::string($2), "", nullptr, nullptr ); }
@@ -168,23 +170,32 @@ Statements: Statement { $$ = new CStatementList($1); }
 		decls.push_back($2);
 		$$ = new CStatementList(decls); 
 	}
-FormalList: /*epsilon*/
-	| Type ID FormalRests
-	| Type ID 
-FormalRests: FormalRest
-	| FormalRests FormalRest
-FormalRest: ',' Type ID
+FormalList: /*epsilon*/ { $$ = nullptr; }
+	| Type ID FormalRests { 
+		CVarDecl* var = new CVarDecl( $1, std::string($2) );
+		std::vector< IVarDecl* > decls = dynamic_cast< ÑFormalList* >($3)->List();
+		decls.insert(decls.begin(), var);
+		$$ = new ÑFormalList( decls );
+	}
+	| Type ID { $$ = new ÑFormalList( new CVarDecl( $1, std::string($2) ) ); }
+FormalRests: FormalRest { $$ = new ÑFormalList($1); }
+	| FormalRests FormalRest {
+		std::vector< IVarDecl* > decls = dynamic_cast< ÑFormalList* >($1)->List();
+		decls.push_back( $2 );
+		$$ = new ÑFormalList( decls );
+	}
+FormalRest: ',' Type ID { $$ = new CVarDecl( $2, std::string($3) ); }
 Type: INT '[' ']' { $$ = new CType( "int[]"); }
 	| BOOLEAN { $$ = new CType( "boolean"); }
 	| INT { $$ = new CType( "int"); }
 	| ID { $$ = new CType( "id"); }
 Statement: '{' Statements '}' { std::cout << "{Statements}" << std::endl;}
-	| '{' '}'
+	| '{' '}' { $$ = nullptr; }
 	| IF '(' Exp ')' Statement ELSE Statement { $$ = new CIfStatement( $3, $5, $7 ); }
 	| WHILE '(' Exp ')' Statement { $$ = new CWhileStatement( $3, $5 ); }
 	| PRINT '(' Exp ')' ';' { $$ = new CPrintStatement( $3 ); }
 	| ID '=' Exp ';' { $$ = new CAssignmentStatement( std::string( $1 ), $3 ); }
-	| ID '[' Exp ']' '=' Exp ';' { std::cout << "ID[]" << std::endl; }
+	| ID '[' Exp ']' '=' Exp ';' { $$ = new CElementAssignment( std::string($1), $3, $6 ); }
 Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-" ); }
 	| Exp '+' Exp { $$ = new CBinExp( $1, $3, "+" ); }
 	| Exp '<' Exp { $$ = new CBinExp( $1, $3, "<" ); }

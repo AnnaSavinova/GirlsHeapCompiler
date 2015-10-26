@@ -3,7 +3,9 @@
 class ÑFormalList : public IFormalList
 {
 public:
-	ÑFormalList::ÑFormalList( std::vector<IVarDecl*>& _list );
+    ÑFormalList( IVarDecl* _decl );
+	ÑFormalList( std::vector<IVarDecl*>& _list );
+
 	~ÑFormalList();
 	void Accept( IVisitor* visitor ) const
 	{
