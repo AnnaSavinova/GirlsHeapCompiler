@@ -14,3 +14,13 @@
 		delete type;
 	}
 }
+
+const IType * ÑFormalList::Type() const
+{
+	return type;
+}
+
+const std::vector<std::string>& ÑFormalList::IdList() const
+{
+	return idList;
+}

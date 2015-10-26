@@ -12,3 +12,8 @@ CNewInt::~CNewInt()
 {
     delete expression;
 }
+
+const IExp * CNewInt::Expression() const
+{
+	return expression;
+}
