@@ -81,9 +81,12 @@ void yyerror( int*, const char* str );
 %type<methodDecl> MethodDecl;
 %type<methodDecls> MethodDecls;
 %type<statements> Statements;
+%type<statement> Statement;
 %type<varDecl> VarDecl;
 %type<varDecls> VarDecls;
 %type<exp> Exp;
+%type<expList> ExpRests;
+%type<exp> ExpRest;
 %type<type> Type;
 
 /* Секция с описанием правил парсера. */
@@ -93,7 +96,7 @@ Program: /* empty */
 	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
 ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
 	| ClassDecls ClassDecl { 
-		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >$1->ClassDeclList();
+		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >($1)->ClassDeclList();
 		decls.push_back($2);
 		$$ = new CClassDeclList(decls); 
 	}
@@ -159,50 +162,62 @@ MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp
 			$9
 			);
 	}
-Statements: Statement
-	| Statements Statement
+Statements: Statement { $$ = new CStatementList($1); }
+	| Statements Statement  { 
+		std::vector< IStatement* > decls = dynamic_cast< CStatementList* >($1)->StatementList();
+		decls.push_back($2);
+		$$ = new CStatementList(decls); 
+	}
 FormalList: /*epsilon*/
 	| Type ID FormalRests
-	| Type ID
+	| Type ID 
 FormalRests: FormalRest
 	| FormalRests FormalRest
 FormalRest: ',' Type ID
-Type: INT '[' ']'
-	| BOOLEAN
-	| INT
-	| ID
-Statement: '{' Statements '}'
+Type: INT '[' ']' { $$ = new CType( "int[]"); }
+	| BOOLEAN { $$ = new CType( "boolean"); }
+	| INT { $$ = new CType( "int"); }
+	| ID { $$ = new CType( "id"); }
+Statement: '{' Statements '}' { std::cout << "{Statements}" << std::endl;}
 	| '{' '}'
-	| IF '(' Exp ')' Statement ELSE Statement
-	| WHILE '(' Exp ')' Statement
-	| PRINT '(' Exp ')' ';'
-	| ID '=' Exp ';'
-	| ID '[' Exp ']' '=' Exp ';'
-Exp: '-' Exp %prec UMINUS
-	| Exp '+' Exp
-	| Exp '<' Exp
-	| Exp '&' Exp
-	| Exp '-' Exp
-	| Exp '*' Exp
-	| Exp '/' Exp
-	| Exp '[' Exp ']'
-	| Exp '.' LENGTH
-	| Exp '.' ID '(' ExpList ')'
-	| INTEGER_LITERAL
+	| IF '(' Exp ')' Statement ELSE Statement { $$ = new CIfStatement( $3, $5, $7 ); }
+	| WHILE '(' Exp ')' Statement { $$ = new CWhileStatement( $3, $5 ); }
+	| PRINT '(' Exp ')' ';' { $$ = new CPrintStatement( $3 ); }
+	| ID '=' Exp ';' { $$ = new CAssignmentStatement( std::string( $1 ), $3 ); }
+	| ID '[' Exp ']' '=' Exp ';' { std::cout << "ID[]" << std::endl; }
+Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-" ); }
+	| Exp '+' Exp { $$ = new CBinExp( $1, $3, "+" ); }
+	| Exp '<' Exp { $$ = new CBinExp( $1, $3, "<" ); }
+	| Exp '&' Exp { $$ = new CBinExp( $1, $3, "&" ); }
+	| Exp '-' Exp { $$ = new CBinExp( $1, $3, "-" ); }
+	| Exp '*' Exp { $$ = new CBinExp( $1, $3, "*" ); }
+	| Exp '/' Exp { $$ = new CBinExp( $1, $3, "/" ); }
+	| Exp '[' Exp ']' { $$ = new CBinExp( $1, $3, "[]" ); }
+	| Exp '.' LENGTH { $$ = new CLengthExp( $1 ); }
+	| Exp '.' ID '(' ExpList ')' { std::cout << "Method call" << std::endl; }
+	| INTEGER_LITERAL { std::cout << "INTEGER_LITERAL" << std::endl; }
 	| TRUE
 	| FALSE
 	| ID
 	| THIS
 	| NEW INT '[' Exp ']'
 	| NEW ID '(' ')'
-	| '!' Exp
-	| '(' Exp ')'
+	| '!' Exp { $$ = new CUnExp( $2, "!" ); }
+	| '(' Exp ')' { $$ = $2; }
 ExpList: /*epsilon*/
-	| Exp 
-	| Exp ExpRests
-ExpRests: ExpRest
-	| ExpRests ExpRest
-ExpRest: ',' Exp
+	| Exp  { $$ = new CExpList( $1 ); }
+	| Exp ExpRests { 
+		std::vector< IExp* > exps = dynamic_cast<CExpList*>($2)->Expressions();
+		exps.insert(exps.begin(), $1);
+		$$ = new CExpList(exps); 
+	}
+ExpRests: ExpRest { $$ = new CExpList( $1 ); }
+	| ExpRests ExpRest  { 
+		std::vector< IExp* > exps = dynamic_cast<CExpList*>($1)->Expressions();
+		exps.push_back($2);
+		$$ = new CExpList(exps); 
+	}
+ExpRest: ',' Exp { $$ = $2; }
 %%
 
 /* Функция обработки ошибки. */

@@ -3,13 +3,15 @@
 class CStatementList : public IStatementList
 {
 public:
-	CStatementList( std::vector<IStatement*> &_statementList );
+    CStatementList( IStatement* _statement );
+	CStatementList( std::vector<IStatement*>& _statementList );
+
 	~CStatementList();
 	void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );
 	}
-	const std::vector<IStatement*>* StatementList() const;
+	const std::vector<IStatement*>& StatementList() const;
 
 private:
 	std::vector<IStatement*> statementList;

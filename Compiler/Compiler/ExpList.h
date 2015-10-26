@@ -3,10 +3,12 @@
 
 class CExpList : public IExpList {
 public:
+    CExpList( IExp* );
     CExpList( const std::vector<IExp*>& );
+
     ~CExpList();
 
-	const std::vector<IExp*>* Expressions() const;
+	const std::vector<IExp*>& Expressions() const;
 	void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );

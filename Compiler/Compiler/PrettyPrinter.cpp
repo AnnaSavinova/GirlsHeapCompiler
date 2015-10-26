@@ -45,10 +45,10 @@ void CPrettyPrinter::Visit( const CClassDeclList* classDecls )
 
 void CPrettyPrinter::Visit( const CExpList* expList )
 {
-	for ( size_t i = 0; i < expList->Expressions()->size(); i++ ) {
-		( *( expList->Expressions() ) )[i]->Accept( this );
+	for ( size_t i = 0; i < expList->Expressions().size(); i++ ) {
+		expList->Expressions()[i]->Accept( this );
 
-		if ( i < expList->Expressions()->size() - 1 ) {
+		if ( i < expList->Expressions().size() - 1 ) {
 			std::cout << ", ";
 		}
 	}
@@ -163,8 +163,8 @@ void CPrettyPrinter::Visit( const CPrintStatement* printStatement )
 
 void CPrettyPrinter::Visit( const CStatementList* statementList )
 {
-	for ( size_t i = 0; i < statementList->StatementList()->size(); i++ ) {
-		( *( statementList->StatementList() ) )[i]->Accept( this );
+	for ( size_t i = 0; i < statementList->StatementList().size(); i++ ) {
+		statementList->StatementList()[i]->Accept( this );
 		std::cout << std::endl;
 	}
 }

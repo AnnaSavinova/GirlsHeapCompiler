@@ -1,5 +1,10 @@
 #include "StatementList.h"
 
+CStatementList::CStatementList( IStatement* _statement )
+{
+    statementList.push_back( _statement );
+}
+
 CStatementList::CStatementList( std::vector<IStatement*>& _statementList )
 {
 	for( size_t i = 0; i < _statementList.size(); i++ ) {
@@ -17,9 +22,9 @@ CStatementList::~CStatementList()
 	}
 }
 
-const std::vector<IStatement*>* CStatementList::StatementList() const
+const std::vector<IStatement*>& CStatementList::StatementList() const
 {
-	return &statementList;
+	return statementList;
 }
 
 
