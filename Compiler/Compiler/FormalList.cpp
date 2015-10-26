@@ -1,21 +1,16 @@
 #include "FormalList.h"
 
-ÑFormalList::ÑFormalList( IType * _type, std::string _id, IFormalRestList * _formalRestList )
+ÑFormalList::ÑFormalList( IType * _type, std::vector<std::string>& _idList )
 {
 	assert( _type != nullptr );
-	assert( !_id.empty() );
-	assert( _formalRestList != nullptr );
+	assert( !_idList.empty() );
 	type = _type;
-	id = _id;
-	formalRestList = _formalRestList;
+	idList = _idList;
 }
 
 ÑFormalList::~ÑFormalList()
 {
 	if( type != nullptr ) {
 		delete type;
-	}
-	if( formalRestList != nullptr ) {
-		delete formalRestList;
 	}
 }
