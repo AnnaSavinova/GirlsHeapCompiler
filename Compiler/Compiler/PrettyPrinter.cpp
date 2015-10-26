@@ -55,16 +55,15 @@ void CPrettyPrinter::Visit( const CExpList* expList )
 }
 
 void CPrettyPrinter::Visit( const ÑFormalList* formalList )
-{
-	formalList->Type()->Accept( this );
-	
+{	
 	std::cout << " ";
-	for ( int i = 0; i < formalList->IdList().size() - 1; ++i ) {
-		std::cout << formalList->IdList()[i] << ", ";
+	for ( int i = 0; i < formalList->List().size() - 1; ++i ) {
+		formalList->List()[i]->Accept( this );
+		std::cout << ", ";
 	}
 
-	if ( formalList->IdList().size() ) {
-		std::cout << formalList->IdList()[formalList->IdList().size()];
+	if ( formalList->List().size() ) {
+		formalList->List()[formalList->List().size() - 1]->Accept( this );
 	}
 }
 
