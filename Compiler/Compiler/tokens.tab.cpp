@@ -149,28 +149,24 @@ typedef union YYSTYPE
 
 	int ival;
 	char sval[255];
-	CProgram* program;
-	CMainClass* mainClass;
-	CClassDecl* classDecl;
-	CClassDeclList* classDecls;
-	CExpList* expList;
-	—FormalList* formalList;
-	CIfStatement* ifStatement;
-	CLengthExp* lengthExp;
-	CMethodDecl* methodDecl;
-	CMethodDeclList* methodDecls;
-	CNewClass* newClass;
-	CNewInt* newInt;
-	CPrintStatement* printStatement;
-	CStatementList* statements;
-	CUnExp* unExp;
-	CVarDecl* varDecl;
-	CVarDeclList* varDecls;
-	CWhileStatement* whileStatements;
+	IProgram* program;
+	IMainClass* mainClass;
+	IClassDecl* classDecl;
+	IClassDeclList* classDecls;
+	IExpList* expList;
+	IFormalList* formalList;
+	IStatement* statement;
+	IMethodDecl* methodDecl;
+	IMethodDeclList* methodDecls;
+	IStatementList* statements;
+	IExp* exp;
+	IVarDecl* varDecl;
+	IVarDeclList* varDecls;
+	IType* type;
 
 
 /* Line 387 of yacc.c  */
-#line 174 "tokens.tab.cpp"
+#line 170 "tokens.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -198,7 +194,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 202 "tokens.tab.cpp"
+#line 198 "tokens.tab.cpp"
 
 #ifdef short
 # undef short
@@ -522,13 +518,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    94,    94,    95,    96,    97,   102,   103,   104,   105,
-     106,   107,   108,   109,   110,   111,   112,   117,   118,   123,
-     124,   125,   126,   127,   128,   129,   130,   131,   132,   133,
-     134,   135,   136,   137,   138,   139,   140,   141,   142,   143,
-     144,   145,   146,   147,   148,   149,   150,   151,   152,   153,
-     154,   155,   156,   157,   158,   159,   160,   161,   162,   163,
-     164,   165,   166,   167,   168,   169,   170,   171
+       0,    92,    92,    93,    94,    95,   100,   101,   102,   103,
+     104,   105,   106,   107,   108,   109,   110,   115,   116,   121,
+     122,   132,   142,   152,   162,   163,   164,   165,   166,   167,
+     168,   169,   170,   171,   172,   173,   174,   175,   176,   177,
+     178,   179,   180,   181,   182,   183,   184,   185,   186,   187,
+     188,   189,   190,   191,   192,   193,   194,   195,   196,   197,
+     198,   199,   200,   201,   202,   203,   204,   205
 };
 #endif
 
@@ -1573,121 +1569,187 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 94 "tokens.y"
-    { (yyval.program) = new CProgram(dynamic_cast<IMainClass*>((yyvsp[(1) - (1)].mainClass)), nullptr); }
+#line 92 "tokens.y"
+    { (yyval.program) = new CProgram((yyvsp[(1) - (1)].mainClass), nullptr); }
     break;
 
   case 3:
 /* Line 1792 of yacc.c  */
-#line 95 "tokens.y"
-    { (yyval.program) = new CProgram(dynamic_cast<IMainClass*>((yyvsp[(1) - (2)].mainClass)), dynamic_cast<IClassDeclList*>((yyvsp[(2) - (2)].classDecls))); }
+#line 93 "tokens.y"
+    { (yyval.program) = new CProgram((yyvsp[(1) - (2)].mainClass), (yyvsp[(2) - (2)].classDecls)); }
     break;
 
   case 4:
 /* Line 1792 of yacc.c  */
-#line 96 "tokens.y"
+#line 94 "tokens.y"
     { (yyval.classDecls) = new CClassDeclList((yyvsp[(1) - (1)].classDecl)); }
     break;
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 97 "tokens.y"
+#line 95 "tokens.y"
     { 
-		std::vector< IClassDecl* > decls = dynamic_cast<CClassDeclList*>((yyvsp[(1) - (2)].classDecls))->ClassDeclList();
-		decls.push_back(dynamic_cast<IClassDecl*>((yyvsp[(2) - (2)].classDecl)));
+		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >(yyvsp[(1) - (2)].classDecls)->ClassDeclList();
+		decls.push_back((yyvsp[(2) - (2)].classDecl));
 		(yyval.classDecls) = new CClassDeclList(decls); 
 	}
     break;
 
   case 6:
 /* Line 1792 of yacc.c  */
-#line 102 "tokens.y"
-    { (yyval.mainClass) = new CMainClass(std::string((yyvsp[(2) - (17)].sval)), dynamic_cast<IStatementList*>((yyvsp[(15) - (17)].statements))); }
+#line 100 "tokens.y"
+    { (yyval.mainClass) = new CMainClass(std::string((yyvsp[(2) - (17)].sval)), (yyvsp[(15) - (17)].statements)); }
     break;
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 103 "tokens.y"
-    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (6)].sval)), "", dynamic_cast<IVarDeclList*>((yyvsp[(4) - (6)].varDecls)), dynamic_cast<IMethodDeclList*>((yyvsp[(5) - (6)].methodDecls)) ); }
+#line 101 "tokens.y"
+    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (6)].sval)), "", (yyvsp[(4) - (6)].varDecls), (yyvsp[(5) - (6)].methodDecls) ); }
     break;
 
   case 8:
 /* Line 1792 of yacc.c  */
-#line 104 "tokens.y"
-    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (5)].sval)), "", nullptr, dynamic_cast<IMethodDeclList*>((yyvsp[(4) - (5)].methodDecls)) ); }
+#line 102 "tokens.y"
+    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (5)].sval)), "", nullptr, (yyvsp[(4) - (5)].methodDecls) ); }
     break;
 
   case 9:
 /* Line 1792 of yacc.c  */
-#line 105 "tokens.y"
-    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (5)].sval)), "", dynamic_cast<IVarDeclList*>((yyvsp[(4) - (5)].varDecls)), nullptr ); }
+#line 103 "tokens.y"
+    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (5)].sval)), "", (yyvsp[(4) - (5)].varDecls), nullptr ); }
     break;
 
   case 10:
 /* Line 1792 of yacc.c  */
-#line 106 "tokens.y"
+#line 104 "tokens.y"
     { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (4)].sval)), "", nullptr, nullptr ); }
     break;
 
   case 11:
 /* Line 1792 of yacc.c  */
-#line 107 "tokens.y"
-    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (8)].sval)), std::string((yyvsp[(4) - (8)].sval)), dynamic_cast<IVarDeclList*>((yyvsp[(6) - (8)].varDecls)), dynamic_cast<IMethodDeclList*>((yyvsp[(7) - (8)].methodDecls)) ); }
+#line 105 "tokens.y"
+    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (8)].sval)), std::string((yyvsp[(4) - (8)].sval)), (yyvsp[(6) - (8)].varDecls), (yyvsp[(7) - (8)].methodDecls) ); }
     break;
 
   case 12:
 /* Line 1792 of yacc.c  */
-#line 108 "tokens.y"
-    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (7)].sval)), std::string((yyvsp[(4) - (7)].sval)), nullptr, dynamic_cast<IMethodDeclList*>((yyvsp[(6) - (7)].methodDecls)) ); }
+#line 106 "tokens.y"
+    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (7)].sval)), std::string((yyvsp[(4) - (7)].sval)), nullptr, (yyvsp[(6) - (7)].methodDecls) ); }
     break;
 
   case 13:
 /* Line 1792 of yacc.c  */
-#line 109 "tokens.y"
-    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (7)].sval)), std::string((yyvsp[(4) - (7)].sval)), dynamic_cast<IVarDeclList*>((yyvsp[(6) - (7)].varDecls)), nullptr ); }
+#line 107 "tokens.y"
+    { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (7)].sval)), std::string((yyvsp[(4) - (7)].sval)), (yyvsp[(6) - (7)].varDecls), nullptr ); }
     break;
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 110 "tokens.y"
+#line 108 "tokens.y"
     { (yyval.classDecl) = new CClassDecl(std::string((yyvsp[(2) - (6)].sval)), std::string((yyvsp[(4) - (6)].sval)), nullptr, nullptr ); }
     break;
 
   case 15:
 /* Line 1792 of yacc.c  */
-#line 111 "tokens.y"
-    { (yyval.varDecls) = new CVarDeclList( dynamic_cast< IVarDecl* >((yyvsp[(1) - (1)].varDecl)) ); }
+#line 109 "tokens.y"
+    { (yyval.varDecls) = new CVarDeclList( (yyvsp[(1) - (1)].varDecl) ); }
     break;
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 112 "tokens.y"
+#line 110 "tokens.y"
     { 
 		std::vector< IVarDecl* > decls = dynamic_cast<CVarDeclList*>((yyvsp[(1) - (2)].varDecls))->VarDeclList();
-		decls.push_back(dynamic_cast<IVarDecl*>((yyvsp[(2) - (2)].varDecl)));
+		decls.push_back((yyvsp[(2) - (2)].varDecl));
 		(yyval.varDecls) = new CVarDeclList(decls); 
 	}
     break;
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 117 "tokens.y"
-    { (yyval.methodDecls) = new CMethodDeclList( dynamic_cast<IMethodDecl*>((yyvsp[(1) - (1)].methodDecl)) ); }
+#line 115 "tokens.y"
+    { (yyval.methodDecls) = new CMethodDeclList( (yyvsp[(1) - (1)].methodDecl) ); }
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 118 "tokens.y"
+#line 116 "tokens.y"
     { 
 		std::vector< IMethodDecl* > decls = dynamic_cast<CMethodDeclList*>((yyvsp[(1) - (2)].methodDecls))->MethodDeclList();
-		decls.push_back(dynamic_cast<IMethodDecl*>((yyvsp[(2) - (2)].methodDecl)));
+		decls.push_back((yyvsp[(2) - (2)].methodDecl));
 		(yyval.methodDecls) = new CMethodDeclList(decls); 
+	}
+    break;
+
+  case 19:
+/* Line 1792 of yacc.c  */
+#line 121 "tokens.y"
+    { (yyval.varDecl) = new CVarDecl( (yyvsp[(1) - (3)].type), std::string((yyvsp[(2) - (3)].sval)) ); }
+    break;
+
+  case 20:
+/* Line 1792 of yacc.c  */
+#line 122 "tokens.y"
+    {
+		(yyval.methodDecl) = new CMethodDecl( 
+			(yyvsp[(2) - (13)].type), 
+			std::string((yyvsp[(3) - (13)].sval)),
+			(yyvsp[(5) - (13)].formalList),
+			(yyvsp[(8) - (13)].varDecls),
+			(yyvsp[(9) - (13)].statements),
+			(yyvsp[(11) - (13)].exp)
+			);
+	}
+    break;
+
+  case 21:
+/* Line 1792 of yacc.c  */
+#line 132 "tokens.y"
+    {
+		(yyval.methodDecl) = new CMethodDecl( 
+			(yyvsp[(2) - (12)].type), 
+			std::string((yyvsp[(3) - (12)].sval)),
+			(yyvsp[(5) - (12)].formalList),
+			nullptr,
+			(yyvsp[(8) - (12)].statements),
+			(yyvsp[(10) - (12)].exp)
+			);
+	}
+    break;
+
+  case 22:
+/* Line 1792 of yacc.c  */
+#line 142 "tokens.y"
+    {
+		(yyval.methodDecl) = new CMethodDecl( 
+			(yyvsp[(2) - (12)].type), 
+			std::string((yyvsp[(3) - (12)].sval)),
+			(yyvsp[(5) - (12)].formalList),
+			(yyvsp[(8) - (12)].varDecls),
+			nullptr,
+			(yyvsp[(10) - (12)].exp)
+			);
+	}
+    break;
+
+  case 23:
+/* Line 1792 of yacc.c  */
+#line 152 "tokens.y"
+    {
+		(yyval.methodDecl) = new CMethodDecl( 
+			(yyvsp[(2) - (11)].type), 
+			std::string((yyvsp[(3) - (11)].sval)),
+			(yyvsp[(5) - (11)].formalList),
+			nullptr,
+			nullptr,
+			(yyvsp[(9) - (11)].exp)
+			);
 	}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 1691 "tokens.tab.cpp"
+#line 1753 "tokens.tab.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1919,7 +1981,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 172 "tokens.y"
+#line 206 "tokens.y"
 
 
 /* ‘ÛÌÍˆËˇ Ó·‡·ÓÚÍË Ó¯Ë·ÍË. */

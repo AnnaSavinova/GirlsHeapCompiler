@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-class CProgram : IProgram
+class CProgram : public IProgram
 {
 public:
 	CProgram( IMainClass*, IClassDeclList* );

@@ -89,28 +89,24 @@ typedef union YYSTYPE
 
 	int ival;
 	char sval[255];
-	CProgram* program;
-	CMainClass* mainClass;
-	CClassDecl* classDecl;
-	CClassDeclList* classDecls;
-	CExpList* expList;
-	ÑFormalList* formalList;
-	CIfStatement* ifStatement;
-	CLengthExp* lengthExp;
-	CMethodDecl* methodDecl;
-	CMethodDeclList* methodDecls;
-	CNewClass* newClass;
-	CNewInt* newInt;
-	CPrintStatement* printStatement;
-	CStatementList* statements;
-	CUnExp* unExp;
-	CVarDecl* varDecl;
-	CVarDeclList* varDecls;
-	CWhileStatement* whileStatements;
+	IProgram* program;
+	IMainClass* mainClass;
+	IClassDecl* classDecl;
+	IClassDeclList* classDecls;
+	IExpList* expList;
+	IFormalList* formalList;
+	IStatement* statement;
+	IMethodDecl* methodDecl;
+	IMethodDeclList* methodDecls;
+	IStatementList* statements;
+	IExp* exp;
+	IVarDecl* varDecl;
+	IVarDeclList* varDecls;
+	IType* type;
 
 
 /* Line 2058 of yacc.c  */
-#line 114 "tokens.tab.hpp"
+#line 110 "tokens.tab.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

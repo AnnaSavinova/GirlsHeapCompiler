@@ -20,24 +20,20 @@ void yyerror( int*, const char* str );
 %union{
 	int ival;
 	char sval[255];
-	CProgram* program;
-	CMainClass* mainClass;
-	CClassDecl* classDecl;
-	CClassDeclList* classDecls;
-	CExpList* expList;
-	СFormalList* formalList;
-	CIfStatement* ifStatement;
-	CLengthExp* lengthExp;
-	CMethodDecl* methodDecl;
-	CMethodDeclList* methodDecls;
-	CNewClass* newClass;
-	CNewInt* newInt;
-	CPrintStatement* printStatement;
-	CStatementList* statements;
-	CUnExp* unExp;
-	CVarDecl* varDecl;
-	CVarDeclList* varDecls;
-	CWhileStatement* whileStatements;
+	IProgram* program;
+	IMainClass* mainClass;
+	IClassDecl* classDecl;
+	IClassDeclList* classDecls;
+	IExpList* expList;
+	IFormalList* formalList;
+	IStatement* statement;
+	IMethodDecl* methodDecl;
+	IMethodDeclList* methodDecls;
+	IStatementList* statements;
+	IExp* exp;
+	IVarDecl* varDecl;
+	IVarDeclList* varDecls;
+	IType* type;
 }
 
 /* Определение лево-ассоцитивности. Аналогично есть %right.
@@ -87,44 +83,82 @@ void yyerror( int*, const char* str );
 %type<statements> Statements;
 %type<varDecl> VarDecl;
 %type<varDecls> VarDecls;
+%type<exp> Exp;
+%type<type> Type;
 
 /* Секция с описанием правил парсера. */
 %%
 Program: /* empty */
-	MainClass { $$ = new CProgram(dynamic_cast<IMainClass*>($1), nullptr); }
-	| MainClass ClassDecls { $$ = new CProgram(dynamic_cast<IMainClass*>($1), dynamic_cast<IClassDeclList*>($2)); }
+	MainClass { $$ = new CProgram($1, nullptr); }
+	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
 ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
 	| ClassDecls ClassDecl { 
-		std::vector< IClassDecl* > decls = dynamic_cast<CClassDeclList*>($1)->ClassDeclList();
-		decls.push_back(dynamic_cast<IClassDecl*>($2));
+		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >$1->ClassDeclList();
+		decls.push_back($2);
 		$$ = new CClassDeclList(decls); 
 	}
-MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass(std::string($2), dynamic_cast<IStatementList*>($15)); }
-ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", dynamic_cast<IVarDeclList*>($4), dynamic_cast<IMethodDeclList*>($5) ); }
-	| CLASS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", nullptr, dynamic_cast<IMethodDeclList*>($4) ); }
-	| CLASS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), "", dynamic_cast<IVarDeclList*>($4), nullptr ); }
+MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass(std::string($2), $15); }
+ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", $4, $5 ); }
+	| CLASS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", nullptr, $4 ); }
+	| CLASS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), "", $4, nullptr ); }
 	| CLASS ID '{' '}' { $$ = new CClassDecl(std::string($2), "", nullptr, nullptr ); }
-	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), dynamic_cast<IVarDeclList*>($6), dynamic_cast<IMethodDeclList*>($7) ); }
-	| CLASS ID EXTENDS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, dynamic_cast<IMethodDeclList*>($6) ); }
-	| CLASS ID EXTENDS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), dynamic_cast<IVarDeclList*>($6), nullptr ); }
+	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), $6, $7 ); }
+	| CLASS ID EXTENDS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, $6 ); }
+	| CLASS ID EXTENDS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), $6, nullptr ); }
 	| CLASS ID EXTENDS ID '{' '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, nullptr ); }
-VarDecls: VarDecl { $$ = new CVarDeclList( dynamic_cast< IVarDecl* >($1) ); }
+VarDecls: VarDecl { $$ = new CVarDeclList( $1 ); }
 	| VarDecls VarDecl { 
 		std::vector< IVarDecl* > decls = dynamic_cast<CVarDeclList*>($1)->VarDeclList();
-		decls.push_back(dynamic_cast<IVarDecl*>($2));
+		decls.push_back($2);
 		$$ = new CVarDeclList(decls); 
 	}
-MethodDecls: MethodDecl { $$ = new CMethodDeclList( dynamic_cast<IMethodDecl*>($1) ); }
+MethodDecls: MethodDecl { $$ = new CMethodDeclList( $1 ); }
 	| MethodDecls MethodDecl { 
 		std::vector< IMethodDecl* > decls = dynamic_cast<CMethodDeclList*>($1)->MethodDeclList();
-		decls.push_back(dynamic_cast<IMethodDecl*>($2));
+		decls.push_back($2);
 		$$ = new CMethodDeclList(decls); 
 	}
-VarDecl: Type ID ';'
-MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp ';' '}'
-	| PUBLIC Type ID '(' FormalList ')' '{' Statements RETURN Exp ';' '}'
-	| PUBLIC Type ID '(' FormalList ')' '{' VarDecls RETURN Exp ';' '}'
-	| PUBLIC Type ID '(' FormalList ')' '{' RETURN Exp ';' '}'
+VarDecl: Type ID ';' { $$ = new CVarDecl( $1, std::string($2) ); }
+MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp ';' '}' {
+		$$ = new CMethodDecl( 
+			$2, 
+			std::string($3),
+			$5,
+			$8,
+			$9,
+			$11
+			);
+	}
+	| PUBLIC Type ID '(' FormalList ')' '{' Statements RETURN Exp ';' '}' {
+		$$ = new CMethodDecl( 
+			$2, 
+			std::string($3),
+			$5,
+			nullptr,
+			$8,
+			$10
+			);
+	}
+	| PUBLIC Type ID '(' FormalList ')' '{' VarDecls RETURN Exp ';' '}' {
+		$$ = new CMethodDecl( 
+			$2, 
+			std::string($3),
+			$5,
+			$8,
+			nullptr,
+			$10
+			);
+	}
+	| PUBLIC Type ID '(' FormalList ')' '{' RETURN Exp ';' '}' {
+		$$ = new CMethodDecl( 
+			$2, 
+			std::string($3),
+			$5,
+			nullptr,
+			nullptr,
+			$9
+			);
+	}
 Statements: Statement
 	| Statements Statement
 FormalList: /*epsilon*/

@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-class CMainClass : IMainClass
+class CMainClass : public IMainClass
 {
 public:
 	CMainClass( std::string, IStatementList* );
