@@ -3,6 +3,7 @@
 
 class CPrettyPrinter : public IVisitor
 {
+public:
 	void Visit( const CAssignmentStatement* assigmentStatement );
 	void Visit( const CBinExp* binExp );
 	void Visit( const CClassDecl* classDecl );
