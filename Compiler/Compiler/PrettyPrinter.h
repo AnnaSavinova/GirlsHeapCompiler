@@ -20,6 +20,7 @@ public:
 	void Visit( const CPrintStatement* printStatement );
 	void Visit( const CProgram* program );
 	void Visit( const CStatementList* statementList );
+	void Visit( const CType* type );
 	void Visit( const CUnExp* unExp );
 	void Visit( const CVarDecl* varDecl );
 	void Visit( const CVarDeclList* varDecls );
