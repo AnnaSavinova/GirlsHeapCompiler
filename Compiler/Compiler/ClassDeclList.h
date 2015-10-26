@@ -3,12 +3,12 @@
 class CClassDeclList : public IClassDeclList
 {
 public:
-	CClassDeclList( std::vector<IClassDecl*> &_classDeclList );
+	CClassDeclList( const std::vector<IClassDecl*>& _classDecl );
 
     CClassDeclList( IClassDecl* _classDecl );
 	~CClassDeclList();
 
-	const std::vector<IClassDecl*>* ClassDeclList() const;
+	const std::vector<IClassDecl*>& ClassDeclList() const;
 
 private:
 	std::vector<IClassDecl*> classDeclList;

@@ -37,8 +37,8 @@ void CPrettyPrinter::Visit( const CClassDecl* classDecl )
 
 void CPrettyPrinter::Visit( const CClassDeclList* classDecls )
 {
-	for ( size_t i = 0; i < classDecls->ClassDeclList()->size(); i++ ) {
-		( *( classDecls->ClassDeclList() ) )[i]->Accept( this );
+	for ( size_t i = 0; i < classDecls->ClassDeclList().size(); i++ ) {
+		classDecls->ClassDeclList()[i]->Accept( this );
 		std::cout << std::endl;
 	}
 }

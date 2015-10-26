@@ -91,23 +91,23 @@ void yyerror( int*, const char* str );
 /* Секция с описанием правил парсера. */
 %%
 Program: /* empty */
-	MainClass { $$ = new CProgram($1, nullptr); }
-	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
+	MainClass { $$ = new CProgram(dynamic_cast<IMainClass*>($1), nullptr); }
+	| MainClass ClassDecls { $$ = new CProgram(dynamic_cast<IMainClass*>($1), dynamic_cast<IClassDeclList*>($2)); }
 ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
 	| ClassDecls ClassDecl { 
-	std::vector<IClassDecl*> decls = $1.ClassDeclList();
-	decls.push_back($2);
-	$$ = new CClassDeclList(decls); 
+		std::vector< IClassDecl* > decls = dynamic_cast<CClassDeclList*>($1)->ClassDeclList();
+		decls.push_back(dynamic_cast<IClassDecl*>($2));
+		$$ = new CClassDeclList(decls); 
 	}
-MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statement '}' '}'
-ClassDecl: CLASS ID '{' VarDecls MethodDecls '}'
-	| CLASS ID '{' MethodDecls '}'
-	| CLASS ID '{' VarDecls '}'
-	| CLASS ID '{' '}'
-	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}'
-	| CLASS ID EXTENDS ID '{' MethodDecls '}'
-	| CLASS ID EXTENDS ID '{' VarDecls '}'
-	| CLASS ID EXTENDS ID '{' '}'
+MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass(std::string($2), dynamic_cast<IStatementList*>($15)); }
+ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", dynamic_cast<IVarDeclList*>($4), dynamic_cast<IMethodDeclList*>($5) ); }
+	| CLASS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", nullptr, dynamic_cast<IMethodDeclList*>($4) ); }
+	| CLASS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), "", dynamic_cast<IVarDeclList*>($4), nullptr ); }
+	| CLASS ID '{' '}' { $$ = new CClassDecl(std::string($2), "", nullptr, nullptr ); }
+	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), dynamic_cast<IVarDeclList*>($6), dynamic_cast<IMethodDeclList*>($7) ); }
+	| CLASS ID EXTENDS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, dynamic_cast<IMethodDeclList*>($6) ); }
+	| CLASS ID EXTENDS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), dynamic_cast<IVarDeclList*>($6), nullptr ); }
+	| CLASS ID EXTENDS ID '{' '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, nullptr ); }
 VarDecls: VarDecl
 	| VarDecls VarDecl
 MethodDecls: MethodDecl

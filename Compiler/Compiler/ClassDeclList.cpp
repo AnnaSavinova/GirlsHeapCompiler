@@ -1,12 +1,7 @@
 #include "ClassDeclList.h"
 
-CClassDeclList::CClassDeclList( std::vector<IClassDecl*>& _classDeclList )
-{
-	for( size_t i = 0; i < _classDeclList.size(); i++ ) {
-		assert( _classDeclList[i] );
-	}
-	classDeclList = _classDeclList;
-}
+CClassDeclList::CClassDeclList( const std::vector<IClassDecl*>& _classDecl ) : classDeclList(_classDecl)
+{}
 
 CClassDeclList::CClassDeclList( IClassDecl* _classDecl )
 {    
@@ -23,9 +18,9 @@ CClassDeclList::~CClassDeclList()
 	}
 }
 
-const std::vector<IClassDecl*>* CClassDeclList::ClassDeclList() const
+const std::vector<IClassDecl*>& CClassDeclList::ClassDeclList() const
 {
-	return &classDeclList;
+	return classDeclList;
 }
 
 
