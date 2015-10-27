@@ -6,10 +6,6 @@ CMethodDecl::CMethodDecl( IType* _type, std::string _id, IFormalList* _formalLis
 {
 	assert( _type != nullptr );
 	assert( !_id.empty() );
-	assert( _formalList != nullptr );
-	assert( _varDeclList != nullptr );
-	assert( _statementList != nullptr );
-	assert( _exp != nullptr );
 	type = _type;
 	id = _id;
 	formalList = _formalList;

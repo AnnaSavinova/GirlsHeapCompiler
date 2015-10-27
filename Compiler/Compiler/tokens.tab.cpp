@@ -2281,7 +2281,6 @@ int main()
 {
     yyparse(0);
     CPrettyPrinter p;
-	std::cout << program;
     p.Visit( (CProgram*) program );
 	return 0;
 }

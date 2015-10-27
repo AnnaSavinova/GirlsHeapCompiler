@@ -11,7 +11,9 @@ void CPrettyPrinter::Visit( const CAssignmentStatement* assigmentStatement )
 
 void CPrettyPrinter::Visit( const CBinExp* binExp )
 {
-	// TODO
+    binExp->Expression1()->Accept( this );
+    std::cout << binExp->Operation();
+    binExp->Expression2()->Accept( this );
 }
 
 void CPrettyPrinter::Visit( const CClassDecl* classDecl )
@@ -51,7 +53,11 @@ void CPrettyPrinter::Visit( const CConstructor* constructor )
 
 void CPrettyPrinter::Visit( const CElementAssignment* elemAssign )
 {
-    std::cout << "AAAAAAAAAAAAAAAAAAAAAaaa";
+    std::cout << elemAssign->Id() << "[";
+    elemAssign->Exp1()->Accept( this );
+    std::cout << "] = ";
+    elemAssign->Exp2()->Accept( this );
+    std::cout << std::endl;
 }
 
 void CPrettyPrinter::Visit( const CExpList* expList )
@@ -76,6 +82,8 @@ void CPrettyPrinter::Visit( const CFormalList* formalList )
 	if ( formalList->List().size() ) {
 		formalList->List()[formalList->List().size() - 1]->Accept( this );
 	}
+
+    std::cout << " ";
 }
 
 void CPrettyPrinter::Visit( const CId* id )
@@ -96,7 +104,7 @@ void CPrettyPrinter::Visit( const CIfStatement* ifStatement )
 	}
 
 	if ( ifStatement->ElseStatement() != nullptr ) {
-		std::cout << "else " << std::endl;
+		std::cout << std::endl << "else " << std::endl;
 		ifStatement->ElseStatement()->Accept( this );
 	}
 }
@@ -125,9 +133,13 @@ void CPrettyPrinter::Visit( const CMainClass* mainClass )
 
 void CPrettyPrinter::Visit( const CMethodCall* methodCall )
 {
-    methodCall->Exp()->Accept( this );
+    if( methodCall->Exp() != nullptr ) {
+        methodCall->Exp()->Accept( this );
+    }
     std::cout << "." << methodCall->Id() << "(";
-    methodCall->Args()->Accept( this );
+    if( methodCall->Args() != nullptr ) {
+        methodCall->Args()->Accept( this );
+    }
     std::cout << ")" << std::endl;
 }
 
@@ -154,7 +166,7 @@ void CPrettyPrinter::Visit( const CMethodDecl* methodDecl )
 	if ( methodDecl->Expression() != nullptr ) {
 		methodDecl->Expression()->Accept( this );
 	}
-	std::cout << ";" << std::endl;
+	std::cout << ";" << std::endl << "}" << std::endl;
 }
 
 void CPrettyPrinter::Visit( const CMethodDeclList* methodDecls )

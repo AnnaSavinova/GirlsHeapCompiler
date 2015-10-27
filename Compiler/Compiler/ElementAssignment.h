@@ -10,6 +10,10 @@ public:
     {
         visitor->Visit( this );
     }
+
+    std::string Id() const;
+    const IExp* Exp1() const;
+    const IExp* Exp2() const;
 private:
     std::string id;
     IExp* exp1;
