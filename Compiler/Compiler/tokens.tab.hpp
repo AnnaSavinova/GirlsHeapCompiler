@@ -41,9 +41,9 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 2058 of yacc.c  */
-#line 13 "tokens.y"
+#line 16 "tokens.y"
 
-#include "classes.h"
+	#include "classes.h"
 
 
 /* Line 2058 of yacc.c  */
@@ -85,7 +85,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 20 "tokens.y"
+#line 23 "tokens.y"
 
 	int ival;
 	char sval[255];

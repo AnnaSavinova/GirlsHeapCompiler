@@ -3,6 +3,9 @@
 /* Секция с кодом, который попадет в парсер.*/
 %{
 #include <iostream>
+#include "classes.h"
+
+IProgram* program;
 extern "C" int yylex();
 void yyerror( int*, const char* str );
 %}
@@ -11,7 +14,7 @@ void yyerror( int*, const char* str );
 Обычно используется для описания классов, реализующих синтаксическое дерево. */
 
 %code requires {
-#include "classes.h"
+	#include "classes.h"
 }
 /* Параметры функции парсера. */
 %parse-param { int* hasError }
@@ -93,8 +96,7 @@ void yyerror( int*, const char* str );
 
 /* Секция с описанием правил парсера. */
 %%
-Program:
-	MainClass { $$ = new CProgram($1, nullptr); }
+Program: MainClass { $$ = new CProgram($1, nullptr); program = $$; }
 	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
 ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
 	| ClassDecls ClassDecl { 
