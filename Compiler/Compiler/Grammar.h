@@ -2,112 +2,139 @@
 
 class IVisitor;
 
+class ICoord
+{
+	int Line() const
+	{
+		return line;
+	}
+
+private:
+	int line;
+};
+
 // Корневой интерфейс программы
-class IProgram {
+class IProgram : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IProgram() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IProgram() {}
 };
 
 // Главный класс
-class IMainClass {
+class IMainClass : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IMainClass() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IMainClass() {}
 };
 
 // Список классов
-class IClassDeclList {
+class IClassDeclList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IClassDeclList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IClassDeclList() {}
 };
 
 // Описание класса
-class IClassDecl {
+class IClassDecl : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IClassDecl() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IClassDecl() {}
 };
 
 // Список объявлений переменных
-class IVarDeclList {
+class IVarDeclList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IVarDeclList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IVarDeclList() {}
 };
 
 // Объявление переменной
-class IVarDecl {
+class IVarDecl : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IVarDecl() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IVarDecl() {}
 };
 
 // Список методов класса
-class IMethodDeclList {
+class IMethodDeclList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IMethodDeclList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IMethodDeclList() {}
 };
 
 // Метод класса
-class IMethodDecl {
+class IMethodDecl : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IMethodDecl() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IMethodDecl() {}
 };
 
 // Список параметров
-class IFormalList {
+class IFormalList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IFormalList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IFormalList() {}
 };
 
 // Тип
-class IType {
+class IType : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IType() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IType() {}
 };
 
 // Последовательность команд
-class IStatementList {
+class IStatementList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IStatementList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IStatementList() {}
 };
 
 // Одна команда (или блок)
-class IStatement {
+class IStatement : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IStatement() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IStatement() {}
 };
 
 // Последовательность выражений (аргументы функции)
-class IExpList {
+class IExpList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IExpList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IExpList() {}
 };
 
 // Арифметическое выражение
-class IExp {
+class IExp : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IExp() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IExp() {}
 };
 
-class IFormalRest {
+class IFormalRest : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IFormalRest() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IFormalRest() {}
 };
 
-class IFormalRestList {
+class IFormalRestList : public ICoord
+{
 public:
-    virtual void Accept( IVisitor* ) const = 0;
-    virtual ~IFormalRestList() {}
+	virtual void Accept( IVisitor* ) const = 0;
+	virtual ~IFormalRestList() {}
 };
