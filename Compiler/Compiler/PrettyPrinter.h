@@ -9,8 +9,9 @@ public:
 	void Visit( const CClassDecl* classDecl );
 	void Visit( const CClassDeclList* classDecls );
     void Visit( const CConstructor* constructor );
+    void Visit( const CElementAssignment* elemAssign );
 	void Visit( const CExpList* expList );
-	void Visit( const ÑFormalList* formalList );
+	void Visit( const CFormalList* formalList );
     void Visit( const CId* id );
 	void Visit( const CIfStatement* ifStatement );
 	void Visit( const CLengthExp* lengthExp );

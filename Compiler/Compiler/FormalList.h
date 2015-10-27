@@ -1,12 +1,12 @@
 #pragma once
 #include "common.h"
-class ÑFormalList : public IFormalList
+class CFormalList : public IFormalList
 {
 public:
-    ÑFormalList( IVarDecl* _decl );
-	ÑFormalList( std::vector<IVarDecl*>& _list );
+    CFormalList( IVarDecl* _decl );
+    CFormalList( std::vector<IVarDecl*>& _list );
 
-	~ÑFormalList();
+	~CFormalList();
 	void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );

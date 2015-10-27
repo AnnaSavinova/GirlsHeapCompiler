@@ -49,6 +49,11 @@ void CPrettyPrinter::Visit( const CConstructor* constructor )
 
 }
 
+void CPrettyPrinter::Visit( const CElementAssignment* elemAssign )
+{
+    std::cout << "AAAAAAAAAAAAAAAAAAAAAaaa";
+}
+
 void CPrettyPrinter::Visit( const CExpList* expList )
 {
 	for ( size_t i = 0; i < expList->Expressions().size(); i++ ) {
@@ -60,7 +65,7 @@ void CPrettyPrinter::Visit( const CExpList* expList )
 	}
 }
 
-void CPrettyPrinter::Visit( const ÑFormalList* formalList )
+void CPrettyPrinter::Visit( const CFormalList* formalList )
 {	
 	std::cout << " ";
 	for ( int i = 0; i < formalList->List().size() - 1; ++i ) {

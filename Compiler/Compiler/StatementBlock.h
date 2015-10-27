@@ -6,6 +6,10 @@ public:
     ~CStatementBlock();
 
     IStatementList* Statements() const;
+    virtual void Accept( IVisitor* visitor ) const
+    {
+        visitor->Visit( this );
+    }
 private:
     IStatementList* statements;
 };

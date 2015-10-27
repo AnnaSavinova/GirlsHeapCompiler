@@ -26,3 +26,5 @@
 #include "VarDecl.h"
 #include "VarDeclList.h"
 #include "WhileStatement.h"
+
+static IProgram* program;

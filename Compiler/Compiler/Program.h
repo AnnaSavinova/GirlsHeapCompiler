@@ -8,7 +8,7 @@ public:
 
 	const IMainClass* MainClass() const;
 	const IClassDeclList* ClassDeclList() const;
-	void Accept( IVisitor* visitor ) const
+	virtual void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );
 	}

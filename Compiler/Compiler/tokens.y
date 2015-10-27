@@ -3,9 +3,8 @@
 /* Секция с кодом, который попадет в парсер.*/
 %{
 #include <iostream>
-#include "classes.h"
+#include "PrettyPrinter.h"
 
-IProgram* program;
 extern "C" int yylex();
 void yyerror( int*, const char* str );
 %}
@@ -97,7 +96,7 @@ void yyerror( int*, const char* str );
 /* Секция с описанием правил парсера. */
 %%
 Program: MainClass { $$ = new CProgram($1, nullptr); program = $$; }
-	| MainClass ClassDecls { $$ = new CProgram($1, $2); }
+	| MainClass ClassDecls { $$ = new CProgram($1, $2); program = $$; }
 ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
 	| ClassDecls ClassDecl { 
 		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >($1)->ClassDeclList();
@@ -175,16 +174,16 @@ Statements: Statement { $$ = new CStatementList($1); }
 FormalList: /*epsilon*/ { $$ = nullptr; }
 	| Type ID FormalRests { 
 		CVarDecl* var = new CVarDecl( $1, std::string($2) );
-		std::vector< IVarDecl* > decls = dynamic_cast< СFormalList* >($3)->List();
+		std::vector< IVarDecl* > decls = dynamic_cast< CFormalList* >($3)->List();
 		decls.insert(decls.begin(), var);
-		$$ = new СFormalList( decls );
+		$$ = new CFormalList( decls );
 	}
-	| Type ID { $$ = new СFormalList( new CVarDecl( $1, std::string($2) ) ); }
-FormalRests: FormalRest { $$ = new СFormalList($1); }
+	| Type ID { $$ = new CFormalList( new CVarDecl( $1, std::string($2) ) ); }
+FormalRests: FormalRest { $$ = new CFormalList($1); }
 	| FormalRests FormalRest {
-		std::vector< IVarDecl* > decls = dynamic_cast< СFormalList* >($1)->List();
+		std::vector< IVarDecl* > decls = dynamic_cast< CFormalList* >($1)->List();
 		decls.push_back( $2 );
-		$$ = new СFormalList( decls );
+		$$ = new CFormalList( decls );
 	}
 FormalRest: ',' Type ID { $$ = new CVarDecl( $2, std::string($3) ); }
 Type: INT '[' ']' { $$ = new CType( "int[]"); }
@@ -237,4 +236,13 @@ ExpRest: ',' Exp { $$ = $2; }
 void yyerror( int*, const char* str )
 {
 	std::cout << str << std::endl;
+}
+
+int main()
+{
+    yyparse(0);
+    CPrettyPrinter p;
+	std::cout << program;
+    p.Visit( (CProgram*) program );
+	return 0;
 }

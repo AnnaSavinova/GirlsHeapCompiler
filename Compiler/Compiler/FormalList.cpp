@@ -1,20 +1,20 @@
 #include "FormalList.h"
 
-ÑFormalList::ÑFormalList( IVarDecl* _decl )
+CFormalList::CFormalList( IVarDecl* _decl )
 {
     list.push_back( _decl );
 }
 
-ÑFormalList::ÑFormalList( std::vector<IVarDecl*>& _list )
+CFormalList::CFormalList( std::vector<IVarDecl*>& _list )
 {
 	list = _list;
 }
 
-ÑFormalList::~ÑFormalList()
+CFormalList::~CFormalList()
 {
 }
 
-const std::vector<IVarDecl*>& ÑFormalList::List() const
+const std::vector<IVarDecl*>& CFormalList::List() const
 {
 	return list;
 }
