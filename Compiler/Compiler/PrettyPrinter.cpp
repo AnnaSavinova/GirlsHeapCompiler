@@ -79,7 +79,6 @@ void CPrettyPrinter::Visit( const CExpList* expList )
 
 void CPrettyPrinter::Visit( const CFormalList* formalList )
 {	
-	std::cout << " ";
 	for ( int i = 0; i < formalList->List().size() - 1; ++i ) {
 		formalList->List()[i]->type->Accept( this );
 		std::cout << " " << formalList->List()[i]->id;
@@ -144,11 +143,11 @@ void CPrettyPrinter::Visit( const CMethodCall* methodCall )
     if( methodCall->Exp() != nullptr ) {
         methodCall->Exp()->Accept( this );
     }
-    std::cout << "." << methodCall->Id() << "(";
+    std::cout << "." << methodCall->Id() << "( ";
     if( methodCall->Args() != nullptr ) {
         methodCall->Args()->Accept( this );
     }
-    std::cout << ")";
+    std::cout << " )";
 }
 
 void CPrettyPrinter::Visit( const CMethodDecl* methodDecl )
@@ -247,9 +246,9 @@ void CPrettyPrinter::Visit( const CVarDeclList* varDecls )
 
 void CPrettyPrinter::Visit( const CWhileStatement* whileStatement )
 {
-	std::cout << "while( ";
+	std::cout << "while ( ";
 	whileStatement->Expression()->Accept( this );
-	std::cout << " ) " << std::endl;
+	std::cout << " ) ";
 
 	if ( whileStatement->Statement() != nullptr ) {
 		whileStatement->Statement()->Accept( this );

@@ -244,5 +244,6 @@ int main()
     yyparse(0);
     CPrettyPrinter p;
     p.Visit( (CProgram*) program );
+	system("pause");
 	return 0;
 }
