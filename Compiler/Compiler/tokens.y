@@ -36,6 +36,7 @@ void yyerror( int*, const char* str );
 	IVarDecl* varDecl;
 	IVarDeclList* varDecls;
 	IType* type;
+	CFormalListElement* formalListElement;
 }
 
 /* Определение лево-ассоцитивности. Аналогично есть %right.
@@ -91,7 +92,7 @@ void yyerror( int*, const char* str );
 %type<exp> ExpRest;
 %type<type> Type;
 %type<formalList> FormalRests;
-%type<varDecl> FormalRest;
+%type<formalListElement> FormalRest;
 
 /* Секция с описанием правил парсера. */
 %%
@@ -173,19 +174,19 @@ Statements: Statement { $$ = new CStatementList($1); }
 	}
 FormalList: /*epsilon*/ { $$ = nullptr; }
 	| Type ID FormalRests { 
-		CVarDecl* var = new CVarDecl( $1, std::string($2) );
-		std::vector< IVarDecl* > decls = dynamic_cast< CFormalList* >($3)->List();
+		CFormalListElement* var = new CFormalListElement( $1, std::string($2) );
+		std::vector< CFormalListElement* > decls = dynamic_cast< CFormalList* >($3)->List();
 		decls.insert(decls.begin(), var);
 		$$ = new CFormalList( decls );
 	}
-	| Type ID { $$ = new CFormalList( new CVarDecl( $1, std::string($2) ) ); }
+	| Type ID { $$ = new CFormalList( new CFormalListElement( $1, std::string($2) ) ); }
 FormalRests: FormalRest { $$ = new CFormalList($1); }
 	| FormalRests FormalRest {
-		std::vector< IVarDecl* > decls = dynamic_cast< CFormalList* >($1)->List();
+		std::vector< CFormalListElement* > decls = dynamic_cast< CFormalList* >($1)->List();
 		decls.push_back( $2 );
 		$$ = new CFormalList( decls );
 	}
-FormalRest: ',' Type ID { $$ = new CVarDecl( $2, std::string($3) ); }
+FormalRest: ',' Type ID { $$ = new CFormalListElement( $2, std::string($3) ); }
 Type: INT '[' ']' { $$ = new CType( "int[]"); }
 	| BOOLEAN { $$ = new CType( "boolean"); }
 	| INT { $$ = new CType( "int"); }

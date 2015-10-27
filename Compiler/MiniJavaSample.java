@@ -14,7 +14,7 @@ class LS {
     
     // Invoke methods to initialize, print and search
     // for elements on the array
-    public int Start(int sz){
+    public int Start(int sz, int aaa, int bbb, boolean x, int[] c){
 	int aux01 ;
 	int aux02 ;
 

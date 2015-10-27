@@ -103,10 +103,11 @@ typedef union YYSTYPE
 	IVarDecl* varDecl;
 	IVarDeclList* varDecls;
 	IType* type;
+	CFormalListElement* formalListElement;
 
 
 /* Line 2058 of yacc.c  */
-#line 110 "tokens.tab.hpp"
+#line 111 "tokens.tab.hpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
