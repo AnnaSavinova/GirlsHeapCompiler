@@ -6,14 +6,14 @@ public:
     CAssignmentStatement( std::string, IExp*, int _line );
     ~CAssignmentStatement();
 
-	const std::string Id() const;
+	const CSymbol* Id() const;
 	const IExp* Expression() const;
 	void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );
 	}
 private:
-    std::string id;
+    const CSymbol* id;
     IExp* expression;
 };
 

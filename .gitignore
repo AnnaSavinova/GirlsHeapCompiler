@@ -56,3 +56,5 @@ bld/
 
 !win_flex.exe
 !win_bison.exe
+
+Compiler/Compiler/enc_*

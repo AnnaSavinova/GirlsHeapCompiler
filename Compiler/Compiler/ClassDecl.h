@@ -7,8 +7,8 @@ public:
 	CClassDecl( std::string, std::string, IVarDeclList*,  IMethodDeclList*, int _line );
 	~CClassDecl();
 
-	const std::string Id() const;
-	const std::string ParentId() const;
+	const CSymbol* Id() const;
+	const CSymbol* ParentId() const;
 	const IVarDeclList* VarDeclList() const;
 	const IMethodDeclList* MethodDeclList() const;
 	void Accept( IVisitor* visitor ) const
@@ -18,7 +18,7 @@ public:
 
 
 private:
-	std::string id, parentId; // parentId can be null
+	const CSymbol* id, parentId; // parentId can be null
 	IVarDeclList* varDecls; // can be null
 	IMethodDeclList* methodDecls; // can be null
 };
