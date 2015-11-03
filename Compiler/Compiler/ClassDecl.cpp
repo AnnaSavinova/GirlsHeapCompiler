@@ -1,7 +1,7 @@
 #include "ClassDecl.h"
 
 CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls, int _line ) :
-	id( _id ),
+	id( symbolStorage.Get(_id) ),
 	parentId( _parentId ),
 	varDecls( _varDecls ),
 	methodDecls( _methodDecls )
@@ -28,12 +28,12 @@ CClassDecl::~CClassDecl()
 	}
 }
 
-const std::string CClassDecl::Id() const
+const CSymbol* CClassDecl::Id() const
 {
 	return id;
 }
 
-const std::string CClassDecl::ParentId() const
+const CSymbol* CClassDecl::ParentId() const
 {
 	return parentId;
 }

@@ -2,7 +2,7 @@
 
 
 
-CConstructor::CConstructor( std::string _id, int _line ) : id( _id ) 
+CConstructor::CConstructor( std::string _id, int _line ) : id( symbolStorage.Get(_id) ) 
 {
 	line = _line;
 }
@@ -11,7 +11,7 @@ CConstructor::CConstructor( std::string _id, int _line ) : id( _id )
 CConstructor::~CConstructor()
 {}
 
-std::string CConstructor::Id() const
+const CSymbol* CConstructor::Id() const
 {
     return id;
 }
