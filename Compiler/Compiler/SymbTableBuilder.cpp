@@ -73,7 +73,7 @@ void CSymbTableBuilder::Visit( const CFormalList * formalList )
             errors.push_back( formalList->Line() );
             std::cerr << "At line: " << formalList->Line() << " formal list without method" << std::endl;
         } else {
-            currMethod->AddFormalArg( formals[i], t );
+            currMethod->AddFormalArg( formals[i]->id, t );
         }
     }
 }
@@ -102,6 +102,24 @@ void CSymbTableBuilder::Visit( const CMainClass * mainClass )
         std::cerr <<  "At line: " << mainClass->Line() << "duplicate class definition" << std::endl;
     } else {
         mainClass->Statements()->Accept( this );
+    }
+}
+
+void CSymbTableBuilder::Visit( const CMethodCall * methodCall )
+{
+    methodCall->Exp()->Accept( this );
+    methodCall->Args()->Accept( this );
+}
+
+void CSymbTableBuilder::Visit( const CMethodDecl * methodDecl )
+{
+    methodDecl->Type()->Accept( this );
+    CType* t = lastTypeValue;
+    if( !currClass->AddMethod( methodDecl->Id(), t ) ) {
+        errors.push_back( methodDecl->Line() );
+        std::cerr << "At line: " << methodDecl->Line() << " duplicate mathod definition" << std::endl;
+    } else {
+        currMethod = currClass->FindMethod( methodDecl->Id() );
     }
 }
 
