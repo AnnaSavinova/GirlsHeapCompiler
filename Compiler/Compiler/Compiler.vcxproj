@@ -92,6 +92,7 @@
     <ClCompile Include="PrintStatement.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StatementList.cpp" />
+    <ClCompile Include="SymbolsTable.cpp" />
     <ClCompile Include="SymbTableBuilder.cpp" />
     <ClCompile Include="tokens.flex.cpp" />
     <ClCompile Include="tokens.tab.cpp" />
