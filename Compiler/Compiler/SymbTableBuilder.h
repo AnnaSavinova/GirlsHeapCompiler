@@ -1,5 +1,7 @@
 #pragma once
 #include "common.h"
+#include "SymbolsTable.h"
+
 class CSymbTableBuilder : public IVisitor
 {
 public:
@@ -16,7 +18,7 @@ public:
 	void Visit( const CId* id );
 	void Visit( const CIfStatement* ifStatement );
 	void Visit( const CLengthExp* lengthExp );
-	void Visit( const CMainClass* mainclass );
+	void Visit( const CMainClass* mainClass );
 	void Visit( const CMethodCall* methodCall );
 	void Visit( const CMethodDecl* methodDecl );
 	void Visit( const CMethodDeclList* methodDecls );
@@ -33,6 +35,11 @@ public:
 	void Visit( const CVarDeclList* varDecls );
 	void Visit( const CWhileStatement* whileStatement );
 private:
+    CClassInfo* currClass;
+    CMethodInfo* currMethod;
+    CTable* symbTable;
+    CType* lastTypeValue;
 
+    std::vector<int> errors;
 };
 
