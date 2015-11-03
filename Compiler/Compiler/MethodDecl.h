@@ -9,7 +9,7 @@ public:
 	~CMethodDecl();
 	
 	const IType* Type() const;
-	const std::string Id() const;
+	CSymbol* Id() const;
 	const IFormalList* FormalList() const;
 	const IVarDeclList* VarDeclList() const;
 	const IStatementList* StatementList() const;
@@ -21,7 +21,7 @@ public:
 
 private:
 	IType* type;
-	std::string id;
+  CSymbol* id;
 	IFormalList* formalList;
 	IVarDeclList* varDeclList;
 	IStatementList* statementList;

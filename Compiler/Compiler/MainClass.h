@@ -6,7 +6,7 @@ public:
 	CMainClass( std::string, IStatementList*, int _line );
 	~CMainClass();
 
-	const std::string Id() const;
+	CSymbol* Id() const;
 	const IStatementList* Statements() const;
 	void Accept( IVisitor* visitor ) const
 	{
@@ -14,6 +14,6 @@ public:
 	}
 
 private:
-	std::string id;
+  CSymbol* id;
 	IStatementList* statements;
 };

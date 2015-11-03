@@ -2286,10 +2286,7 @@ void yyerror( int*, const char* str )
 
 int main()
 {
-	std::cout << "BB" << yylineno << std::endl;
     yyparse(0);
-	
-	std::cout << "BB" << yylineno << std::endl;
     CPrettyPrinter p;
     p.Visit( (CProgram*) program );
 	system("pause");

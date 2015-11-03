@@ -1,8 +1,6 @@
 #include "ElementAssignment.h"
 
-
-
-CElementAssignment::CElementAssignment( std::string _id, IExp* _exp1, IExp* _exp2, int _line ) : id( _id ), exp1( _exp1 ), exp2( _exp2 )
+CElementAssignment::CElementAssignment( std::string _id, IExp* _exp1, IExp* _exp2, int _line ) : id( symbolStorage.Get( _id ) ), exp1( _exp1 ), exp2( _exp2 )
 {
 	line = _line;
 }
@@ -11,7 +9,7 @@ CElementAssignment::CElementAssignment( std::string _id, IExp* _exp1, IExp* _exp
 CElementAssignment::~CElementAssignment()
 {}
 
-std::string CElementAssignment::Id() const
+CSymbol* CElementAssignment::Id() const
 {
     return id;
 }

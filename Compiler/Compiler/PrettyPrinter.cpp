@@ -25,7 +25,7 @@ void CPrettyPrinter::Visit( const CBinExp* binExp )
 void CPrettyPrinter::Visit( const CClassDecl* classDecl )
 {
 	std::cout << "class " << classDecl->Id();
-	if ( !classDecl->ParentId().empty() ) {
+	if ( classDecl->ParentId() != nullptr ) {
 		std::cout << " extends " << classDecl->ParentId();
 	}
 	std::cout << "{" << std::endl;

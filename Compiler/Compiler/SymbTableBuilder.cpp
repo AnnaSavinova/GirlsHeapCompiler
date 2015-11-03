@@ -23,7 +23,7 @@ void CSymbTableBuilder::Visit( const CBinExp * binExp )
 
 void CSymbTableBuilder::Visit( const CClassDecl * classDecl )
 {
-    const CSymbol* id = classDecl->Id();
+    CSymbol* id = classDecl->Id();
     if( !symbTable->AddClass( id, classDecl->ParentId() ) ) {
         errors.push_back(classDecl->Line());
         std::cerr << "At line " << classDecl->Line() << "duplicate definition class " << id->String() << std::endl;
@@ -67,7 +67,7 @@ void CSymbTableBuilder::Visit( const CFormalList * formalList )
 
     for( int i = 0; i < formals.size(); ++i ) {
         formals[i]->type->Accept( this );
-        const CType* t = lastTypeValue;
+        CType* t = lastTypeValue;
 
         if( currMethod == nullptr ) {
             errors.push_back( formalList->Line() );

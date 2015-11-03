@@ -2,7 +2,7 @@
 
 
 
-CNewClass::CNewClass( std::string ID, int _line ) :  id(ID)
+CNewClass::CNewClass( std::string _id, int _line ) :  id( symbolStorage.Get( _id) )
 {
 	line = _line;
 }
@@ -11,7 +11,7 @@ CNewClass::CNewClass( std::string ID, int _line ) :  id(ID)
 CNewClass::~CNewClass()
 {}
 
-const std::string CNewClass::Id() const
+CSymbol* CNewClass::Id() const
 {
 	return id;
 }

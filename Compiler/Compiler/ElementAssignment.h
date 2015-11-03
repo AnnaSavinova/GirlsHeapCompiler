@@ -12,11 +12,11 @@ public:
         visitor->Visit( this );
     }
 
-    std::string Id() const;
+    CSymbol* Id() const;
     const IExp* Exp1() const;
     const IExp* Exp2() const;
 private:
-    std::string id;
+    CSymbol* id;
     IExp* exp1;
     IExp* exp2;
 };

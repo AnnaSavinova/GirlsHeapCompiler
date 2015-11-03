@@ -13,7 +13,7 @@ CAssignmentStatement::~CAssignmentStatement()
     delete expression;
 }
 
-const CSymbol* CAssignmentStatement::Id() const
+CSymbol* CAssignmentStatement::Id() const
 {
 	return id;
 }

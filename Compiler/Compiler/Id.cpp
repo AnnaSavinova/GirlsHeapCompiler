@@ -1,6 +1,6 @@
 #include "Id.h"
 
-CId::CId( std::string s, int _line ) :  id(s)
+CId::CId( std::string s, int _line ) :  id( symbolStorage.Get( s ) )
 {
 	line = _line;
 }
@@ -9,7 +9,7 @@ CId::CId( std::string s, int _line ) :  id(s)
 CId::~CId()
 {}
 
-std::string CId::Id() const
+CSymbol* CId::Id() const
 {
     return id;
 }

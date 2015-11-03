@@ -7,12 +7,12 @@ public:
     CId( std::string, int _line );
     ~CId();
 
-    std::string Id() const; 
+    CSymbol* Id() const; 
     virtual void Accept( IVisitor* visitor ) const
     {
         visitor->Visit( this );
     }
 private:
-    std::string id;
+    CSymbol* id;
 };
 

@@ -17,7 +17,7 @@ private:
 class CStorage
 {
 public:
-	const CSymbol* Get( const std::string & s )
+	CSymbol* Get( const std::string & s )
 	{
 		auto found = symbols.find( s );
 		if( found == symbols.end() ) {

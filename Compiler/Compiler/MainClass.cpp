@@ -2,7 +2,7 @@
 
 
 CMainClass::CMainClass( std::string _id, IStatementList* _statements, int _line ) :
-	id( _id ),
+	id( symbolStorage.Get( _id ) ),
     statements( _statements )
 {
 	line = _line;
@@ -16,7 +16,7 @@ CMainClass::~CMainClass()
 	delete statements;
 }
 
-const std::string CMainClass::Id() const
+CSymbol* CMainClass::Id() const
 {
 	return id;
 }

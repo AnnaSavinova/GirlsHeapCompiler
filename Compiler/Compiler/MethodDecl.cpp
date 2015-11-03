@@ -8,7 +8,7 @@ CMethodDecl::CMethodDecl( IType* _type, std::string _id, IFormalList* _formalLis
 	assert( _type != nullptr );
 	assert( !_id.empty() );
 	type = _type;
-	id = _id;
+	id = symbolStorage.Get(_id);
 	formalList = _formalList;
 	varDeclList = _varDeclList;
 	statementList = _statementList;
@@ -39,7 +39,7 @@ const IType* CMethodDecl::Type() const
 	return type;
 }
 
-const std::string CMethodDecl::Id() const
+CSymbol* CMethodDecl::Id() const
 {
 	return id;
 }

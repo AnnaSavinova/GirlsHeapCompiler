@@ -3,9 +3,12 @@
 
 struct CFormalListElement
 {
-	CFormalListElement( IType* _type, std::string _id, int _line ) : type( _type ), id( _id ) {};
+	CFormalListElement( IType* _type, std::string _id, int _line ) : type( _type ) 
+  {
+    id = symbolStorage.Get(_id);
+  };
 	IType* type;
-	std::string id;
+  CSymbol* id;
 };
 
 class CFormalList : public IFormalList, public CCoord

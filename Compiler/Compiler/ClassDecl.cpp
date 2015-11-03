@@ -2,7 +2,7 @@
 
 CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls, int _line ) :
 	id( symbolStorage.Get(_id) ),
-	parentId( _parentId ),
+	parentId( symbolStorage.Get(_parentId) ),
 	varDecls( _varDecls ),
 	methodDecls( _methodDecls )
 {
@@ -11,13 +11,13 @@ CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _v
 
 CClassDecl::~CClassDecl()
 {
-	//if ( id != nullptr ) {
-	//	delete id;
-	//}
+	if ( id != nullptr ) {
+		delete id;
+	}
 
-	//if ( parentId != nullptr ) {
-	//	delete parentId;
-	//}
+	if ( parentId != nullptr ) {
+		delete parentId;
+	}
 
 	if ( varDecls != nullptr ) {
 		delete varDecls;
@@ -28,12 +28,12 @@ CClassDecl::~CClassDecl()
 	}
 }
 
-const CSymbol* CClassDecl::Id() const
+CSymbol* CClassDecl::Id() const
 {
 	return id;
 }
 
-const CSymbol* CClassDecl::ParentId() const
+CSymbol* CClassDecl::ParentId() const
 {
 	return parentId;
 }

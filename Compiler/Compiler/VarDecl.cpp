@@ -6,7 +6,7 @@ CVarDecl::CVarDecl( IType* _type, std::string _id, int _line )
 	assert( _type != nullptr );
 	assert( !_id.empty() );
 	type = _type;
-	id = _id;
+	id = symbolStorage.Get( _id );
 }
 
 CVarDecl::~CVarDecl()
@@ -21,7 +21,7 @@ const IType* CVarDecl::Type() const
 	return type;
 }
 
-const std::string CVarDecl::Id() const
+CSymbol* CVarDecl::Id() const
 {
 	return id;
 }

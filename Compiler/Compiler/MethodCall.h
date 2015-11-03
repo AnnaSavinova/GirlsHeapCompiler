@@ -8,7 +8,7 @@ public:
     ~CMethodCall();
 
     IExp* Exp() const;
-    std::string Id() const;
+    CSymbol* Id() const;
     IExpList* Args() const;
 
     virtual void Accept( IVisitor* visitor ) const
@@ -17,7 +17,7 @@ public:
     }
 private:
     IExp* exp;
-    std::string id;
+    CSymbol* id;
     IExpList* args;
 };
 

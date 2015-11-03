@@ -12,9 +12,9 @@ public:
 	}
 
 	const IType* Type() const;
-	const std::string Id() const;
+	CSymbol* Id() const;
 
 private:
 	IType* type;
-	std::string id;
+  CSymbol* id;
 };
