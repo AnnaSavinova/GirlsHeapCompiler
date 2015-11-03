@@ -144,10 +144,7 @@ OPERANDS [-+*/!.,;:=<]
 	return ID;
 }
 
-[ \t] {} /*ignore*/
-[\n] {
-	++yylineno;
-}
+[ \t\n] {} /*ignore*/
 
 . {
 	std::cout << "PANIC!!" << std::endl;

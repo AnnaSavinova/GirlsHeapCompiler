@@ -92,7 +92,9 @@
     <ClCompile Include="StatementBlock.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
-    <ClCompile Include="SymbTableBuilder.cpp" />
+    <ClCompile Include="SymbTableBuilder.cpp">
+      <Filter>Исходный код</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tokens.tab.hpp" />
@@ -195,7 +197,9 @@
     <ClInclude Include="Symbol.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="SymbTableBuilder.h" />
+    <ClInclude Include="SymbTableBuilder.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="tokens.y" />

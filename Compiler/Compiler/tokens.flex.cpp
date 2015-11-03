@@ -377,8 +377,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 29
-#define YY_END_OF_BUFFER 30
+#define YY_NUM_RULES 28
+#define YY_END_OF_BUFFER 29
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -388,7 +388,7 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[134] =
     {   0,
-        0,    0,   30,   28,   26,   27,   24,   28,    2,   24,
+        0,    0,   29,   27,   26,   26,   24,   27,    2,   24,
         3,   25,   25,   25,   25,   25,   25,   25,   25,   25,
        25,   25,   25,   25,   25,   25,   25,    1,    0,   23,
         3,   25,   25,   25,   25,   25,   25,   25,   25,   13,
@@ -540,10 +540,10 @@ static yyconst flex_int16_t yy_chk[205] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[30] =
+static yyconst flex_int32_t yy_rule_can_match_eol[29] =
     {   0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    0, 0, 0, 0, 0, 0, 0, 1, 0, 0,     };
+    0, 0, 0, 0, 0, 0, 1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -1040,31 +1040,24 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case 26:
+/* rule 26 can match eol */
 YY_RULE_SETUP
 #line 147 "tokens.l"
 {} /*ignore*/
 	YY_BREAK
 case 27:
-/* rule 27 can match eol */
 YY_RULE_SETUP
-#line 148 "tokens.l"
-{
-	++yylineno;
-}
-	YY_BREAK
-case 28:
-YY_RULE_SETUP
-#line 152 "tokens.l"
+#line 149 "tokens.l"
 {
 	std::cout << "PANIC!!" << std::endl;
 };
 	YY_BREAK
-case 29:
+case 28:
 YY_RULE_SETUP
-#line 155 "tokens.l"
+#line 152 "tokens.l"
 ECHO;
 	YY_BREAK
-#line 1068 "tokens.flex.cpp"
+#line 1061 "tokens.flex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2070,7 +2063,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 154 "tokens.l"
+#line 151 "tokens.l"
 
 
 int YYtext();

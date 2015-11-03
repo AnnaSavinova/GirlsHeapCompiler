@@ -4,7 +4,7 @@ class CSymbTableBuilder : public IVisitor
 {
 public:
 	CSymbTableBuilder();
-	~CSymbTableBuilder();
+	~CSymbTableBuilder();   
 	void Visit( const CAssignmentStatement* assigmentStatement );
 	void Visit( const CBinExp* binExp );
 	void Visit( const CClassDecl* classDecl );
