@@ -92,6 +92,7 @@
     <ClCompile Include="PrintStatement.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StatementList.cpp" />
+    <ClCompile Include="SymbTableBuilder.cpp" />
     <ClCompile Include="tokens.flex.cpp" />
     <ClCompile Include="tokens.tab.cpp" />
     <ClCompile Include="Type.cpp" />
@@ -136,6 +137,9 @@
     <ClInclude Include="PrintStatement.h" />
     <ClInclude Include="StatementBlock.h" />
     <ClInclude Include="StatementList.h" />
+    <ClInclude Include="Symbol.h" />
+    <ClInclude Include="SymbolsTable.h" />
+    <ClInclude Include="SymbTableBuilder.h" />
     <ClInclude Include="tokens.tab.hpp" />
     <ClInclude Include="UnExp.h" />
     <ClInclude Include="VarDecl.h" />

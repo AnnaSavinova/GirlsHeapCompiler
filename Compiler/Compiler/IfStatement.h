@@ -1,9 +1,10 @@
 #pragma once
 #include "Grammar.h"
 #include "common.h"
-class CIfStatement : public IStatement {
+class CIfStatement : public IStatement, public CCoord
+{
 public:
-    CIfStatement( IExp*, IStatement*, IStatement* );
+    CIfStatement( IExp*, IStatement*, IStatement*, int _line );
     ~CIfStatement();
 
     const IExp* Expression() const;

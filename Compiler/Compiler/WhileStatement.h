@@ -1,9 +1,10 @@
 #pragma once
 #include "Grammar.h"
 #include "common.h"
-class CWhileStatement : public IStatement {
+class CWhileStatement : public IStatement, public CCoord
+{
 public:
-    CWhileStatement( IExp*, IStatement* );
+    CWhileStatement( IExp*, IStatement*, int _line );
     ~CWhileStatement();
 
     const IExp* Expression() const;

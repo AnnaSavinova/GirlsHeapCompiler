@@ -1,16 +1,18 @@
 #include "VarDeclList.h"
 
-CVarDeclList::CVarDeclList( std::vector<IVarDecl*>& _varDeclList )
+CVarDeclList::CVarDeclList( std::vector<IVarDecl*>& _varDeclList, int _line )
 {
+	line = _line;
 	for( size_t i = 0; i < _varDeclList.size(); i++ ) {
 		assert( _varDeclList[i] );
 	}
 	varDeclList = _varDeclList;
 }
 
-CVarDeclList::CVarDeclList( IVarDecl* _varDecl )
+CVarDeclList::CVarDeclList( IVarDecl* _varDecl, int _line )
 {
-    varDeclList.push_back( _varDecl );
+	line = _line;
+	varDeclList.push_back( _varDecl );
 }
 
 CVarDeclList::~CVarDeclList()

@@ -2,8 +2,10 @@
 
 
 
-CStatementBlock::CStatementBlock( IStatementList* _statements ) : statements(_statements)
-{}
+CStatementBlock::CStatementBlock( IStatementList* _statements, int _line ) : statements(_statements)
+{
+	line = _line;
+}
 
 
 CStatementBlock::~CStatementBlock()

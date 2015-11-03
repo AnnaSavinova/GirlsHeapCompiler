@@ -1,10 +1,11 @@
 #pragma once
 #include "common.h"
 
-class CExpList : public IExpList {
+class CExpList : public IExpList, public CCoord
+{
 public:
-    CExpList( IExp* );
-    CExpList( const std::vector<IExp*>& );
+    CExpList( IExp*, int _line );
+    CExpList( const std::vector<IExp*>&, int _line );
 
     ~CExpList();
 

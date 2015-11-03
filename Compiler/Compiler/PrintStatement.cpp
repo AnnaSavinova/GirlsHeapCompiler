@@ -1,7 +1,8 @@
 #include "PrintStatement.h"
 
-CPrintStatement::CPrintStatement( IExp* _expression) : expression(_expression)
+CPrintStatement::CPrintStatement( IExp* _expression, int _line ) :  expression(_expression)
 {
+	line = _line;
     assert( _expression != nullptr );
 }
 

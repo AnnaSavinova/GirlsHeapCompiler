@@ -1,9 +1,10 @@
 #pragma once
 #include "common.h"
 
-class CElementAssignment : public IStatement {
+class CElementAssignment : public IStatement, public CCoord
+{
 public:
-    CElementAssignment( std::string, IExp*, IExp* );
+    CElementAssignment( std::string, IExp*, IExp*, int _line );
     ~CElementAssignment();
 
     virtual void Accept( IVisitor* visitor ) const

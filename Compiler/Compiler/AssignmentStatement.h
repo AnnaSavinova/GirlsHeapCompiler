@@ -1,9 +1,9 @@
 #pragma once
 #include "common.h"
 
-class CAssignmentStatement : public IStatement {
+class CAssignmentStatement : public IStatement, public CCoord {
 public:
-    CAssignmentStatement( std::string, IExp* );
+    CAssignmentStatement( std::string, IExp*, int _line );
     ~CAssignmentStatement();
 
 	const std::string Id() const;

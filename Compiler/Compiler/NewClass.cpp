@@ -2,8 +2,10 @@
 
 
 
-CNewClass::CNewClass( std::string ID): id(ID)
-{}
+CNewClass::CNewClass( std::string ID, int _line ) :  id(ID)
+{
+	line = _line;
+}
 
 
 CNewClass::~CNewClass()

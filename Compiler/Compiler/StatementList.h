@@ -1,10 +1,10 @@
 #pragma once
 #include "common.h"
-class CStatementList : public IStatementList
+class CStatementList : public IStatementList, public CCoord
 {
 public:
-    CStatementList( IStatement* _statement );
-	CStatementList( std::vector<IStatement*>& _statementList );
+    CStatementList( IStatement* _statement, int _line );
+	CStatementList( std::vector<IStatement*>& _statementList, int _line );
 
 	~CStatementList();
 	void Accept( IVisitor* visitor ) const

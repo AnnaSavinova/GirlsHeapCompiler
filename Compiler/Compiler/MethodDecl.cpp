@@ -2,8 +2,9 @@
 
 CMethodDecl::CMethodDecl( IType* _type, std::string _id, IFormalList* _formalList,
 	IVarDeclList* _varDeclList, IStatementList* _statementList,
-	IExp* _exp )
+	IExp* _exp, int _line )
 {
+	line = _line;
 	assert( _type != nullptr );
 	assert( !_id.empty() );
 	type = _type;

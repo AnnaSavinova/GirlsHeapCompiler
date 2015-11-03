@@ -1,10 +1,10 @@
 #pragma once
 #include "common.h"
-class CMethodDeclList : public IMethodDeclList
+class CMethodDeclList : public IMethodDeclList, public CCoord
 {
 public:
-    CMethodDeclList( IMethodDecl* _methodDecl );
-	CMethodDeclList( const std::vector<IMethodDecl*>& _methodDeclList );
+    CMethodDeclList( IMethodDecl* _methodDecl, int _line );
+	CMethodDeclList( const std::vector<IMethodDecl*>& _methodDeclList, int _line );
 
 	~CMethodDeclList();
 	void Accept( IVisitor* visitor ) const

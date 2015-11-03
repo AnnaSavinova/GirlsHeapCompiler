@@ -1,9 +1,9 @@
 #pragma once
 #include "common.h"
 
-class CType : public IType {
+class CType : public IType, public CCoord {
 public:
-    CType( const std::string );
+    CType( const std::string, int _line );
     ~CType();
 
 	const std::string Type() const;

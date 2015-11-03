@@ -1,8 +1,9 @@
 #pragma once
 #include "common.h"
-class CPrintStatement : public IStatement {
+class CPrintStatement : public IStatement, public CCoord
+{
 public:
-    CPrintStatement( IExp* );
+    CPrintStatement( IExp*, int _line );
     ~CPrintStatement();
 
     const IExp* Expression() const;

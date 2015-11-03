@@ -1,12 +1,14 @@
 #include "StatementList.h"
 
-CStatementList::CStatementList( IStatement* _statement )
+CStatementList::CStatementList( IStatement* _statement, int _line )
 {
+	line = _line;
     statementList.push_back( _statement );
 }
 
-CStatementList::CStatementList( std::vector<IStatement*>& _statementList )
+CStatementList::CStatementList( std::vector<IStatement*>& _statementList, int _line )
 {
+	line = _line;
 	for( size_t i = 0; i < _statementList.size(); i++ ) {
 		assert( _statementList[i] != nullptr );
 	}

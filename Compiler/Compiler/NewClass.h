@@ -1,9 +1,10 @@
 #pragma once
 #include "common.h"
 class CNewClass :
-    public IExp {
+    public IExp, public CCoord
+{
 public:
-    CNewClass( std::string );
+    CNewClass( std::string, int _line );
     ~CNewClass();
 
 	const std::string Id() const;

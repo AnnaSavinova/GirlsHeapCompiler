@@ -2,8 +2,10 @@
 
 
 
-CNumber::CNumber( int _number) : number(_number)
-{}
+CNumber::CNumber( int _number, int _line ) : number(_number)
+{
+	line = _line;
+}
 
 
 CNumber::~CNumber()

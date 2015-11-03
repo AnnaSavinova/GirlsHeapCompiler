@@ -1,10 +1,11 @@
 #include "MainClass.h"
 
 
-CMainClass::CMainClass( std::string _id, IStatementList* _statements ) :
+CMainClass::CMainClass( std::string _id, IStatementList* _statements, int _line ) :
 	id( _id ),
     statements( _statements )
 {
+	line = _line;
 	// assert( _id );
 	assert( _statements );
 }

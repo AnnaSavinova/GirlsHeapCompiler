@@ -1,7 +1,8 @@
 #include "VarDecl.h"
 
-CVarDecl::CVarDecl( IType* _type, std::string _id )
+CVarDecl::CVarDecl( IType* _type, std::string _id, int _line )
 {
+	line = _line;
 	assert( _type != nullptr );
 	assert( !_id.empty() );
 	type = _type;

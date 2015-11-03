@@ -1,9 +1,10 @@
 #pragma once
 #include "common.h"
 
-class CMethodCall : public IExp {
+class CMethodCall : public IExp, public CCoord
+{
 public:
-    CMethodCall( IExp*, std::string, IExpList* );
+    CMethodCall( IExp*, std::string, IExpList*, int _line );
     ~CMethodCall();
 
     IExp* Exp() const;

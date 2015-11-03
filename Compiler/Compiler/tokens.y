@@ -6,6 +6,7 @@
 #include "PrettyPrinter.h"
 
 extern "C" int yylex();
+extern int yylineno;
 void yyerror( int*, const char* str );
 %}
 
@@ -96,36 +97,36 @@ void yyerror( int*, const char* str );
 
 /* Секция с описанием правил парсера. */
 %%
-Program: MainClass { $$ = new CProgram($1, nullptr); program = $$; }
-	| MainClass ClassDecls { $$ = new CProgram($1, $2); program = $$; }
-ClassDecls: ClassDecl { $$ = new CClassDeclList($1); }
+Program: MainClass { $$ = new CProgram($1, nullptr, yylineno); program = $$; }
+	| MainClass ClassDecls { $$ = new CProgram($1, $2, yylineno); program = $$; }
+ClassDecls: ClassDecl { $$ = new CClassDeclList($1, yylineno); }
 	| ClassDecls ClassDecl { 
 		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >($1)->ClassDeclList();
 		decls.push_back($2);
-		$$ = new CClassDeclList(decls); 
+		$$ = new CClassDeclList(decls, yylineno); 
 	}
-MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass( std::string($2), $15 ); }
-ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl( std::string($2), "", $4, $5 ); }
-	| CLASS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", nullptr, $4 ); }
-	| CLASS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), "", $4, nullptr ); }
-	| CLASS ID '{' '}' { $$ = new CClassDecl(std::string($2), "", nullptr, nullptr ); }
-	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), $6, $7 ); }
-	| CLASS ID EXTENDS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, $6 ); }
-	| CLASS ID EXTENDS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), $6, nullptr ); }
-	| CLASS ID EXTENDS ID '{' '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, nullptr ); }
-VarDecls: VarDecl { $$ = new CVarDeclList( $1 ); }
+MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass( std::string($2), $15, yylineno ); }
+ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl( std::string($2), "", $4, $5, yylineno ); }
+	| CLASS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), "", nullptr, $4, yylineno ); }
+	| CLASS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), "", $4, nullptr, yylineno ); }
+	| CLASS ID '{' '}' { $$ = new CClassDecl(std::string($2), "", nullptr, nullptr, yylineno ); }
+	| CLASS ID EXTENDS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), $6, $7, yylineno ); }
+	| CLASS ID EXTENDS ID '{' MethodDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, $6, yylineno ); }
+	| CLASS ID EXTENDS ID '{' VarDecls '}' { $$ = new CClassDecl(std::string($2), std::string($4), $6, nullptr, yylineno ); }
+	| CLASS ID EXTENDS ID '{' '}' { $$ = new CClassDecl(std::string($2), std::string($4), nullptr, nullptr, yylineno ); }
+VarDecls: VarDecl { $$ = new CVarDeclList( $1, yylineno ); }
 	| VarDecls VarDecl { 
 		std::vector< IVarDecl* > decls = dynamic_cast<CVarDeclList*>($1)->VarDeclList();
 		decls.push_back($2);
-		$$ = new CVarDeclList(decls); 
+		$$ = new CVarDeclList(decls, yylineno); 
 	}
-MethodDecls: MethodDecl { $$ = new CMethodDeclList( $1 ); }
+MethodDecls: MethodDecl { $$ = new CMethodDeclList( $1, yylineno ); }
 	| MethodDecls MethodDecl { 
 		std::vector< IMethodDecl* > decls = dynamic_cast<CMethodDeclList*>($1)->MethodDeclList();
 		decls.push_back($2);
-		$$ = new CMethodDeclList(decls); 
+		$$ = new CMethodDeclList(decls, yylineno); 
 	}
-VarDecl: Type ID ';' { $$ = new CVarDecl( $1, std::string($2) ); }
+VarDecl: Type ID ';' { $$ = new CVarDecl( $1, std::string($2), yylineno ); }
 MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp ';' '}' {
 		$$ = new CMethodDecl( 
 			$2, 
@@ -133,7 +134,8 @@ MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp
 			$5,
 			$8,
 			$9,
-			$11
+			$11, 
+			yylineno
 			);
 	}
 	| PUBLIC Type ID '(' FormalList ')' '{' Statements RETURN Exp ';' '}' {
@@ -143,7 +145,8 @@ MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp
 			$5,
 			nullptr,
 			$8,
-			$10
+			$10, 
+			yylineno
 			);
 	}
 	| PUBLIC Type ID '(' FormalList ')' '{' VarDecls RETURN Exp ';' '}' {
@@ -153,7 +156,8 @@ MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp
 			$5,
 			$8,
 			nullptr,
-			$10
+			$10, 
+			yylineno
 			);
 	}
 	| PUBLIC Type ID '(' FormalList ')' '{' RETURN Exp ';' '}' {
@@ -163,72 +167,73 @@ MethodDecl: PUBLIC Type ID '(' FormalList ')' '{' VarDecls Statements RETURN Exp
 			$5,
 			nullptr,
 			nullptr,
-			$9
+			$9, 
+			yylineno
 			);
 	}
-Statements: Statement { $$ = new CStatementList($1); }
+Statements: Statement { $$ = new CStatementList($1, yylineno); }
 	| Statements Statement  { 
 		std::vector< IStatement* > decls = dynamic_cast< CStatementList* >($1)->StatementList();
 		decls.push_back($2);
-		$$ = new CStatementList(decls); 
+		$$ = new CStatementList(decls, yylineno); 
 	}
 FormalList: /*epsilon*/ { $$ = nullptr; }
 	| Type ID FormalRests { 
-		CFormalListElement* var = new CFormalListElement( $1, std::string($2) );
+		CFormalListElement* var = new CFormalListElement( $1, std::string($2), yylineno );
 		std::vector< CFormalListElement* > decls = dynamic_cast< CFormalList* >($3)->List();
 		decls.insert(decls.begin(), var);
-		$$ = new CFormalList( decls );
+		$$ = new CFormalList( decls, yylineno );
 	}
-	| Type ID { $$ = new CFormalList( new CFormalListElement( $1, std::string($2) ) ); }
-FormalRests: FormalRest { $$ = new CFormalList($1); }
+	| Type ID { $$ = new CFormalList( new CFormalListElement( $1, std::string($2), yylineno ), yylineno ); }
+FormalRests: FormalRest { $$ = new CFormalList($1, yylineno); }
 	| FormalRests FormalRest {
 		std::vector< CFormalListElement* > decls = dynamic_cast< CFormalList* >($1)->List();
 		decls.push_back( $2 );
-		$$ = new CFormalList( decls );
+		$$ = new CFormalList( decls, yylineno );
 	}
-FormalRest: ',' Type ID { $$ = new CFormalListElement( $2, std::string($3) ); }
-Type: INT '[' ']' { $$ = new CType( "int[]"); }
-	| BOOLEAN { $$ = new CType( "boolean"); }
-	| INT { $$ = new CType( "int"); }
-	| ID { $$ = new CType( "id"); }
-Statement: '{' Statements '}' { $$ = new CStatementBlock($2); }
+FormalRest: ',' Type ID { $$ = new CFormalListElement( $2, std::string($3), yylineno ); }
+Type: INT '[' ']' { $$ = new CType( "int[]", yylineno ); }
+	| BOOLEAN { $$ = new CType( "boolean", yylineno ); }
+	| INT { $$ = new CType( "int", yylineno ); }
+	| ID { $$ = new CType( "id", yylineno ); }
+Statement: '{' Statements '}' { $$ = new CStatementBlock($2, yylineno); }
 	| '{' '}' { $$ = nullptr; }
-	| IF '(' Exp ')' Statement ELSE Statement { $$ = new CIfStatement( $3, $5, $7 ); }
-	| WHILE '(' Exp ')' Statement { $$ = new CWhileStatement( $3, $5 ); }
-	| PRINT '(' Exp ')' ';' { $$ = new CPrintStatement( $3 ); }
-	| ID '=' Exp ';' { $$ = new CAssignmentStatement( std::string( $1 ), $3 ); }
-	| ID '[' Exp ']' '=' Exp ';' { $$ = new CElementAssignment( std::string($1), $3, $6 ); }
-Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-" ); }
-	| Exp '+' Exp { $$ = new CBinExp( $1, $3, "+" ); }
-	| Exp '<' Exp { $$ = new CBinExp( $1, $3, "<" ); }
-	| Exp '&' Exp { $$ = new CBinExp( $1, $3, "&" ); }
-	| Exp '-' Exp { $$ = new CBinExp( $1, $3, "-" ); }
-	| Exp '*' Exp { $$ = new CBinExp( $1, $3, "*" ); }
-	| Exp '/' Exp { $$ = new CBinExp( $1, $3, "/" ); }
-	| Exp '[' Exp ']' { $$ = new CBinExp( $1, $3, "[]" ); }
-	| Exp '.' LENGTH { $$ = new CLengthExp( $1 ); }
-	| Exp '.' ID '(' ExpList ')' { $$ = new CMethodCall( $1, $3, $5 ); }
-	| INTEGER_LITERAL { $$ = new CNumber($1); }
-	| TRUE { $$ = new CNumber(1); }
-	| FALSE { $$ = new CNumber(0); }
-	| ID { $$ = new CId($1); }
-	| THIS { $$ = new CId("this"); }
-	| NEW INT '[' Exp ']' { $$ = new CNewInt( $4 ); }
-	| NEW ID '(' ')' { $$ = new CConstructor( $2 ); }
-	| '!' Exp { $$ = new CUnExp( $2, "!" ); }
+	| IF '(' Exp ')' Statement ELSE Statement { $$ = new CIfStatement( $3, $5, $7, yylineno ); }
+	| WHILE '(' Exp ')' Statement { $$ = new CWhileStatement( $3, $5, yylineno ); }
+	| PRINT '(' Exp ')' ';' { $$ = new CPrintStatement( $3, yylineno ); }
+	| ID '=' Exp ';' { $$ = new CAssignmentStatement( std::string( $1 ), $3, yylineno ); }
+	| ID '[' Exp ']' '=' Exp ';' { $$ = new CElementAssignment( std::string($1), $3, $6, yylineno ); }
+Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-", yylineno ); }
+	| Exp '+' Exp { $$ = new CBinExp( $1, $3, "+", yylineno ); }
+	| Exp '<' Exp { $$ = new CBinExp( $1, $3, "<", yylineno ); }
+	| Exp '&' Exp { $$ = new CBinExp( $1, $3, "&", yylineno ); }
+	| Exp '-' Exp { $$ = new CBinExp( $1, $3, "-", yylineno ); }
+	| Exp '*' Exp { $$ = new CBinExp( $1, $3, "*", yylineno ); }
+	| Exp '/' Exp { $$ = new CBinExp( $1, $3, "/", yylineno ); }
+	| Exp '[' Exp ']' { $$ = new CBinExp( $1, $3, "[]", yylineno ); }
+	| Exp '.' LENGTH { $$ = new CLengthExp( $1, yylineno ); }
+	| Exp '.' ID '(' ExpList ')' { $$ = new CMethodCall( $1, $3, $5, yylineno ); }
+	| INTEGER_LITERAL { $$ = new CNumber($1, yylineno); }
+	| TRUE { $$ = new CNumber(1, yylineno); }
+	| FALSE { $$ = new CNumber(0, yylineno); }
+	| ID { $$ = new CId($1, yylineno); }
+	| THIS { $$ = new CId("this", yylineno); }
+	| NEW INT '[' Exp ']' { $$ = new CNewInt( $4, yylineno ); }
+	| NEW ID '(' ')' { $$ = new CConstructor( $2, yylineno ); }
+	| '!' Exp { $$ = new CUnExp( $2, "!", yylineno ); }
 	| '(' Exp ')' { $$ = $2; }
 ExpList: /*epsilon*/ { $$ = nullptr; }
-	| Exp  { $$ = new CExpList( $1 ); }
+	| Exp  { $$ = new CExpList( $1, yylineno ); }
 	| Exp ExpRests { 
 		std::vector< IExp* > exps = dynamic_cast<CExpList*>($2)->Expressions();
 		exps.insert(exps.begin(), $1);
-		$$ = new CExpList(exps); 
+		$$ = new CExpList(exps, yylineno); 
 	}
-ExpRests: ExpRest { $$ = new CExpList( $1 ); }
+ExpRests: ExpRest { $$ = new CExpList( $1, yylineno ); }
 	| ExpRests ExpRest  { 
 		std::vector< IExp* > exps = dynamic_cast<CExpList*>($1)->Expressions();
 		exps.push_back($2);
-		$$ = new CExpList(exps); 
+		$$ = new CExpList(exps, yylineno); 
 	}
 ExpRest: ',' Exp { $$ = $2; }
 %%

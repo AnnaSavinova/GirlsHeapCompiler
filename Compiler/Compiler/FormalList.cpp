@@ -1,12 +1,14 @@
 #include "FormalList.h"
 
-CFormalList::CFormalList( CFormalListElement* _elem )
+CFormalList::CFormalList( CFormalListElement* _elem, int _line )
 {
-    list.push_back( _elem );
+	line = _line;
+	list.push_back( _elem );
 }
 
-CFormalList::CFormalList( std::vector<CFormalListElement*>& _list )
+CFormalList::CFormalList( std::vector<CFormalListElement*>& _list, int _line )
 {
+	line = _line;
 	list = _list;
 }
 

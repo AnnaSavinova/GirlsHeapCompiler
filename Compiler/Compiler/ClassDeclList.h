@@ -1,11 +1,11 @@
 #pragma once
 #include "common.h"
-class CClassDeclList : public IClassDeclList
+class CClassDeclList : public IClassDeclList, public CCoord
 {
 public:
-	CClassDeclList( const std::vector<IClassDecl*>& _classDecl );
+	CClassDeclList( const std::vector<IClassDecl*>& _classDecl, int _line );
 
-    CClassDeclList( IClassDecl* _classDecl );
+    CClassDeclList( IClassDecl* _classDecl, int _line );
 	~CClassDeclList();
 
 	const std::vector<IClassDecl*>& ClassDeclList() const;

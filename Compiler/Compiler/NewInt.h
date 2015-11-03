@@ -1,9 +1,10 @@
 #pragma once
 #include "common.h"
 class CNewInt :
-    public IExp {
+    public IExp, public CCoord
+{
 public:
-    CNewInt( IExp* );
+    CNewInt( IExp*, int _line );
     ~CNewInt();
 
 	const IExp* Expression() const;

@@ -1,11 +1,11 @@
 #pragma once
 #include "common.h"
-class CMethodDecl : public IMethodDecl
+class CMethodDecl : public IMethodDecl, public CCoord
 {
 public:
 	CMethodDecl( IType* _type, std::string _id, IFormalList* _formalList,
 		IVarDeclList* _varDeclList, IStatementList* _statementList,
-		IExp* _exp );
+		IExp* _exp, int _line );
 	~CMethodDecl();
 	
 	const IType* Type() const;

@@ -2,8 +2,9 @@
 
 
 
-CBinExp::CBinExp( IExp* exp1, IExp* exp2, std::string op ) : expression1(exp1), expression2(exp2), operation(op)
+CBinExp::CBinExp( IExp* exp1, IExp* exp2, std::string op, int _line ) : expression1( exp1 ), expression2( exp2 ), operation( op )
 {
+	line = _line;
     assert( exp1 != nullptr );
     assert( exp2 != nullptr );
 }

@@ -2,8 +2,9 @@
 
 
 
-CLengthExp::CLengthExp( IExp* exp) : expression(exp)
+CLengthExp::CLengthExp( IExp* exp, int _line ) : expression(exp)
 {
+	line = _line;
     assert( exp != nullptr );
 }
 

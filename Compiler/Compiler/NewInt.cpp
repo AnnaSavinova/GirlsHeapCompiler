@@ -2,8 +2,9 @@
 
 
 
-CNewInt::CNewInt( IExp* exp ) : expression(exp)
+CNewInt::CNewInt( IExp* exp, int _line ) :  expression(exp)
 {
+	line = _line;
     assert( expression != nullptr );
 }
 

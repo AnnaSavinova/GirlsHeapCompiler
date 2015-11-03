@@ -1,10 +1,13 @@
 #include "ClassDeclList.h"
 
-CClassDeclList::CClassDeclList( const std::vector<IClassDecl*>& _classDecl ) : classDeclList(_classDecl)
-{}
+CClassDeclList::CClassDeclList( const std::vector<IClassDecl*>& _classDecl, int _line ) : classDeclList(_classDecl)
+{
+	line = _line;
+}
 
-CClassDeclList::CClassDeclList( IClassDecl* _classDecl )
+CClassDeclList::CClassDeclList( IClassDecl* _classDecl, int _line )
 {    
+	line = _line;
     assert( _classDecl );
     classDeclList.push_back( _classDecl );
 }

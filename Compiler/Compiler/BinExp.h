@@ -1,8 +1,9 @@
 #pragma once
 #include "common.h"
-class CBinExp : public IExp {
+class CBinExp : public IExp, public CCoord
+{
 public:
-    CBinExp( IExp*, IExp*, std::string );
+    CBinExp( IExp*, IExp*, std::string, int _line );
     ~CBinExp();
 
 	const IExp* Expression1() const;

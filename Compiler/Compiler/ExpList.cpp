@@ -1,12 +1,15 @@
 #include "ExpList.h"
 
-CExpList::CExpList( IExp* exp )
+CExpList::CExpList( IExp* exp, int _line )
 {
-    expressions.push_back( exp );
+	line = _line;
+	expressions.push_back( exp );
 }
 
-CExpList::CExpList( const std::vector<IExp*>& v ) : expressions(v)
-{}
+CExpList::CExpList( const std::vector<IExp*>& v, int _line) : expressions( v )
+{
+	line = _line;
+}
 
 
 CExpList::~CExpList()

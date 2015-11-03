@@ -2,15 +2,16 @@
 
 
 
-CUnExp::CUnExp( IExp* exp, std::string op ) : expression(exp), operation(op)
+CUnExp::CUnExp( IExp* exp, std::string op, int _line ) : expression( exp ), operation( op )
 {
-    assert( exp != nullptr );
+	line = _line;
+	assert( exp != nullptr );
 }
 
 
 CUnExp::~CUnExp()
 {
-	if ( expression != nullptr ) {
+	if( expression != nullptr ) {
 		delete expression;
 	}
 }

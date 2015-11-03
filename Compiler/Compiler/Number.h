@@ -1,8 +1,9 @@
 #pragma once
 #include "common.h"
-class CNumber : public IExp {
+class CNumber : public IExp, public CCoord
+{
 public:
-    CNumber( int );
+    CNumber( int, int _line );
     ~CNumber();
 
     int Number() const;

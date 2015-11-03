@@ -1,8 +1,9 @@
 #pragma once
 #include "common.h"
-class CLengthExp : public IExp {
+class CLengthExp : public IExp, public CCoord
+{
 public:
-    CLengthExp( IExp* );
+    CLengthExp( IExp*, int _line );
     ~CLengthExp();
 
 	const IExp* Expression() const;

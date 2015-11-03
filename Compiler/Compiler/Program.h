@@ -1,9 +1,9 @@
 #pragma once
 #include "common.h"
-class CProgram : public IProgram
+class CProgram : public IProgram, public CCoord
 {
 public:
-	CProgram( IMainClass*, IClassDeclList* );
+	CProgram( IMainClass*, IClassDeclList*, int _line );
 	~CProgram();
 
 	const IMainClass* MainClass() const;

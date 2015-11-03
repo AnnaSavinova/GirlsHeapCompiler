@@ -1,6 +1,6 @@
 #include "ClassDecl.h"
 
-CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls ) :
+CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls, int _line ) :
 	id( _id ),
 	parentId( _parentId ),
 	varDecls( _varDecls ),

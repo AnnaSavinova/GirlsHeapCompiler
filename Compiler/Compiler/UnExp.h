@@ -2,9 +2,10 @@
 #include "Grammar.h"
 #include "common.h"
 class CUnExp :
-    public IExp {
+    public IExp, public CCoord
+{
 public:
-    CUnExp( IExp*, std::string );
+    CUnExp( IExp*, std::string, int _line );
     ~CUnExp();
 
 	const IExp* Expression() const;

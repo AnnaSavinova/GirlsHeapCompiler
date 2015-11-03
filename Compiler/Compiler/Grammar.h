@@ -2,19 +2,19 @@
 
 class IVisitor;
 
-class ICoord
+class CCoord
 {
+public:
 	int Line() const
 	{
 		return line;
 	}
-
-private:
+protected:
 	int line;
 };
 
 // Корневой интерфейс программы
-class IProgram : public ICoord
+class IProgram 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -22,7 +22,7 @@ public:
 };
 
 // Главный класс
-class IMainClass : public ICoord
+class IMainClass 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -30,7 +30,7 @@ public:
 };
 
 // Список классов
-class IClassDeclList : public ICoord
+class IClassDeclList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -38,7 +38,7 @@ public:
 };
 
 // Описание класса
-class IClassDecl : public ICoord
+class IClassDecl 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -46,7 +46,7 @@ public:
 };
 
 // Список объявлений переменных
-class IVarDeclList : public ICoord
+class IVarDeclList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -54,7 +54,7 @@ public:
 };
 
 // Объявление переменной
-class IVarDecl : public ICoord
+class IVarDecl 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -62,7 +62,7 @@ public:
 };
 
 // Список методов класса
-class IMethodDeclList : public ICoord
+class IMethodDeclList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -70,7 +70,7 @@ public:
 };
 
 // Метод класса
-class IMethodDecl : public ICoord
+class IMethodDecl 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -78,7 +78,7 @@ public:
 };
 
 // Список параметров
-class IFormalList : public ICoord
+class IFormalList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -86,7 +86,7 @@ public:
 };
 
 // Тип
-class IType : public ICoord
+class IType 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -94,7 +94,7 @@ public:
 };
 
 // Последовательность команд
-class IStatementList : public ICoord
+class IStatementList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -102,7 +102,7 @@ public:
 };
 
 // Одна команда (или блок)
-class IStatement : public ICoord
+class IStatement 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -110,7 +110,7 @@ public:
 };
 
 // Последовательность выражений (аргументы функции)
-class IExpList : public ICoord
+class IExpList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
@@ -118,21 +118,21 @@ public:
 };
 
 // Арифметическое выражение
-class IExp : public ICoord
+class IExp 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
 	virtual ~IExp() {}
 };
 
-class IFormalRest : public ICoord
+class IFormalRest 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;
 	virtual ~IFormalRest() {}
 };
 
-class IFormalRestList : public ICoord
+class IFormalRestList 
 {
 public:
 	virtual void Accept( IVisitor* ) const = 0;

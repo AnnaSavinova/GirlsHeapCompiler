@@ -1,8 +1,9 @@
 #pragma once
 #include "common.h"
-class CStatementBlock : public IStatement {
+class CStatementBlock : public IStatement, public CCoord
+{
 public:
-    CStatementBlock( IStatementList* statements );
+    CStatementBlock( IStatementList* statements, int _line );
     ~CStatementBlock();
 
     IStatementList* Statements() const;

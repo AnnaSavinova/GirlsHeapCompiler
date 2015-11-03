@@ -3,16 +3,16 @@
 
 struct CFormalListElement
 {
-	CFormalListElement( IType* _type, std::string _id ) : type( _type ), id( _id ) {};
+	CFormalListElement( IType* _type, std::string _id, int _line ) : type( _type ), id( _id ) {};
 	IType* type;
 	std::string id;
 };
 
-class CFormalList : public IFormalList
+class CFormalList : public IFormalList, public CCoord
 {
 public:
-    CFormalList( CFormalListElement* _decl );
-    CFormalList( std::vector<CFormalListElement*>& _list );
+    CFormalList( CFormalListElement* _decl, int _line );
+    CFormalList( std::vector<CFormalListElement*>& _list, int _line );
 
 	~CFormalList();
 	void Accept( IVisitor* visitor ) const

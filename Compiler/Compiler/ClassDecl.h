@@ -1,10 +1,10 @@
 #pragma once
 #include "common.h"
 
-class CClassDecl : public IClassDecl
+class CClassDecl : public IClassDecl, public CCoord
 {
 public:
-	CClassDecl( std::string, std::string, IVarDeclList*,  IMethodDeclList* );
+	CClassDecl( std::string, std::string, IVarDeclList*,  IMethodDeclList*, int _line );
 	~CClassDecl();
 
 	const std::string Id() const;

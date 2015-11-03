@@ -2,8 +2,10 @@
 
 
 
-CConstructor::CConstructor( std::string _id ) : id( _id )
-{}
+CConstructor::CConstructor( std::string _id, int _line ) : id( _id ) 
+{
+	line = _line;
+}
 
 
 CConstructor::~CConstructor()

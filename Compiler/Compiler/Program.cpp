@@ -1,10 +1,11 @@
 #include "Program.h"
 
 
-CProgram::CProgram( IMainClass* _mainClass, IClassDeclList* _classDeclList ) :
+CProgram::CProgram( IMainClass* _mainClass, IClassDeclList* _classDeclList, int _line ) :
 	mainClass( _mainClass ),
 	classDeclList( _classDeclList )
 {
+	line = _line;
 	assert( _mainClass != nullptr );
 }
 

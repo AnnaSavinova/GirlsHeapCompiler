@@ -1,9 +1,10 @@
 #pragma once
 #include "common.h"
 
-class CId : public IExp {
+class CId : public IExp, public CCoord
+{
 public:
-    CId( std::string );
+    CId( std::string, int _line );
     ~CId();
 
     std::string Id() const; 

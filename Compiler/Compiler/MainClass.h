@@ -1,9 +1,9 @@
 #pragma once
 #include "common.h"
-class CMainClass : public IMainClass
+class CMainClass : public IMainClass, public CCoord
 {
 public:
-	CMainClass( std::string, IStatementList* );
+	CMainClass( std::string, IStatementList*, int _line );
 	~CMainClass();
 
 	const std::string Id() const;

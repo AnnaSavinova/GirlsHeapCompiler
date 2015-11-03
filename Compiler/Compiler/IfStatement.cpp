@@ -1,8 +1,9 @@
 #include "Grammar.h"
 #include "IfStatement.h"
 
-CIfStatement::CIfStatement( IExp * _expression, IStatement* _thenStatement, IStatement * _elseStatement) : expression(_expression), thenStatement(_thenStatement), elseStatement(_elseStatement)
+CIfStatement::CIfStatement( IExp * _expression, IStatement* _thenStatement, IStatement * _elseStatement, int _line ) :  expression(_expression), thenStatement(_thenStatement), elseStatement(_elseStatement)
 {
+	line = _line;
     assert( _expression );
     assert( _thenStatement );
     assert( _elseStatement );
