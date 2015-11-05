@@ -38,9 +38,6 @@
     <ClCompile Include="MethodDeclList.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
-    <ClCompile Include="NewClass.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
     <ClCompile Include="NewInt.cpp">
       <Filter>Исходный код</Filter>
     </ClCompile>
@@ -137,9 +134,6 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="MethodDeclList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="NewClass.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="NewInt.h">

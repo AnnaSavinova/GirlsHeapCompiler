@@ -82,7 +82,6 @@
     <ClCompile Include="MethodCall.cpp" />
     <ClCompile Include="MethodDecl.cpp" />
     <ClCompile Include="MethodDeclList.cpp" />
-    <ClCompile Include="NewClass.cpp" />
     <ClCompile Include="NewInt.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="PrettyPrinter.cpp" />
@@ -127,7 +126,6 @@
     <ClInclude Include="MethodCall.h" />
     <ClInclude Include="MethodDecl.h" />
     <ClInclude Include="MethodDeclList.h" />
-    <ClInclude Include="NewClass.h" />
     <ClInclude Include="NewInt.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="PrettyPrinter.h" />

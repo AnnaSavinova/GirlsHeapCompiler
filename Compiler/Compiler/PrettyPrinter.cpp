@@ -184,11 +184,6 @@ void CPrettyPrinter::Visit( const CMethodDeclList* methodDecls )
 	}
 }
 
-void CPrettyPrinter::Visit( const CNewClass* newClass )
-{
-	std::cout << "new " << newClass->Id() << std::endl;
-}
-
 void CPrettyPrinter::Visit( const CNewInt* newInt )
 {
 	std::cout << "new int[";

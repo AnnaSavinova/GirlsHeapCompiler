@@ -15,7 +15,6 @@ class CMainClass;
 class CMethodCall;
 class CMethodDecl;
 class CMethodDeclList;
-class CNewClass;
 class CNewInt;
 class CNumber;
 class CPrintStatement;
@@ -46,7 +45,6 @@ public:
     virtual void Visit( const CMethodCall* methodCall ) = 0;
     virtual void Visit( const CMethodDecl* methodDecl ) = 0;
     virtual void Visit( const CMethodDeclList* methodDecls ) = 0;
-    virtual void Visit( const CNewClass* newclass ) = 0;
     virtual void Visit( const CNewInt* newInt ) = 0;
     virtual void Visit( const CNumber* number ) = 0;
     virtual void Visit( const CPrintStatement* printStatement ) = 0;

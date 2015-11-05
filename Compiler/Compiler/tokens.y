@@ -4,6 +4,7 @@
 %{
 #include <iostream>
 #include "PrettyPrinter.h"
+#include "SymbTableBuilder.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -104,7 +105,6 @@ ClassDecls: ClassDecl { $$ = new CClassDeclList($1, yylineno); }
 		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >($1)->ClassDeclList();
 		decls.push_back($2);
 		$$ = new CClassDeclList(decls, yylineno); 
-		std::cout << "AAAAAAAAAAAAAA " << yylineno << std::endl;
 	}
 MainClass: CLASS ID '{' PUBLIC STATIC VOID MAIN '(' STRING '['']' ID ')' '{' Statements '}' '}' { $$ = new CMainClass( std::string($2), $15, yylineno ); }
 ClassDecl: CLASS ID '{' VarDecls MethodDecls '}' { $$ = new CClassDecl( std::string($2), "", $4, $5, yylineno ); }
@@ -248,8 +248,11 @@ void yyerror( int*, const char* str )
 int main()
 {
     yyparse(0);
-    CPrettyPrinter p;
-    p.Visit( (CProgram*) program );
+    //CPrettyPrinter printer;
+    //printer.Visit( (CProgram*) program );
+
+	CSymbTableBuilder tableBuilder;
+	tableBuilder.Visit( (CProgram*) program );
 	system("pause");
 	return 0;
 }

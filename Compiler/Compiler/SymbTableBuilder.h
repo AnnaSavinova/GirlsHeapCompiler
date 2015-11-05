@@ -22,7 +22,6 @@ public:
 	void Visit( const CMethodCall* methodCall );
 	void Visit( const CMethodDecl* methodDecl );
 	void Visit( const CMethodDeclList* methodDecls );
-	void Visit( const CNewClass* newclass );
 	void Visit( const CNewInt* newInt );
 	void Visit( const CNumber* number );
 	void Visit( const CPrintStatement* printStatement );

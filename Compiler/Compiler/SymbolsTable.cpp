@@ -69,11 +69,11 @@ CType * CVarInfo::Type()
 
 bool CMethodInfo::AddFormalArg( CSymbol * _name, CType * _type )
 {
-	if( formalArgs.find( name ) != formalArgs.end() ) {
+	if( formalArgs.find( _name ) != formalArgs.end() ) {
 		// уже есть такой аргумент
 		return false;
 	} else {
-		formalArgs[name] = CVarInfo( name, type );
+		formalArgs[_name] = CVarInfo( _name, _type );
 	}
 }
 

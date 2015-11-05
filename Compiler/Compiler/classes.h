@@ -14,7 +14,6 @@
 #include "MethodCall.h"
 #include "MethodDecl.h"
 #include "MethodDeclList.h"
-#include "NewClass.h"
 #include "NewInt.h"
 #include "Number.h"
 #include "PrintStatement.h"

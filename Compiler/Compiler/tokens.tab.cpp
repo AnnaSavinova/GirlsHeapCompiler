@@ -67,13 +67,14 @@
 
 #include <iostream>
 #include "PrettyPrinter.h"
+#include "SymbTableBuilder.h"
 
 extern "C" int yylex();
 extern int yylineno;
 void yyerror( int*, const char* str );
 
 /* Line 371 of yacc.c  */
-#line 77 "tokens.tab.cpp"
+#line 78 "tokens.tab.cpp"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -104,13 +105,13 @@ extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
 /* Line 387 of yacc.c  */
-#line 16 "tokens.y"
+#line 17 "tokens.y"
 
 	#include "classes.h"
 
 
 /* Line 387 of yacc.c  */
-#line 114 "tokens.tab.cpp"
+#line 115 "tokens.tab.cpp"
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -148,7 +149,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 23 "tokens.y"
+#line 24 "tokens.y"
 
 	int ival;
 	char sval[255];
@@ -170,7 +171,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 174 "tokens.tab.cpp"
+#line 175 "tokens.tab.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -198,7 +199,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 202 "tokens.tab.cpp"
+#line 203 "tokens.tab.cpp"
 
 #ifdef short
 # undef short
@@ -522,7 +523,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   100,   100,   101,   102,   103,   109,   110,   111,   112,
+       0,   101,   101,   102,   103,   104,   109,   110,   111,   112,
      113,   114,   115,   116,   117,   118,   119,   124,   125,   130,
      131,   142,   153,   164,   175,   176,   181,   182,   188,   189,
      190,   195,   196,   197,   198,   199,   200,   201,   202,   203,
@@ -1573,30 +1574,29 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 100 "tokens.y"
+#line 101 "tokens.y"
     { (yyval.program) = new CProgram((yyvsp[(1) - (1)].mainClass), nullptr, yylineno); program = (yyval.program); }
     break;
 
   case 3:
 /* Line 1792 of yacc.c  */
-#line 101 "tokens.y"
+#line 102 "tokens.y"
     { (yyval.program) = new CProgram((yyvsp[(1) - (2)].mainClass), (yyvsp[(2) - (2)].classDecls), yylineno); program = (yyval.program); }
     break;
 
   case 4:
 /* Line 1792 of yacc.c  */
-#line 102 "tokens.y"
+#line 103 "tokens.y"
     { (yyval.classDecls) = new CClassDeclList((yyvsp[(1) - (1)].classDecl), yylineno); }
     break;
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 103 "tokens.y"
+#line 104 "tokens.y"
     { 
 		std::vector< IClassDecl* > decls = dynamic_cast< CClassDeclList* >((yyvsp[(1) - (2)].classDecls))->ClassDeclList();
 		decls.push_back((yyvsp[(2) - (2)].classDecl));
 		(yyval.classDecls) = new CClassDeclList(decls, yylineno); 
-		std::cout << "AAAAAAAAAAAAAA " << yylineno << std::endl;
 	}
     break;
 
@@ -2287,8 +2287,11 @@ void yyerror( int*, const char* str )
 int main()
 {
     yyparse(0);
-    CPrettyPrinter p;
-    p.Visit( (CProgram*) program );
+    //CPrettyPrinter printer;
+    //printer.Visit( (CProgram*) program );
+
+	CSymbTableBuilder tableBuilder;
+	tableBuilder.Visit( (CProgram*) program );
 	system("pause");
 	return 0;
 }

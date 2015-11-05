@@ -1,7 +1,7 @@
 #include "SymbTableBuilder.h"
 
 
-CSymbTableBuilder::CSymbTableBuilder()
+CSymbTableBuilder::CSymbTableBuilder() : symbTable( new CTable())
 {
 }
 
@@ -29,8 +29,12 @@ void CSymbTableBuilder::Visit( const CClassDecl * classDecl )
         std::cerr << "At line " << classDecl->Line() << "duplicate definition class " << id->String() << std::endl;
     } else {
         currClass = symbTable->FindClass( id );
-        classDecl->VarDeclList()->Accept( this );
-        classDecl->MethodDeclList()->Accept( this );
+        if( classDecl->VarDeclList() != nullptr ) {
+            classDecl->VarDeclList()->Accept( this );
+        }
+        if( classDecl->MethodDeclList() != nullptr ) {
+            classDecl->MethodDeclList()->Accept( this );
+        }
     }
 }
 
@@ -73,7 +77,10 @@ void CSymbTableBuilder::Visit( const CFormalList * formalList )
             errors.push_back( formalList->Line() );
             std::cerr << "At line: " << formalList->Line() << " formal list without method" << std::endl;
         } else {
-            currMethod->AddFormalArg( formals[i]->id, t );
+            if( !currMethod->AddFormalArg( formals[i]->id, t ) ) {
+                errors.push_back( formalList->Line() );
+                std::cerr << "At line: " << formalList->Line() << " duplicated definition" << std::endl;
+            }
         }
     }
 }
@@ -97,18 +104,34 @@ void CSymbTableBuilder::Visit( const CLengthExp * lengthExp )
 
 void CSymbTableBuilder::Visit( const CMainClass * mainClass )
 {
-    if( !symbTable->AddClass( mainClass->Id(), nullptr ) ) {
+    CSymbol* id = mainClass->Id();
+    if( !symbTable->AddClass( id, nullptr ) ) {
         errors.push_back( mainClass->Line() );
         std::cerr <<  "At line: " << mainClass->Line() << "duplicate class definition" << std::endl;
     } else {
-        mainClass->Statements()->Accept( this );
+        currClass = symbTable->FindClass( id );
+        CSymbol* mainName = symbolStorage.Get( "main" );
+        CType* t = new CType( std::string( "void" ), mainClass->Line() );
+        if( !currClass->AddMethod( mainName, t ) )
+        {
+            errors.push_back( mainClass->Line() );
+            std::cerr <<  "At line: " << mainClass->Line() << "duplicate main method definition" << std::endl;
+        } else {
+            if( mainClass->Statements() != nullptr ) {
+                mainClass->Statements()->Accept( this );
+            }
+        }
     }
 }
 
 void CSymbTableBuilder::Visit( const CMethodCall * methodCall )
 {
-    methodCall->Exp()->Accept( this );
-    methodCall->Args()->Accept( this );
+    if( methodCall->Exp() != nullptr ) {
+        methodCall->Exp()->Accept( this );
+    }
+    if( methodCall->Args() != nullptr ) {
+        methodCall->Args()->Accept( this );
+    }
 }
 
 void CSymbTableBuilder::Visit( const CMethodDecl * methodDecl )
@@ -117,9 +140,108 @@ void CSymbTableBuilder::Visit( const CMethodDecl * methodDecl )
     CType* t = lastTypeValue;
     if( !currClass->AddMethod( methodDecl->Id(), t ) ) {
         errors.push_back( methodDecl->Line() );
-        std::cerr << "At line: " << methodDecl->Line() << " duplicate mathod definition" << std::endl;
+        std::cerr << "At line: " << methodDecl->Line() << " duplicate method definition" << std::endl;
     } else {
         currMethod = currClass->FindMethod( methodDecl->Id() );
+        if( methodDecl->FormalList() != nullptr ) {
+            methodDecl->FormalList()->Accept( this );
+        }
+        if( methodDecl->VarDeclList() != nullptr ) {
+            methodDecl->VarDeclList()->Accept( this );
+        }
+        if( methodDecl->StatementList() != nullptr ) {
+            methodDecl->StatementList()->Accept( this );
+        }
     }
+}
+
+void CSymbTableBuilder::Visit( const CMethodDeclList * methodDecls )
+{
+    std::vector< IMethodDecl* > methodDeclList = methodDecls->MethodDeclList();
+    for( int i = 0; i < methodDeclList.size(); ++i ) {
+        methodDeclList[i]->Accept( this );
+    }
+}
+
+void CSymbTableBuilder::Visit( const CNewInt * newInt )
+{
+    newInt->Expression()->Accept( this );
+}
+
+void CSymbTableBuilder::Visit( const CNumber * number )
+{
+    //nothing to do here
+}
+
+void CSymbTableBuilder::Visit( const CPrintStatement * printStatement )
+{
+    printStatement->Expression()->Accept( this );
+}
+
+void CSymbTableBuilder::Visit( const CProgram * program )
+{
+    if( program != nullptr ) {
+        if( program->ClassDeclList() != nullptr ) {
+            program->ClassDeclList()->Accept( this );
+        }
+        if( program->MainClass() != nullptr ) {
+            program->MainClass()->Accept( this );
+        }
+    }
+}
+
+void CSymbTableBuilder::Visit( const CStatementBlock * statementBlock )
+{
+    statementBlock->Statements()->Accept( this );
+}
+
+void CSymbTableBuilder::Visit( const CStatementList * statementList )
+{
+    std::vector< IStatement* > statements = statementList->StatementList();
+
+    for( int i = 0; i < statements.size(); ++i ) {
+        statements[i]->Accept( this );
+    }
+}
+
+void CSymbTableBuilder::Visit( const CType * type )
+{
+    //TODO хм.. а что тут делать?
+    lastTypeValue = const_cast<CType*>(type);
+}
+
+void CSymbTableBuilder::Visit( const CUnExp * unExp )
+{
+    unExp->Expression()->Accept( this );
+}
+
+void CSymbTableBuilder::Visit( const CVarDecl * varDecl )
+{
+    varDecl->Type()->Accept( this );
+    CType* t = lastTypeValue;
+    CSymbol* id = varDecl->Id();
+    if( currMethod == nullptr ) {
+        if( !currClass->AddVar( id, t ) ) {
+            errors.push_back( varDecl->Line() );
+            std::cerr << "At line: " << varDecl->Line() << " duplicated definition" << std::endl;
+        }
+    } else if( !currMethod->AddLocalArg( id, t ) ) {
+        errors.push_back( varDecl->Line() );
+        std::cerr << "At line: " << varDecl->Line() << " duplicated definition" << std::endl;
+    }
+}
+
+void CSymbTableBuilder::Visit( const CVarDeclList * varDecls )
+{
+    std::vector< IVarDecl* > varDeclList = varDecls->VarDeclList();
+    for( int i = 0; i < varDeclList.size(); ++i ) {
+        varDeclList[i]->Accept( this );
+    }
+}
+
+void CSymbTableBuilder::Visit( const CWhileStatement * whileStatement )
+{
+    whileStatement->Expression()->Accept( this );
+    whileStatement->Statement()->Accept( this );
 }
 

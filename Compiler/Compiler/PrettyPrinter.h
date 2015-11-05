@@ -19,7 +19,6 @@ public:
     void Visit( const CMethodCall* methodCall );
 	void Visit( const CMethodDecl* methodDecl );
 	void Visit( const CMethodDeclList* methodDecls);
-	void Visit( const CNewClass* newClass );
 	void Visit( const CNewInt* newInt );
     void Visit( const CNumber* number );
 	void Visit( const CPrintStatement* printStatement );
