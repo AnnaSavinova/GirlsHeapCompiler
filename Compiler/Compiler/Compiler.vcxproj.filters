@@ -1,202 +1,209 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="tokens.tab.cpp" />
     <ClCompile Include="AssignmentStatement.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="BinExp.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="ClassDecl.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="ClassDeclList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="ExpList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="FormalList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="IfStatement.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="LengthExp.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="MainClass.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodDecl.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodDeclList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="NewInt.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="PrintStatement.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="Program.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="StatementList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="tokens.flex.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="VarDecl.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="UnExp.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="VarDeclList.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="WhileStatement.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="PrettyPrinter.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="Type.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="ElementAssignment.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="Number.cpp">
-      <Filter>Исходный код</Filter>
-    </ClCompile>
-    <ClCompile Include="Id.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="Constructor.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementAssignment.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpList.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="FormalList.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Id.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="IfStatement.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="LengthExp.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainClass.cpp">
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="MethodCall.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodDecl.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodDeclList.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="NewInt.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Number.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintStatement.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="StatementBlock.cpp">
-      <Filter>Исходный код</Filter>
+      <Filter>Исходный код\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="SymbTableBuilder.cpp" />
-    <ClCompile Include="SymbolsTable.cpp" />
+    <ClCompile Include="StatementList.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Type.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnExp.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="VarDecl.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="VarDeclList.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="WhileStatement.cpp">
+      <Filter>Исходный код\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="PrettyPrinter.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolsTable.cpp">
+      <Filter>Исходный код\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="tokens.flex.cpp">
+      <Filter>Исходный код\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbTableBuilder.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="tokens.tab.cpp">
+      <Filter>Исходный код\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeChecker.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tokens.tab.hpp" />
     <ClInclude Include="AssignmentStatement.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="BinExp.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="ClassDecl.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="ClassDeclList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="classes.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="ExpList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="FormalList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Grammar.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="IfStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="LengthExp.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="MainClass.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="MethodDecl.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="MethodDeclList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="NewInt.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="PrintStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="StatementList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Program.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="UnExp.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="VarDecl.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="VarDeclList.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="WhileStatement.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="PrettyPrinter.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="ElementAssignment.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Number.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Constructor.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementAssignment.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpList.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="FormalList.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Id.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="IfStatement.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="LengthExp.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="MainClass.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="MethodCall.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodDecl.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodDeclList.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="NewInt.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Number.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintStatement.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="StatementBlock.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="IVisitor.h">
-      <Filter>Заголовочные файлы</Filter>
+    <ClInclude Include="StatementList.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="SymbolsTable.h">
-      <Filter>Заголовочные файлы</Filter>
+    <ClInclude Include="UnExp.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="VarDecl.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="VarDeclList.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="WhileStatement.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="PrettyPrinter.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbTableBuilder.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="classes.h">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Grammar.h">
+      <Filter>Заголовочные файлы\Common</Filter>
     </ClInclude>
     <ClInclude Include="Symbol.h">
-      <Filter>Заголовочные файлы</Filter>
+      <Filter>Заголовочные файлы\Common</Filter>
     </ClInclude>
-    <ClInclude Include="SymbTableBuilder.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="tokens.y" />
-  </ItemGroup>
-  <ItemGroup>
-    <Flex Include="tokens.l" />
+    <ClInclude Include="SymbolsTable.h">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="tokens.tab.hpp">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeChecker.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="IVisitor.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">
@@ -205,5 +212,33 @@
     <Filter Include="Исходный код">
       <UniqueIdentifier>{ad54d104-1740-4005-ac7b-660adcfcfd61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Nodes">
+      <UniqueIdentifier>{5d25ff74-3de8-4f3b-aff1-a19efea8bab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Visitors">
+      <UniqueIdentifier>{f9b17409-4221-4026-bc95-739e48bc5c4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Common">
+      <UniqueIdentifier>{f1a488d8-1ec1-407f-b252-afadcb340b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходный код\Nodes">
+      <UniqueIdentifier>{c18da726-a255-486e-95d0-fe0999ac0570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходный код\Visitors">
+      <UniqueIdentifier>{a7335352-8d6e-4132-8876-3f1eb6f1efcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходный код\Common">
+      <UniqueIdentifier>{51d003aa-c697-4406-84b6-e6657cc5aefd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Flex Include="tokens.l">
+      <Filter>Исходный код\Common</Filter>
+    </Flex>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="tokens.y">
+      <Filter>Исходный код\Common</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

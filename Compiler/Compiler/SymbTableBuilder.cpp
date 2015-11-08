@@ -10,6 +10,11 @@ CSymbTableBuilder::~CSymbTableBuilder()
 {
 }
 
+const CTable * CSymbTableBuilder::GetSymbolTable() const
+{
+	return symbTable;
+}
+
 void CSymbTableBuilder::Visit( const CAssignmentStatement * assigmentStatement )
 {
     assigmentStatement->Expression()->Accept( this );

@@ -1838,7 +1838,7 @@ yyreduce:
   case 35:
 /* Line 1792 of yacc.c  */
 #line 199 "tokens.y"
-    { (yyval.type) = new CType( "id", yylineno ); }
+    { (yyval.type) = new CType( (yyvsp[(1) - (1)].sval), yylineno ); }
     break;
 
   case 36:

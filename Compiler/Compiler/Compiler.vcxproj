@@ -87,7 +87,6 @@
     <ClCompile Include="PrettyPrinter.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="IfStatement.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="PrintStatement.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StatementList.cpp" />
@@ -96,6 +95,7 @@
     <ClCompile Include="tokens.flex.cpp" />
     <ClCompile Include="tokens.tab.cpp" />
     <ClCompile Include="Type.cpp" />
+    <ClCompile Include="TypeChecker.cpp" />
     <ClCompile Include="UnExp.cpp" />
     <ClCompile Include="VarDecl.cpp" />
     <ClCompile Include="VarDeclList.cpp" />
@@ -140,6 +140,7 @@
     <ClInclude Include="SymbolsTable.h" />
     <ClInclude Include="SymbTableBuilder.h" />
     <ClInclude Include="tokens.tab.hpp" />
+    <ClInclude Include="TypeChecker.h" />
     <ClInclude Include="UnExp.h" />
     <ClInclude Include="VarDecl.h" />
     <ClInclude Include="VarDeclList.h" />

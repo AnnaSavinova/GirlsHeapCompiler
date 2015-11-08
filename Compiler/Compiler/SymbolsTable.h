@@ -11,8 +11,8 @@ public:
 	{
 	}
 
-	CSymbol* Name();
-	CType* Type();
+	CSymbol* Name() const;
+	CType* Type() const;
 
 private:
 	CSymbol* name;
@@ -24,8 +24,8 @@ class CMethodInfo
 public:
 	CMethodInfo() {}
 	CMethodInfo( CSymbol* _name, CType* _type,
-		std::map<CSymbol*, CVarInfo> _formalArgs,
-		std::map<CSymbol*, CVarInfo> _localArgs ) :
+		std::map<CSymbol*, CVarInfo*> _formalArgs,
+		std::map<CSymbol*, CVarInfo*> _localArgs ) :
 		name( _name ), type( _type ), formalArgs( _formalArgs ), localArgs( _localArgs )
 	{
 	}
@@ -37,19 +37,19 @@ public:
 	bool AddFormalArg( CSymbol* name, CType* type );
 	bool AddLocalArg( CSymbol* name, CType* type );
 
-	CVarInfo* FindFormalArg( CSymbol* name );
-	CVarInfo* FindLocalArg( CSymbol* name );
+	CVarInfo* FindFormalArg( CSymbol* name ) const;
+	CVarInfo* FindLocalArg( CSymbol* name ) const;
 
-	CSymbol* Name();
-	std::map<CSymbol*, CVarInfo>& FormalArgs();
-	std::map<CSymbol*, CVarInfo>& LocalArgs();
-	CType* Type();
+	CSymbol* Name() const;
+	std::map<CSymbol*, CVarInfo*>& FormalArgs();
+	std::map<CSymbol*, CVarInfo*>& LocalArgs();
+	CType* Type() const;
 
 private:
 	CSymbol* name;
 	CType* type;
-	std::map<CSymbol*, CVarInfo> formalArgs;
-	std::map<CSymbol*, CVarInfo> localArgs;
+	std::map<CSymbol*, CVarInfo*> formalArgs;
+	std::map<CSymbol*, CVarInfo*> localArgs;
 };
 
 class CClassInfo
@@ -57,8 +57,8 @@ class CClassInfo
 public:
 	CClassInfo() {}
 	CClassInfo( CSymbol* _name, CSymbol* _baseClassName,
-		std::map<CSymbol*, CVarInfo> _varList,
-		std::map<CSymbol*, CMethodInfo> _methodList ) :
+		std::map<CSymbol*, CVarInfo*> _varList,
+		std::map<CSymbol*, CMethodInfo*> _methodList ) :
 		name( _name ), baseClassName( _baseClassName ), varList( _varList ), methodList( _methodList )
 	{}
 
@@ -67,20 +67,20 @@ public:
 	CClassInfo( CSymbol* _name, CSymbol* _baseClassName ) : name( _name ), baseClassName( _baseClassName )
 	{}
 
-	CSymbol* Name();
-	std::map<CSymbol*, CVarInfo>& VarList();
-	std::map<CSymbol*, CMethodInfo>& MethodList();
+	CSymbol* Name() const;
+	std::map<CSymbol*, CVarInfo*>& VarList();
+	std::map<CSymbol*, CMethodInfo*>& MethodList();
 	bool AddVar( CSymbol* name, CType* type );
 	bool AddMethod( CSymbol* name, CType* type );
 
-	CVarInfo* FindVar( CSymbol* name );
-	CMethodInfo* FindMethod( CSymbol* name );
+	CVarInfo* FindVar( CSymbol* name ) const;
+	CMethodInfo* FindMethod( CSymbol* name ) const;
 
 private:
 	CSymbol* name;
 	CSymbol* baseClassName;
-	std::map<CSymbol*, CVarInfo> varList;
-	std::map<CSymbol*, CMethodInfo> methodList;
+	std::map<CSymbol*, CVarInfo*> varList;
+	std::map<CSymbol*, CMethodInfo*> methodList;
 };
 
 class CTable
@@ -88,8 +88,8 @@ class CTable
 public:
 //	bool AddClass( CSymbol* id );
 	bool AddClass( CSymbol* id, CSymbol* baseClassId );
-	CClassInfo* FindClass( CSymbol* id );
+	CClassInfo* FindClass( CSymbol* id ) const;
 
 private:
-	std::map<CSymbol*, CClassInfo> classesList;
+	std::map<CSymbol*, CClassInfo*> classesList;
 };

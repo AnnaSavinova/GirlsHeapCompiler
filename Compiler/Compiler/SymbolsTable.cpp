@@ -1,16 +1,16 @@
 #include "SymbolsTable.h"
 
-CSymbol * CClassInfo::Name()
+CSymbol * CClassInfo::Name() const
 {
 	return name;
 }
 
-std::map<CSymbol*, CVarInfo>& CClassInfo::VarList()
+std::map<CSymbol*, CVarInfo*>& CClassInfo::VarList()
 {
 	return varList;
 }
 
-std::map<CSymbol*, CMethodInfo>& CClassInfo::MethodList()
+std::map<CSymbol*, CMethodInfo*>& CClassInfo::MethodList()
 {
 	return methodList;
 }
@@ -21,7 +21,7 @@ bool CClassInfo::AddVar( CSymbol * name, CType * type )
 		// уже есть такая переменная
 		return false;
 	} else {
-		varList[name] = CVarInfo( name, type );
+		varList[name] = new CVarInfo( name, type );
 	}
 }
 
@@ -31,38 +31,38 @@ bool CClassInfo::AddMethod( CSymbol * name, CType * type )
 		// уже есть такой метод
 		return false;
 	} else {
-		methodList[name] = CMethodInfo( name, type );
+		methodList[name] = new CMethodInfo( name, type );
 	}
 }
 
-CVarInfo * CClassInfo::FindVar( CSymbol * name )
+CVarInfo * CClassInfo::FindVar( CSymbol * name ) const
 {
 	auto found = varList.find( name );
 	if( found == varList.end() ) {
 		// не нашел
 		return nullptr;
 	} else {
-		return &(found->second);
+		return found->second;
 	}
 }
 
-CMethodInfo * CClassInfo::FindMethod( CSymbol * name )
+CMethodInfo * CClassInfo::FindMethod( CSymbol * name ) const
 {
 	auto found = methodList.find( name );
 	if( found == methodList.end() ) {
 		// не нашел такой метод
 		return false;
 	} else {
-		return &(found->second);
+		return found->second;
 	}
 }
 
-CSymbol * CVarInfo::Name()
+CSymbol * CVarInfo::Name() const
 {
 	return name;
 }
 
-CType * CVarInfo::Type()
+CType * CVarInfo::Type() const
 {
 	return type;
 }
@@ -73,7 +73,7 @@ bool CMethodInfo::AddFormalArg( CSymbol * _name, CType * _type )
 		// уже есть такой аргумент
 		return false;
 	} else {
-		formalArgs[_name] = CVarInfo( _name, _type );
+		formalArgs[_name] = new CVarInfo( _name, _type );
 	}
 }
 
@@ -83,46 +83,46 @@ bool CMethodInfo::AddLocalArg( CSymbol * name, CType * type )
 		// уже есть такой аргумент
 		return false;
 	} else {
-		localArgs[name] = CVarInfo( name, type );
+		localArgs[name] = new CVarInfo( name, type );
 	}
 }
 
-CVarInfo * CMethodInfo::FindFormalArg( CSymbol * name )
+CVarInfo * CMethodInfo::FindFormalArg( CSymbol * name ) const
 {
 	auto found = formalArgs.find( name );
 	if( found == formalArgs.end() ) {
 		return nullptr;
 	} else {
-		return &(found->second);
+		return found->second;
 	}
 }
 
-CVarInfo * CMethodInfo::FindLocalArg( CSymbol * name )
+CVarInfo * CMethodInfo::FindLocalArg( CSymbol * name ) const
 {
 	auto found = localArgs.find( name );
 	if( found == localArgs.end() ) {
 		return nullptr;
 	} else {
-		return &(found->second);
+		return found->second;
 	}
 }
 
-CSymbol * CMethodInfo::Name()
+CSymbol * CMethodInfo::Name() const
 {
 	return name;
 }
 
-std::map<CSymbol*, CVarInfo>& CMethodInfo::FormalArgs()
+std::map<CSymbol*, CVarInfo*>& CMethodInfo::FormalArgs()
 {
 	return formalArgs;
 }
 
-std::map<CSymbol*, CVarInfo>& CMethodInfo::LocalArgs()
+std::map<CSymbol*, CVarInfo*>& CMethodInfo::LocalArgs()
 {
 	return localArgs;
 }
 
-CType * CMethodInfo::Type()
+CType * CMethodInfo::Type() const
 {
 	return type;
 }
@@ -143,17 +143,17 @@ bool CTable::AddClass( CSymbol * id, CSymbol * baseClassId )
 		// уже есть такой класс
 		return false;
 	} else {
-		classesList[id] = CClassInfo( id, baseClassId );
+		classesList[id] = new CClassInfo( id, baseClassId );
 	}
 
 }
 
-CClassInfo* CTable::FindClass( CSymbol * id )
+CClassInfo* CTable::FindClass( CSymbol * id ) const
 {
 	auto found = classesList.find( id );
 	if( found == classesList.end() ) {
 		return nullptr; //
 	} else {
-		return &(found->second);
+		return found->second;
 	}
 }

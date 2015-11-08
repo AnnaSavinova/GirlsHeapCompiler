@@ -2,12 +2,11 @@
 #include "common.h"
 #include "SymbolsTable.h"
 
-class CSymbTableBuilder : public IVisitor
+class CTypeChecker :
+	public IVisitor
 {
 public:
-	CSymbTableBuilder();
-	~CSymbTableBuilder();
-	const CTable* GetSymbolTable() const;
+	CTypeChecker( const CTable* symbTable );
 	void Visit( const CAssignmentStatement* assigmentStatement );
 	void Visit( const CBinExp* binExp );
 	void Visit( const CClassDecl* classDecl );
@@ -35,11 +34,13 @@ public:
 	void Visit( const CVarDeclList* varDecls );
 	void Visit( const CWhileStatement* whileStatement );
 private:
-    CClassInfo* currClass;
-    CMethodInfo* currMethod;
-    CTable* symbTable;
-    CType* lastTypeValue;
+	CClassInfo* currClass;
+	CMethodInfo* currMethod;
+	const CTable* symbTable;
+	CType* lastTypeValue;
 
-    std::vector<int> errors;
+	std::vector<int> errors;
+
+	CVarInfo* findVar( CSymbol* id );
 };
 
