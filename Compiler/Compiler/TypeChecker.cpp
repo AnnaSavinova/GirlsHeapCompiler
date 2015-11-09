@@ -23,13 +23,13 @@ void CTypeChecker::Visit( const CAssignmentStatement * assigmentStatement )
 	CSymbol* id = assigmentStatement->Id();
 	if( findVar( id ) == nullptr ) {
 		errors.push_back( assigmentStatement->Line() );
-		std::cerr << "At line: " << assigmentStatement->Line() << " undefined variable " << id->String() << std::endl;
+		std::cerr << "At line " << assigmentStatement->Line() << ": undefined variable " << id->String() << std::endl;
 	} else {
 		std::string varType = currClass->FindVar( id )->Type()->Type();
 		std::string exprType = lastTypeValue->Type();
 		if( varType != exprType ) {
 			errors.push_back( assigmentStatement->Line() );
-			std::cerr << "At line: " << assigmentStatement->Line() << " type mismatch: expected " << varType << ", found " << exprType << std::endl;
+			std::cerr << "At line " << assigmentStatement->Line() << ": type mismatch: expected " << varType << ", found " << exprType << std::endl;
 		}
 	}
 }
@@ -42,7 +42,7 @@ void CTypeChecker::Visit( const CBinExp * binExp )
 	std::string secondType = lastTypeValue->Type();
 	if( firstType != secondType ) {
 		errors.push_back( binExp->Line() );
-		std::cerr << "At line: " << binExp->Line() << " invalid operation between " << firstType << " and " << secondType << std::endl;
+		std::cerr << "At line " << binExp->Line() << ": invalid operation between " << firstType << " and " << secondType << std::endl;
 	}
 }
 
@@ -50,10 +50,10 @@ void CTypeChecker::Visit( const CClassDecl * classDecl )
 {
 	if( symbTable->FindClass( classDecl->Id() ) == nullptr ) {
 		errors.push_back( classDecl->Line() );
-		std::cerr << "At line: " << classDecl->Line() << " undefined class " << classDecl->Id()->String() << std::endl;
+		std::cerr << "At line " << classDecl->Line() << ": undefined class " << classDecl->Id()->String() << std::endl;
 	} else if( classDecl->ParentId() != nullptr && symbTable->FindClass( classDecl->ParentId() ) == nullptr ) {
 		errors.push_back( classDecl->Line() );
-		std::cerr << "At line: " << classDecl->Line() << " undefined base class " << classDecl->ParentId()->String() << std::endl;
+		std::cerr << "At line " << classDecl->Line() << ": undefined base class " << classDecl->ParentId()->String() << std::endl;
 	} else {
 		currClass = symbTable->FindClass( classDecl->Id() );
 		if( classDecl->VarDeclList() != nullptr ) {
@@ -78,7 +78,7 @@ void CTypeChecker::Visit( const CConstructor * constructor )
 	CSymbol* id = constructor->Id();
 	if( symbTable->FindClass( id ) == nullptr ) {
 		errors.push_back( constructor->Line() );
-		std::cerr << "At line: " << constructor->Line() << " class " << id << " not found" << std::endl;
+		std::cerr << "At line " << constructor->Line() << ": class " << id << " not found" << std::endl;
 	}
 	lastTypeValue = new CType( id->String(), constructor->Line() );
 }
@@ -88,11 +88,11 @@ void CTypeChecker::Visit( const CElementAssignment * elemAssign )
 	CVarInfo* var = findVar( elemAssign->Id() );
 	if( var == nullptr ) {
 		errors.push_back( elemAssign->Line() );
-		std::cerr << "At line: " << elemAssign->Line() << " undefined variable " << elemAssign->Id()->String() << std::endl;
+		std::cerr << "At line " << elemAssign->Line() << ": undefined variable " << elemAssign->Id()->String() << std::endl;
 	} else {
 		if( var->Type()->Type() != "int[]" ) {
 			errors.push_back( elemAssign->Line() );
-			std::cerr << "At line: " << elemAssign->Line() << " variable " << elemAssign->Id()->String() << " isn't an array" << std::endl;
+			std::cerr << "At line " << elemAssign->Line() << ": variable " << elemAssign->Id()->String() << " isn't an array" << std::endl;
 		} else {
 			elemAssign->Exp1()->Accept( this );
 			std::string leftType = lastTypeValue->Type(); // int
@@ -101,10 +101,10 @@ void CTypeChecker::Visit( const CElementAssignment * elemAssign )
 			std::string rightType = lastTypeValue->Type(); // int
 			if( leftType != "int" ) {
 				errors.push_back( elemAssign->Line() );
-				std::cerr << "At line: " << elemAssign->Line() << " expected [int], found " << "[" << leftType << "]" << std::endl;
+				std::cerr << "At line " << elemAssign->Line() << ": expected [int], found " << "[" << leftType << "]" << std::endl;
 			} else if( rightType != "int" ) {
 				errors.push_back( elemAssign->Line() );
-				std::cerr << "At line: " << elemAssign->Line() << " expected int in right part of expression, found " << "[" << leftType << "]" << std::endl;
+				std::cerr << "At line " << elemAssign->Line() << ": expected int in right part of expression, found " << "[" << leftType << "]" << std::endl;
 			}
 		}
 	}
@@ -128,11 +128,11 @@ void CTypeChecker::Visit( const CFormalList * formalList )
 
 		if( currMethod == nullptr ) {
 			errors.push_back( formalList->Line() );
-			std::cerr << "At line: " << formalList->Line() << " formal list without method" << std::endl;
+			std::cerr << "At line " << formalList->Line() << ": formal list without method" << std::endl;
 		} else {
 			if( currMethod->FindFormalArg( formals[i]->id ) == nullptr ) {
 				errors.push_back( formalList->Line() );
-				std::cerr << "At line: " << formalList->Line() << " undefined argument " << formals[i]->id << std::endl;
+				std::cerr << "At line " << formalList->Line() << ": undefined argument " << formals[i]->id << std::endl;
 			}
 		}
 	}
@@ -140,7 +140,19 @@ void CTypeChecker::Visit( const CFormalList * formalList )
 
 void CTypeChecker::Visit( const CId * id )
 {
-	lastTypeValue = new CType( id->Id()->String(), id->Line() );
+	// если это имя класса
+  if (symbTable->FindClass(id->Id())) {
+    lastTypeValue = new CType(id->Id()->String(), id->Line());
+    return;
+  }
+
+  // иначе это имя переменной
+  if (currClass->FindVar(id->Id()) != nullptr)
+    lastTypeValue = currClass->FindVar(id->Id())->Type();
+  else if (currMethod->FindFormalArg(id->Id()) != nullptr)
+    lastTypeValue = currMethod->FindFormalArg(id->Id())->Type();
+  else
+    std::cerr << "At line " << id->Line() << ": undefined id " << id->Id()->String() << std::endl;
 }
 
 void CTypeChecker::Visit( const CIfStatement * ifStatement )
@@ -148,7 +160,7 @@ void CTypeChecker::Visit( const CIfStatement * ifStatement )
 	ifStatement->Expression()->Accept( this );
 	if( lastTypeValue->Type() != "boolean" ) {
 		errors.push_back( ifStatement->Line() );
-		std::cerr << "At line: " << ifStatement->Line() << " expected boolean expression, found " << lastTypeValue->Type() << std::endl;
+		std::cerr << "At line " << ifStatement->Line() << ": expected boolean expression, found " << lastTypeValue->Type() << std::endl;
 	}
 	ifStatement->ThenStatement()->Accept( this );
 	ifStatement->ElseStatement()->Accept( this );
@@ -159,7 +171,7 @@ void CTypeChecker::Visit( const CLengthExp * lengthExp )
 	lengthExp->Expression()->Accept( this );
 	if( lastTypeValue->Type() != "int[]" ) {
 		errors.push_back( lengthExp->Line() );
-		std::cerr << "At line: " << lengthExp->Line() << " expected array int[], found " << lastTypeValue->Type() << std::endl;
+		std::cerr << "At line " << lengthExp->Line() << ": expected array int[], found " << lastTypeValue->Type() << std::endl;
 	}
 }
 
@@ -168,7 +180,7 @@ void CTypeChecker::Visit( const CMainClass * mainClass )
 	CSymbol* id = mainClass->Id();
 	if( symbTable->FindClass( id ) == nullptr ) {
 		errors.push_back( mainClass->Line() );
-		std::cerr << "At line: " << mainClass->Line() << " undefined class " << id << std::endl;
+		std::cerr << "At line " << mainClass->Line() << ": undefined class " << id << std::endl;
 	} else {
 		currClass = symbTable->FindClass( id );
 		if( mainClass->Statements() != nullptr ) {
@@ -185,12 +197,12 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 	CClassInfo* classInfo = symbTable->FindClass( symbolStorage.Get( lastTypeValue->Type() ) );
 	if( classInfo == nullptr ) {
 		errors.push_back( methodCall->Line() );
-		std::cerr << "At line: " << methodCall->Line() << " undefined class " << lastTypeValue->Type() << std::endl;
+		std::cerr << "At line " << methodCall->Line() << ": undefined class " << lastTypeValue->Type() << std::endl;
 	} else {
 		CMethodInfo* methodInfo = classInfo->FindMethod( methodCall->Id() );
 		if( methodInfo == nullptr ) {
 			errors.push_back( methodCall->Line() );
-			std::cerr << "At line: " << methodCall->Line() << " undefined method " << methodCall->Id() << std::endl;
+			std::cerr << "At line " << methodCall->Line() << ": undefined method " << methodCall->Id() << std::endl;
 		} else {
 			// TODO как здесь понять тип аргументов, их количество?
 			currMethod = methodInfo;
@@ -220,7 +232,7 @@ void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 	std::string methodType = lastTypeValue->Type();
 	if( methodType != returnType ) {
 		errors.push_back( methodDecl->Line() );
-		std::cerr << "At line: " << methodDecl->Line() << " return value type mismatch method type, expected " << methodType << ", found " << returnType << std::endl;
+		std::cerr << "At line " << methodDecl->Line() << ": return value type mismatch method type, expected " << methodType << ", found " << returnType << std::endl;
 	}
 }
 
@@ -237,7 +249,7 @@ void CTypeChecker::Visit( const CNewInt * newInt )
 	newInt->Expression()->Accept( this );
 	if( lastTypeValue->Type() != "int" ) {
 		errors.push_back( newInt->Line() );
-		std::cerr << "At line: " << newInt->Line() << " expected [int], found " << "[" << lastTypeValue->Type() << "]" << std::endl;
+		std::cerr << "At line " << newInt->Line() << ": expected [int], found " << "[" << lastTypeValue->Type() << "]" << std::endl;
 	}
 	lastTypeValue = new CType( "int[]", newInt->Line() );
 }
@@ -293,7 +305,7 @@ void CTypeChecker::Visit( const CVarDecl * varDecl )
 	CVarInfo* var = findVar( varDecl->Id() );
 	if( var == nullptr ) {
 		errors.push_back( varDecl->Line() );
-		std::cerr << "At line: " << varDecl->Line() << " undefined variable " << varDecl->Id()->String() << std::endl;
+		std::cerr << "At line " << varDecl->Line() << ": undefined variable " << varDecl->Id()->String() << std::endl;
 	} else {
 		lastTypeValue = var->Type(); // ??
 	}
@@ -312,7 +324,7 @@ void CTypeChecker::Visit( const CWhileStatement * whileStatement )
 	whileStatement->Expression()->Accept( this );
 	if( lastTypeValue->Type() != "boolean" ) {
 		errors.push_back( whileStatement->Line() );
-		std::cerr << "At line: " << whileStatement->Line() << " expected boolean expression, found " << lastTypeValue->Type() << std::endl;
+		std::cerr << "At line " << whileStatement->Line() << ": expected boolean expression, found " << lastTypeValue->Type() << std::endl;
 	}
 	whileStatement->Statement()->Accept( this );
 }

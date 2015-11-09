@@ -5,6 +5,7 @@
 #include <iostream>
 #include "PrettyPrinter.h"
 #include "SymbTableBuilder.h"
+#include "TypeChecker.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -253,6 +254,10 @@ int main()
 
 	CSymbTableBuilder tableBuilder;
 	tableBuilder.Visit( (CProgram*) program );
+
+	CTypeChecker checker( tableBuilder.GetSymbolTable() );
+	checker.Visit( (CProgram*) program );
+
 	system("pause");
 	return 0;
 }

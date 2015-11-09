@@ -2,11 +2,13 @@
 
 CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls, int _line ) :
 	id( symbolStorage.Get(_id) ),
-	parentId( symbolStorage.Get(_parentId) ),
 	varDecls( _varDecls ),
 	methodDecls( _methodDecls )
 {
-	// assert( _id != nullptr );
+  if (_parentId.size() > 0)
+    parentId = symbolStorage.Get(_parentId);
+  else
+    parentId = nullptr;
 }
 
 CClassDecl::~CClassDecl()

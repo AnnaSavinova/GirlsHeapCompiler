@@ -1,0 +1,10 @@
+At line 11: undefined id num
+At line 14: expected boolean expression, found int
+At line 12: undefined variable num_aux
+At line 14: undefined id num
+At line 14: undefined id this
+At line 14: undefined class int
+At line 14: undefined variable num_aux
+At line 15: undefined id num_aux
+At line 3: class 00523F68 not found
+At line 3: undefined class Fuck
