@@ -25,7 +25,7 @@ void CTypeChecker::Visit( const CAssignmentStatement * assigmentStatement )
 		errors.push_back( assigmentStatement->Line() );
 		std::cerr << "At line " << assigmentStatement->Line() << ": undefined variable " << id->String() << std::endl;
 	} else {
-		std::string varType = currClass->FindVar( id )->Type()->Type();
+		std::string varType = findVar( id )->Type()->Type();
 		std::string exprType = lastTypeValue->Type();
 		if( varType != exprType ) {
 			errors.push_back( assigmentStatement->Line() );
@@ -44,6 +44,11 @@ void CTypeChecker::Visit( const CBinExp * binExp )
 		errors.push_back( binExp->Line() );
 		std::cerr << "At line " << binExp->Line() << ": invalid operation between " << firstType << " and " << secondType << std::endl;
 	}
+  std::string op = binExp->Operation();
+  if (op == "<" || op == ">" || op == "<=" || op == ">=" /* и так далее... */)
+    lastTypeValue = new CType("boolean", binExp->Line());
+  else
+    lastTypeValue = new CType(firstType, binExp->Line());
 }
 
 void CTypeChecker::Visit( const CClassDecl * classDecl )
@@ -78,7 +83,7 @@ void CTypeChecker::Visit( const CConstructor * constructor )
 	CSymbol* id = constructor->Id();
 	if( symbTable->FindClass( id ) == nullptr ) {
 		errors.push_back( constructor->Line() );
-		std::cerr << "At line " << constructor->Line() << ": class " << id << " not found" << std::endl;
+		std::cerr << "At line " << constructor->Line() << ": class " << id->String() << " not found" << std::endl;
 	}
 	lastTypeValue = new CType( id->String(), constructor->Line() );
 }
@@ -113,8 +118,17 @@ void CTypeChecker::Visit( const CElementAssignment * elemAssign )
 void CTypeChecker::Visit( const CExpList * expList )
 {
 	std::vector<IExp*> exps = expList->Expressions();
+  if (exps.size() != currMethod->FormalArgs().size()) {
+    std::cerr << "At line " << expList->Line() << ": expected " << exps.size() << " arguments, found " << currMethod->FormalArgs().size() << std::endl;
+    return;
+  }
+
 	for( int i = 0; i < exps.size(); ++i ) {
-		exps[i]->Accept( this );
+    std::string expectedType = currMethod->FormalArgsOrdered()[i]->Type();
+    exps[i]->Accept(this);
+    if (lastTypeValue->Type() != expectedType) {
+      std::cerr << "At line " << expList->Line() << ": in argument " << i << " expected " << expectedType << ", found " << lastTypeValue->Type() << std::endl;
+    }
 	}
 }
 
@@ -147,10 +161,8 @@ void CTypeChecker::Visit( const CId * id )
   }
 
   // иначе это имя переменной
-  if (currClass->FindVar(id->Id()) != nullptr)
-    lastTypeValue = currClass->FindVar(id->Id())->Type();
-  else if (currMethod->FindFormalArg(id->Id()) != nullptr)
-    lastTypeValue = currMethod->FindFormalArg(id->Id())->Type();
+  if (findVar(id->Id()) != nullptr)
+    lastTypeValue = findVar(id->Id())->Type();
   else
     std::cerr << "At line " << id->Line() << ": undefined id " << id->Id()->String() << std::endl;
 }
@@ -180,7 +192,7 @@ void CTypeChecker::Visit( const CMainClass * mainClass )
 	CSymbol* id = mainClass->Id();
 	if( symbTable->FindClass( id ) == nullptr ) {
 		errors.push_back( mainClass->Line() );
-		std::cerr << "At line " << mainClass->Line() << ": undefined class " << id << std::endl;
+		std::cerr << "At line " << mainClass->Line() << ": undefined class " << id->String() << std::endl;
 	} else {
 		currClass = symbTable->FindClass( id );
 		if( mainClass->Statements() != nullptr ) {
@@ -191,7 +203,7 @@ void CTypeChecker::Visit( const CMainClass * mainClass )
 
 void CTypeChecker::Visit( const CMethodCall * methodCall )
 {
-	if( methodCall->Exp() != nullptr ) {
+  if( methodCall->Exp() != nullptr ) {
 		methodCall->Exp()->Accept( this );
 	}
 	CClassInfo* classInfo = symbTable->FindClass( symbolStorage.Get( lastTypeValue->Type() ) );
@@ -202,7 +214,7 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 		CMethodInfo* methodInfo = classInfo->FindMethod( methodCall->Id() );
 		if( methodInfo == nullptr ) {
 			errors.push_back( methodCall->Line() );
-			std::cerr << "At line " << methodCall->Line() << ": undefined method " << methodCall->Id() << std::endl;
+			std::cerr << "At line " << methodCall->Line() << ": undefined method " << methodCall->Id()->String() << std::endl;
 		} else {
 			// TODO как здесь понять тип аргументов, их количество?
 			currMethod = methodInfo;

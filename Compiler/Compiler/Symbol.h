@@ -32,4 +32,4 @@ private:
 	std::map<std::string, CSymbol*> symbols;
 };
 
-static CStorage symbolStorage;
+extern CStorage symbolStorage;

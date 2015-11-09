@@ -43,6 +43,7 @@ public:
 	CSymbol* Name() const;
 	std::map<CSymbol*, CVarInfo*>& FormalArgs();
 	std::map<CSymbol*, CVarInfo*>& LocalArgs();
+  std::vector<CType*>& FormalArgsOrdered();
 	CType* Type() const;
 
 private:
@@ -50,6 +51,7 @@ private:
 	CType* type;
 	std::map<CSymbol*, CVarInfo*> formalArgs;
 	std::map<CSymbol*, CVarInfo*> localArgs;
+  std::vector<CType*> formalArgsOrdered;
 };
 
 class CClassInfo

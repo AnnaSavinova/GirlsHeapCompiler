@@ -74,6 +74,7 @@ bool CMethodInfo::AddFormalArg( CSymbol * _name, CType * _type )
 		return false;
 	} else {
 		formalArgs[_name] = new CVarInfo( _name, _type );
+    formalArgsOrdered.push_back(_type);
 	}
 }
 
@@ -122,6 +123,11 @@ std::map<CSymbol*, CVarInfo*>& CMethodInfo::LocalArgs()
 	return localArgs;
 }
 
+std::vector<CType*>& CMethodInfo::FormalArgsOrdered()
+{
+  return formalArgsOrdered;
+}
+
 CType * CMethodInfo::Type() const
 {
 	return type;
@@ -157,3 +163,5 @@ CClassInfo* CTable::FindClass( CSymbol * id ) const
 		return found->second;
 	}
 }
+
+CStorage symbolStorage;
