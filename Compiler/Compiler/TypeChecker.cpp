@@ -11,7 +11,8 @@ CVarInfo* CTypeChecker::findVar( CSymbol* id )
 		} else if( currMethod->FindFormalArg( id ) != nullptr ) {
 			return currMethod->FindFormalArg( id );
 		}
-	} else if( currClass != nullptr && currClass->FindVar( id ) != nullptr ) {
+	} 
+  if( currClass != nullptr && currClass->FindVar( id ) != nullptr ) {
 		return currClass->FindVar( id );
 	}
 	return nullptr;
@@ -27,7 +28,7 @@ void CTypeChecker::Visit( const CAssignmentStatement * assigmentStatement )
 	} else {
 		std::string varType = findVar( id )->Type()->Type();
 		std::string exprType = lastTypeValue->Type();
-		if( varType != exprType ) {
+		if( varType != exprType && !(varType == "boolean" && exprType == "int")) {
 			errors.push_back( assigmentStatement->Line() );
 			std::cerr << "At line " << assigmentStatement->Line() << ": type mismatch: expected " << varType << ", found " << exprType << std::endl;
 		}
@@ -53,7 +54,9 @@ void CTypeChecker::Visit( const CBinExp * binExp )
 
 void CTypeChecker::Visit( const CClassDecl * classDecl )
 {
-	if( symbTable->FindClass( classDecl->Id() ) == nullptr ) {
+  currMethod = nullptr;
+
+  if( symbTable->FindClass( classDecl->Id() ) == nullptr ) {
 		errors.push_back( classDecl->Line() );
 		std::cerr << "At line " << classDecl->Line() << ": undefined class " << classDecl->Id()->String() << std::endl;
 	} else if( classDecl->ParentId() != nullptr && symbTable->FindClass( classDecl->ParentId() ) == nullptr ) {
@@ -123,10 +126,14 @@ void CTypeChecker::Visit( const CExpList * expList )
     return;
   }
 
+  CMethodInfo* tmp = currMethod;
 	for( int i = 0; i < exps.size(); ++i ) {
     std::string expectedType = currMethod->FormalArgsOrdered()[i]->Type();
+
+    currMethod = currMethodCalled;
     exps[i]->Accept(this);
-    if (lastTypeValue->Type() != expectedType) {
+    currMethod = tmp;
+    if (lastTypeValue->Type() != expectedType  && !(expectedType == "boolean" && lastTypeValue->Type() == "int")) {
       std::cerr << "At line " << expList->Line() << ": in argument " << i << " expected " << expectedType << ", found " << lastTypeValue->Type() << std::endl;
     }
 	}
@@ -170,7 +177,7 @@ void CTypeChecker::Visit( const CId * id )
 void CTypeChecker::Visit( const CIfStatement * ifStatement )
 {
 	ifStatement->Expression()->Accept( this );
-	if( lastTypeValue->Type() != "boolean" ) {
+	if( lastTypeValue->Type() != "boolean" && lastTypeValue->Type() != "int") {
 		errors.push_back( ifStatement->Line() );
 		std::cerr << "At line " << ifStatement->Line() << ": expected boolean expression, found " << lastTypeValue->Type() << std::endl;
 	}
@@ -216,12 +223,14 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 			errors.push_back( methodCall->Line() );
 			std::cerr << "At line " << methodCall->Line() << ": undefined method " << methodCall->Id()->String() << std::endl;
 		} else {
-			// TODO как здесь понять тип аргументов, их количество?
+      currMethodCalled = currMethod;
 			currMethod = methodInfo;
 			if( methodCall->Args() != nullptr ) {
 				methodCall->Args()->Accept( this );
 			}
 			lastTypeValue = currMethod->Type();
+      currMethod = currMethodCalled;
+      currMethodCalled = nullptr;
 		}
 	}
 }
@@ -242,7 +251,7 @@ void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 	std::string returnType = lastTypeValue->Type();
 	methodDecl->Type()->Accept( this );
 	std::string methodType = lastTypeValue->Type();
-	if( methodType != returnType ) {
+	if( methodType != returnType && !(methodType == "boolean" && returnType == "int") ) {
 		errors.push_back( methodDecl->Line() );
 		std::cerr << "At line " << methodDecl->Line() << ": return value type mismatch method type, expected " << methodType << ", found " << returnType << std::endl;
 	}
@@ -334,7 +343,7 @@ void CTypeChecker::Visit( const CVarDeclList * varDecls )
 void CTypeChecker::Visit( const CWhileStatement * whileStatement )
 {
 	whileStatement->Expression()->Accept( this );
-	if( lastTypeValue->Type() != "boolean" ) {
+	if( lastTypeValue->Type() != "boolean" && lastTypeValue->Type() != "boolean") {
 		errors.push_back( whileStatement->Line() );
 		std::cerr << "At line " << whileStatement->Line() << ": expected boolean expression, found " << lastTypeValue->Type() << std::endl;
 	}

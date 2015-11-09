@@ -28,6 +28,7 @@ void CSymbTableBuilder::Visit( const CBinExp * binExp )
 
 void CSymbTableBuilder::Visit( const CClassDecl * classDecl )
 {
+    currMethod = nullptr;
     CSymbol* id = classDecl->Id();
     if( !symbTable->AddClass( id, classDecl->ParentId() ) ) {
         errors.push_back(classDecl->Line());

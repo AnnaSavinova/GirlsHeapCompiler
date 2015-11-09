@@ -36,6 +36,7 @@ public:
 private:
 	CClassInfo* currClass;
 	CMethodInfo* currMethod;
+  CMethodInfo* currMethodCalled;
 	const CTable* symbTable;
 	CType* lastTypeValue;
 
