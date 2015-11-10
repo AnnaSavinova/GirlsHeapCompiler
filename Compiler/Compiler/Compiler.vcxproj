@@ -76,7 +76,9 @@
     <ClCompile Include="ElementAssignment.cpp" />
     <ClCompile Include="ExpList.cpp" />
     <ClCompile Include="FormalList.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Id.cpp" />
+    <ClCompile Include="IRStm.cpp" />
     <ClCompile Include="LengthExp.cpp" />
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="MethodCall.cpp" />
@@ -119,7 +121,9 @@
     <ClInclude Include="ElementAssignment.h" />
     <ClInclude Include="ExpList.h" />
     <ClInclude Include="FormalList.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="Id.h" />
+    <ClInclude Include="IRStm.h" />
     <ClInclude Include="IVisitor.h" />
     <ClInclude Include="LengthExp.h" />
     <ClInclude Include="MainClass.h" />

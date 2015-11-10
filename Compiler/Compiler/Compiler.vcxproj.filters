@@ -97,6 +97,10 @@
     <ClCompile Include="TypeChecker.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Исходный код\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="IRStm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -207,6 +211,10 @@
     <ClInclude Include="ThisMethodCall.h">
       <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="IRStm.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">
