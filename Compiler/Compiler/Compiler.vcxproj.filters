@@ -97,6 +97,9 @@
     <ClCompile Include="TypeChecker.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
+    <ClCompile Include="IRExp.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="ThisMethodCall.h">
       <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="IRExp.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">
@@ -232,6 +238,12 @@
     </Filter>
     <Filter Include="Исходный код\Common">
       <UniqueIdentifier>{51d003aa-c697-4406-84b6-e6657cc5aefd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\IRT">
+      <UniqueIdentifier>{028db168-29bf-436b-816a-1e84dd483815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходный код\IRT">
+      <UniqueIdentifier>{08f7f830-113e-4ac1-9389-e0fa6cc015a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
