@@ -1,31 +1,32 @@
 #include "ClassDecl.h"
 
 CClassDecl::CClassDecl( std::string _id, std::string _parentId, IVarDeclList* _varDecls, IMethodDeclList* _methodDecls, int _line ) :
-	id( symbolStorage.Get(_id) ),
+	id( symbolStorage.Get( _id ) ),
 	varDecls( _varDecls ),
 	methodDecls( _methodDecls )
 {
-  if (_parentId.size() > 0)
-    parentId = symbolStorage.Get(_parentId);
-  else
-    parentId = nullptr;
+	line = _line;
+	if( _parentId.size() > 0 )
+		parentId = symbolStorage.Get( _parentId );
+	else
+		parentId = nullptr;
 }
 
 CClassDecl::~CClassDecl()
 {
-	if ( id != nullptr ) {
+	if( id != nullptr ) {
 		delete id;
 	}
 
-	if ( parentId != nullptr ) {
+	if( parentId != nullptr ) {
 		delete parentId;
 	}
 
-	if ( varDecls != nullptr ) {
+	if( varDecls != nullptr ) {
 		delete varDecls;
 	}
 
-	if ( methodDecls != nullptr ) {
+	if( methodDecls != nullptr ) {
 		delete methodDecls;
 	}
 }

@@ -5,6 +5,11 @@ CSymbol * CClassInfo::Name() const
 	return name;
 }
 
+CSymbol * CClassInfo::BaseClassName() const
+{
+	return baseClassName;
+}
+
 std::map<CSymbol*, CVarInfo*>& CClassInfo::VarList()
 {
 	return varList;

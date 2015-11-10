@@ -5,7 +5,8 @@ CTypeChecker::CTypeChecker( const CTable* _symbTable ) : symbTable( _symbTable )
 
 CVarInfo* CTypeChecker::findVar( CSymbol* id )
 {
-	if( currMethod != nullptr ) {
+	if( !methods.empty() ) {
+		CMethodInfo* currMethod = methods.top();
 		if( currMethod->FindLocalArg( id ) != nullptr ) {
 			return currMethod->FindLocalArg( id );
 		} else if( currMethod->FindFormalArg( id ) != nullptr ) {
@@ -54,7 +55,10 @@ void CTypeChecker::Visit( const CBinExp * binExp )
 
 void CTypeChecker::Visit( const CClassDecl * classDecl )
 {
-	currMethod = nullptr;
+	if( !methods.empty() ) {
+		methods = std::stack< CMethodInfo* >();
+	}
+//	currMethod = nullptr;
 
 	if( symbTable->FindClass( classDecl->Id() ) == nullptr ) {
 		errors.push_back( classDecl->Line() );
@@ -63,6 +67,18 @@ void CTypeChecker::Visit( const CClassDecl * classDecl )
 		errors.push_back( classDecl->Line() );
 		std::cerr << "At line " << classDecl->Line() << ": undefined base class " << classDecl->ParentId()->String() << std::endl;
 	} else {
+		std::set <CClassInfo* > parents;
+		CClassInfo* parent = symbTable->FindClass( classDecl->ParentId() );
+		while( parent != nullptr ) {
+			if( parents.find( parent ) != parents.end() ) {
+				errors.push_back( classDecl->Line() );
+				std::cerr << "At line " << classDecl->Line() << ": cyclic inheritance in class " << classDecl->Id()->String() << " extends " << parent->Name()->String() << std::endl;
+				break;
+			} else {
+				parents.insert( parent );
+				parent = symbTable->FindClass( parent->BaseClassName() );
+			}
+		}
 		currClass = symbTable->FindClass( classDecl->Id() );
 		if( classDecl->VarDeclList() != nullptr ) {
 			classDecl->VarDeclList()->Accept( this );
@@ -120,6 +136,7 @@ void CTypeChecker::Visit( const CElementAssignment * elemAssign )
 
 void CTypeChecker::Visit( const CExpList * expList )
 {
+	CMethodInfo* currMethod = methods.top();
 	std::vector<IExp*> exps = expList->Expressions();
 	if( exps.size() != currMethod->FormalArgs().size() ) {
 		std::cerr << "At line " << expList->Line() << ": expected " << exps.size() << " arguments, found " << currMethod->FormalArgs().size() << std::endl;
@@ -127,31 +144,33 @@ void CTypeChecker::Visit( const CExpList * expList )
 	}
 
 	CMethodInfo* tmp = currMethod;
+	methods.pop();
+//	currMethod = methods.top();
 	for( int i = 0; i < exps.size(); ++i ) {
-		std::string expectedType = currMethod->FormalArgsOrdered()[i]->Type();
+		std::string expectedType = tmp->FormalArgsOrdered()[i]->Type();
 
-		currMethod = currMethodCalled;
 		exps[i]->Accept( this );
-		currMethod = tmp;
 		if( lastTypeValue->Type() != expectedType  && !(expectedType == "boolean" && lastTypeValue->Type() == "int") ) {
 			std::cerr << "At line " << expList->Line() << ": in argument " << i << " expected " << expectedType << ", found " << lastTypeValue->Type() << std::endl;
 		}
 	}
+//	currMethod = tmp;
+	methods.push( tmp );
 }
 
 void CTypeChecker::Visit( const CFormalList * formalList )
 {
 	std::vector<CFormalListElement*> formals = formalList->List();
-
+	
 	for( int i = 0; i < formals.size(); ++i ) {
 		formals[i]->type->Accept( this );
 		CType* t = lastTypeValue;
 
-		if( currMethod == nullptr ) {
+		if( methods.empty() ) {
 			errors.push_back( formalList->Line() );
 			std::cerr << "At line " << formalList->Line() << ": formal list without method" << std::endl;
 		} else {
-			if( currMethod->FindFormalArg( formals[i]->id ) == nullptr ) {
+			if( methods.top()->FindFormalArg( formals[i]->id ) == nullptr ) {
 				errors.push_back( formalList->Line() );
 				std::cerr << "At line " << formalList->Line() << ": undefined argument " << formals[i]->id << std::endl;
 			}
@@ -228,21 +247,26 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 			errors.push_back( methodCall->Line() );
 			std::cerr << "At line " << methodCall->Line() << ": undefined method " << methodCall->Id()->String() << std::endl;
 		} else {
-			currMethodCalled = currMethod;
-			currMethod = methodInfo;
+			methods.push( methodInfo );
+			CClassInfo* oldClass = currClass;
+			currClass = classInfo;
+//			currMethod = methodInfo;
 			if( methodCall->Args() != nullptr ) {
 				methodCall->Args()->Accept( this );
 			}
-			lastTypeValue = currMethod->Type();
-			currMethod = currMethodCalled;
-			currMethodCalled = nullptr;
+			lastTypeValue = methods.top()->Type();
+//			currMethod = currMethodCalled;
+//			currMethodCalled = nullptr;
+			methods.pop();
+			currClass = oldClass;
 		}
 	}
 }
 
 void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 {
-	currMethod = currClass->FindMethod( methodDecl->Id() );
+	methods.push( currClass->FindMethod( methodDecl->Id() ) );
+//	currMethod = currClass->FindMethod( methodDecl->Id() );
 	if( methodDecl->FormalList() != nullptr ) {
 		methodDecl->FormalList()->Accept( this );
 	}
@@ -260,6 +284,7 @@ void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 		errors.push_back( methodDecl->Line() );
 		std::cerr << "At line " << methodDecl->Line() << ": return value type mismatch method type, expected " << methodType << ", found " << returnType << std::endl;
 	}
+	methods.pop();
 }
 
 void CTypeChecker::Visit( const CMethodDeclList * methodDecls )
