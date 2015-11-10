@@ -11,8 +11,8 @@ CVarInfo* CTypeChecker::findVar( CSymbol* id )
 		} else if( currMethod->FindFormalArg( id ) != nullptr ) {
 			return currMethod->FindFormalArg( id );
 		}
-	} 
-  if( currClass != nullptr && currClass->FindVar( id ) != nullptr ) {
+	}
+	if( currClass != nullptr && currClass->FindVar( id ) != nullptr ) {
 		return currClass->FindVar( id );
 	}
 	return nullptr;
@@ -28,7 +28,7 @@ void CTypeChecker::Visit( const CAssignmentStatement * assigmentStatement )
 	} else {
 		std::string varType = findVar( id )->Type()->Type();
 		std::string exprType = lastTypeValue->Type();
-		if( varType != exprType && !(varType == "boolean" && exprType == "int")) {
+		if( varType != exprType && !(varType == "boolean" && exprType == "int") ) {
 			errors.push_back( assigmentStatement->Line() );
 			std::cerr << "At line " << assigmentStatement->Line() << ": type mismatch: expected " << varType << ", found " << exprType << std::endl;
 		}
@@ -45,18 +45,18 @@ void CTypeChecker::Visit( const CBinExp * binExp )
 		errors.push_back( binExp->Line() );
 		std::cerr << "At line " << binExp->Line() << ": invalid operation between " << firstType << " and " << secondType << std::endl;
 	}
-  std::string op = binExp->Operation();
-  if (op == "<" || op == ">" || op == "<=" || op == ">=" /* и так далее... */)
-    lastTypeValue = new CType("boolean", binExp->Line());
-  else
-    lastTypeValue = new CType(firstType, binExp->Line());
+	std::string op = binExp->Operation();
+	if( op == "<" || op == ">" || op == "<=" || op == ">=" /* и так далее... */ )
+		lastTypeValue = new CType( "boolean", binExp->Line() );
+	else
+		lastTypeValue = new CType( firstType, binExp->Line() );
 }
 
 void CTypeChecker::Visit( const CClassDecl * classDecl )
 {
-  currMethod = nullptr;
+	currMethod = nullptr;
 
-  if( symbTable->FindClass( classDecl->Id() ) == nullptr ) {
+	if( symbTable->FindClass( classDecl->Id() ) == nullptr ) {
 		errors.push_back( classDecl->Line() );
 		std::cerr << "At line " << classDecl->Line() << ": undefined class " << classDecl->Id()->String() << std::endl;
 	} else if( classDecl->ParentId() != nullptr && symbTable->FindClass( classDecl->ParentId() ) == nullptr ) {
@@ -121,21 +121,21 @@ void CTypeChecker::Visit( const CElementAssignment * elemAssign )
 void CTypeChecker::Visit( const CExpList * expList )
 {
 	std::vector<IExp*> exps = expList->Expressions();
-  if (exps.size() != currMethod->FormalArgs().size()) {
-    std::cerr << "At line " << expList->Line() << ": expected " << exps.size() << " arguments, found " << currMethod->FormalArgs().size() << std::endl;
-    return;
-  }
+	if( exps.size() != currMethod->FormalArgs().size() ) {
+		std::cerr << "At line " << expList->Line() << ": expected " << exps.size() << " arguments, found " << currMethod->FormalArgs().size() << std::endl;
+		return;
+	}
 
-  CMethodInfo* tmp = currMethod;
+	CMethodInfo* tmp = currMethod;
 	for( int i = 0; i < exps.size(); ++i ) {
-    std::string expectedType = currMethod->FormalArgsOrdered()[i]->Type();
+		std::string expectedType = currMethod->FormalArgsOrdered()[i]->Type();
 
-    currMethod = currMethodCalled;
-    exps[i]->Accept(this);
-    currMethod = tmp;
-    if (lastTypeValue->Type() != expectedType  && !(expectedType == "boolean" && lastTypeValue->Type() == "int")) {
-      std::cerr << "At line " << expList->Line() << ": in argument " << i << " expected " << expectedType << ", found " << lastTypeValue->Type() << std::endl;
-    }
+		currMethod = currMethodCalled;
+		exps[i]->Accept( this );
+		currMethod = tmp;
+		if( lastTypeValue->Type() != expectedType  && !(expectedType == "boolean" && lastTypeValue->Type() == "int") ) {
+			std::cerr << "At line " << expList->Line() << ": in argument " << i << " expected " << expectedType << ", found " << lastTypeValue->Type() << std::endl;
+		}
 	}
 }
 
@@ -162,22 +162,27 @@ void CTypeChecker::Visit( const CFormalList * formalList )
 void CTypeChecker::Visit( const CId * id )
 {
 	// если это имя класса
-  if (symbTable->FindClass(id->Id())) {
-    lastTypeValue = new CType(id->Id()->String(), id->Line());
-    return;
-  }
+	if( id->Id()->String() == "this" ) {
+		lastTypeValue = new CType( currClass->Name()->String(), id->Line() );
+		return;
+	}
 
-  // иначе это имя переменной
-  if (findVar(id->Id()) != nullptr)
-    lastTypeValue = findVar(id->Id())->Type();
-  else
-    std::cerr << "At line " << id->Line() << ": undefined id " << id->Id()->String() << std::endl;
+	if( symbTable->FindClass( id->Id() ) ) {
+		lastTypeValue = new CType( id->Id()->String(), id->Line() );
+		return;
+	}
+
+	// иначе это имя переменной
+	if( findVar( id->Id() ) != nullptr )
+		lastTypeValue = findVar( id->Id() )->Type();
+	else
+		std::cerr << "At line " << id->Line() << ": undefined id " << id->Id()->String() << std::endl;
 }
 
 void CTypeChecker::Visit( const CIfStatement * ifStatement )
 {
 	ifStatement->Expression()->Accept( this );
-	if( lastTypeValue->Type() != "boolean" && lastTypeValue->Type() != "int") {
+	if( lastTypeValue->Type() != "boolean" && lastTypeValue->Type() != "int" ) {
 		errors.push_back( ifStatement->Line() );
 		std::cerr << "At line " << ifStatement->Line() << ": expected boolean expression, found " << lastTypeValue->Type() << std::endl;
 	}
@@ -210,7 +215,7 @@ void CTypeChecker::Visit( const CMainClass * mainClass )
 
 void CTypeChecker::Visit( const CMethodCall * methodCall )
 {
-  if( methodCall->Exp() != nullptr ) {
+	if( methodCall->Exp() != nullptr ) {
 		methodCall->Exp()->Accept( this );
 	}
 	CClassInfo* classInfo = symbTable->FindClass( symbolStorage.Get( lastTypeValue->Type() ) );
@@ -223,14 +228,14 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 			errors.push_back( methodCall->Line() );
 			std::cerr << "At line " << methodCall->Line() << ": undefined method " << methodCall->Id()->String() << std::endl;
 		} else {
-      currMethodCalled = currMethod;
+			currMethodCalled = currMethod;
 			currMethod = methodInfo;
 			if( methodCall->Args() != nullptr ) {
 				methodCall->Args()->Accept( this );
 			}
 			lastTypeValue = currMethod->Type();
-      currMethod = currMethodCalled;
-      currMethodCalled = nullptr;
+			currMethod = currMethodCalled;
+			currMethodCalled = nullptr;
 		}
 	}
 }
@@ -343,7 +348,7 @@ void CTypeChecker::Visit( const CVarDeclList * varDecls )
 void CTypeChecker::Visit( const CWhileStatement * whileStatement )
 {
 	whileStatement->Expression()->Accept( this );
-	if( lastTypeValue->Type() != "boolean" && lastTypeValue->Type() != "boolean") {
+	if( lastTypeValue->Type() != "boolean" && lastTypeValue->Type() != "boolean" ) {
 		errors.push_back( whileStatement->Line() );
 		std::cerr << "At line " << whileStatement->Line() << ": expected boolean expression, found " << lastTypeValue->Type() << std::endl;
 	}

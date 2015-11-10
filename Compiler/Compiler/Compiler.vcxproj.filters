@@ -204,6 +204,9 @@
     <ClInclude Include="IVisitor.h">
       <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
+    <ClInclude Include="ThisMethodCall.h">
+      <Filter>Заголовочные файлы\Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">

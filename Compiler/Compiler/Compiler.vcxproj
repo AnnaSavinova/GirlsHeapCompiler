@@ -139,6 +139,7 @@
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="SymbolsTable.h" />
     <ClInclude Include="SymbTableBuilder.h" />
+    <ClInclude Include="ThisMethodCall.h" />
     <ClInclude Include="tokens.tab.hpp" />
     <ClInclude Include="TypeChecker.h" />
     <ClInclude Include="UnExp.h" />
