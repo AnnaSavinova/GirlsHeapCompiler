@@ -100,6 +100,12 @@
     <ClCompile Include="IRExp.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Исходный код\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="IRStm.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -211,6 +217,12 @@
       <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="IRExp.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="IRStm.h">
       <Filter>Заголовочные файлы\IRT</Filter>
     </ClInclude>
   </ItemGroup>
