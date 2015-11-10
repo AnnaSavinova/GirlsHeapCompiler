@@ -4,6 +4,15 @@ class BinaryTree{
     }
 }
 
+class A extends B{
+}
+
+class B extends C {
+	
+}
+class C extends A {
+	
+}
 
 // This class invokes the methods to create a tree,
 // insert, delete and serach for  elements on it

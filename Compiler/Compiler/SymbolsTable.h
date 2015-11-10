@@ -70,6 +70,7 @@ public:
 	{}
 
 	CSymbol* Name() const;
+	CSymbol* BaseClassName() const;
 	std::map<CSymbol*, CVarInfo*>& VarList();
 	std::map<CSymbol*, CMethodInfo*>& MethodList();
 	bool AddVar( CSymbol* name, CType* type );

@@ -1,6 +1,8 @@
 #pragma once
 #include "common.h"
 #include "SymbolsTable.h"
+#include <stack>
+#include <set>
 
 class CTypeChecker :
 	public IVisitor
@@ -35,8 +37,8 @@ public:
 	void Visit( const CWhileStatement* whileStatement );
 private:
 	CClassInfo* currClass;
-	CMethodInfo* currMethod;
-  CMethodInfo* currMethodCalled;
+	std::stack< CMethodInfo* > methods;
+	CMethodInfo* currMethodCalled;
 	const CTable* symbTable;
 	CType* lastTypeValue;
 
