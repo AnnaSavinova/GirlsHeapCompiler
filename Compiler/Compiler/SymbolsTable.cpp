@@ -22,6 +22,7 @@ bool CClassInfo::AddVar( CSymbol * name, CType * type )
 		return false;
 	} else {
 		varList[name] = new CVarInfo( name, type );
+        varOrder[name] = varOrder.size();
 	}
 }
 
@@ -55,6 +56,17 @@ CMethodInfo * CClassInfo::FindMethod( CSymbol * name ) const
 	} else {
 		return found->second;
 	}
+}
+
+int CClassInfo::GetVarOrderNumber( CSymbol* var ) const
+{
+    auto v = varOrder.find( var );
+    if( v != varOrder.end() ) {
+        return v->second;
+    } else {
+        //»ли что?
+        return -1;
+    }
 }
 
 CSymbol * CVarInfo::Name() const

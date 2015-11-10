@@ -78,11 +78,15 @@ public:
 	CVarInfo* FindVar( CSymbol* name ) const;
 	CMethodInfo* FindMethod( CSymbol* name ) const;
 
+    int GetVarOrderNumber( CSymbol* var ) const;
 private:
 	CSymbol* name;
 	CSymbol* baseClassName;
 	std::map<CSymbol*, CVarInfo*> varList;
 	std::map<CSymbol*, CMethodInfo*> methodList;
+
+    //переменные нумеруются с 0
+    std::map<CSymbol*, int> varOrder;
 };
 
 class CTable
