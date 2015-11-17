@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
 #include "Symbol.h"
-#include "IIRExp.h"
+
+class IIRExp;
 
 // Временная переменная
 class CTemp {
@@ -50,9 +51,11 @@ public:
     int FormalsCount() const;
     const IAccess* Formal( size_t index ) const;
     const CTemp* FP() const;
+    int WordSize() const;
 private:
     std::vector< IAccess* > formals;
     const CTemp* fp;
+    int wordSize;
 };
 
 
