@@ -18,6 +18,11 @@ const CTemp* CFrame::FP() const
     return fp;
 }
 
+int CFrame::WordSize() const
+{
+    return wordSize;
+}
+
 CLabel::CLabel() : name( std::to_string( nextUniqueId++ ) )
 {}
 
