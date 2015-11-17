@@ -13,3 +13,5 @@
 
 #include "IIRExp.h"
 #include "IIRStm.h"
+
+#include "IREnums.h"
