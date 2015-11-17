@@ -1,5 +1,5 @@
 #pragma once
-#include "IRStm.h"
+#include "IIRStm.h"
 
 class CIRMove :
     public IIRStm {
