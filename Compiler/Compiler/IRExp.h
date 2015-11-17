@@ -2,28 +2,28 @@
 #include "common.h"
 #include "Frame.h"
 #include <list>
-class CIRStm;
+class IIRStm;
 
-class CIRExp
+class IIRExp
 {
 public:
-	CIRExp();
-	~CIRExp();
-	CONST( int value );
+	IIRExp();
+	virtual ~IIRExp();
+	/*CONST( int value );
 	NAME( CLabel label );
 	TEMP( CTemp temp );
 	BINOP( int binop, CIRExp left, CIRExp right );
 	MEM( CIRExp exp );
 	CALL( CIRExp func, CIRExpList args );
-	ESEQ( CIRStm stm, CIRExp exp );
+	ESEQ( CIRStm stm, CIRExp exp );*/
 };
 
 class CIRExpList
 {
 public:
-	CIRExpList( CIRExp head, CIRExpList tail );
+	CIRExpList( IIRExp head, CIRExpList tail );
 
 private:
-	std::list<CIRExp> expList;
+	std::list<IIRExp> expList;
 };
 
