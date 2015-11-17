@@ -13,6 +13,11 @@ const IAccess * CFrame::Formal( size_t index ) const
     return nullptr;
 }
 
+const CTemp* CFrame::FP() const
+{
+    return fp;
+}
+
 CLabel::CLabel() : name( std::to_string( nextUniqueId++ ) )
 {}
 

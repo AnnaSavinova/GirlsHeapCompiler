@@ -2,7 +2,6 @@
 #include "common.h"
 #include "Frame.h"
 #include <list>
-class IIRStm;
 
 class IIRExp
 {

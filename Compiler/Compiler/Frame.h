@@ -1,19 +1,23 @@
 #pragma once
 #include <vector>
 #include "Symbol.h"
-class IAccess {
-public:
-    virtual ~IAccess() {}
-};
+#include "IIRExp.h"
 
-class CFrame {
+// Временная переменная
+class CTemp {
 public:
-    CFrame( const CSymbol* name, int formalsCount );
-    //Доступ к формальным параметрам
-    int FormalsCount() const;
-    const IAccess* Formal( size_t index ) const;
+    // Новая переменная с уникальным именем
+    CTemp();
+    // Новая переменная с заданным именем
+    explicit CTemp( const CSymbol* symbol );
+    ~CTemp();
+
+    const std::string& Name() const { return name; }
+
 private:
-    std::vector< IAccess* > formals;
+    // Счётчик для создания уникальных имён
+    static int nextUniqueId;
+    std::string name;
 };
 
 //Метка - точка перехода в коде
@@ -33,22 +37,25 @@ private:
 
 };
 
-// Временная переменная
-class CTemp {
+class IAccess {
 public:
-    // Новая переменная с уникальным именем
-    CTemp();
-    // Новая переменная с заданным именем
-    explicit CTemp( const CSymbol* symbol );
-    ~CTemp();
-
-    const std::string& Name() const { return name; }
-
-private:
-    // Счётчик для создания уникальных имён
-    static int nextUniqueId;
-    std::string name;
+    virtual const IIRExp* GetExp( const CTemp* framePtr ) const = 0;
+    virtual ~IAccess() {}
 };
+
+class CFrame {
+public:
+    CFrame( const CSymbol* name, int formalsCount );
+    //Доступ к формальным параметрам
+    int FormalsCount() const;
+    const IAccess* Formal( size_t index ) const;
+    const CTemp* FP() const;
+private:
+    std::vector< IAccess* > formals;
+    const CTemp* fp;
+};
+
+
 
 
 
