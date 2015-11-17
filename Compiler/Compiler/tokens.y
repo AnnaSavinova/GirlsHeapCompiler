@@ -9,6 +9,10 @@
 
 extern "C" int yylex();
 extern int yylineno;
+
+int CLabel::nextUniqueId = 0;
+int CTemp::nextUniqueId = 0;
+
 void yyerror( int*, const char* str );
 %}
 

@@ -1,13 +1,11 @@
 #include "IIRExp.h"
 #include "IIRStm.h"
 
-
-
-CIRExp::CIRExp()
+IIRExp::IIRExp()
 {
 }
 
 
-CIRExp::~CIRExp()
+IIRExp::~IIRExp()
 {
 }

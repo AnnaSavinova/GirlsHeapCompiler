@@ -33,8 +33,6 @@ private:
 
 };
 
-int CLabel::nextUniqueId = 0;
-
 // Временная переменная
 class CTemp {
 public:
@@ -51,8 +49,6 @@ private:
     static int nextUniqueId;
     std::string name;
 };
-
-int CTemp::nextUniqueId = 0;
 
 
 

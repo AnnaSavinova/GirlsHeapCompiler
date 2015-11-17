@@ -18,3 +18,8 @@ const IIRStm * CIRStmConverter::ToStm() const
 {
     return stm;
 }
+
+const IIRStm * CIRStmConverter::ToConditional( const CLabel * t, const CLabel * f ) const
+{
+    return nullptr;
+}

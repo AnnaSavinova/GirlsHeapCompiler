@@ -121,6 +121,13 @@
     <ClCompile Include="IRSeq.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>
+    <ClCompile Include="IRExpConverter.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRStmConverter.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTranslator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -258,6 +265,19 @@
     <ClInclude Include="IRSeq.h">
       <Filter>Заголовочные файлы\IRT</Filter>
     </ClInclude>
+    <ClInclude Include="IIRSubtreeWrapper.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRExpConverter.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IREnums.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRStmConverter.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTranslator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">

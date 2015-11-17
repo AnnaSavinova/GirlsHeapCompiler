@@ -16,3 +16,8 @@ const IIRStm * CIRExpConverter::ToStm() const
 {
     return new CIRExp( exp );
 }
+
+const IIRStm * CIRExpConverter::ToConditional( const CLabel * t, const CLabel * f ) const
+{
+    return nullptr;
+}
