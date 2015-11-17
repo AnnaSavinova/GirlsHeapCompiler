@@ -97,13 +97,28 @@
     <ClCompile Include="TypeChecker.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
-    <ClCompile Include="IRExp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
     <ClCompile Include="Frame.cpp">
       <Filter>Исходный код\Common</Filter>
     </ClCompile>
-    <ClCompile Include="IRStm.cpp">
+    <ClCompile Include="IIRExp.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRMove.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRExp.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRCjump.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRJump.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRLabel.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRSeq.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>
   </ItemGroup>
@@ -216,13 +231,31 @@
     <ClInclude Include="ThisMethodCall.h">
       <Filter>Заголовочные файлы\Nodes</Filter>
     </ClInclude>
-    <ClInclude Include="IRExp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
     <ClInclude Include="Frame.h">
       <Filter>Заголовочные файлы\Common</Filter>
     </ClInclude>
-    <ClInclude Include="IRStm.h">
+    <ClInclude Include="IIRExp.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IIRStm.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRMove.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRExp.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRCjump.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRJump.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRLabel.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRSeq.h">
       <Filter>Заголовочные файлы\IRT</Filter>
     </ClInclude>
   </ItemGroup>

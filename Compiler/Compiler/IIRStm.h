@@ -1,25 +1,18 @@
 #pragma once
 #include "Frame.h"
 
-class IIRExp;
-
 class IIRStm {
 public:
-    IIRStm();
-    virtual ~IIRStm();
-
-    /*void MOVE( CIRExp dst, CIRExp src );
-    void EXP( CIRExp exp );
-    void JUMP( CIRExp exp, std::vector< CTemp > targets );
-    void CJUMP( int relop, CIRExp left, CIRExp right, CLabel ifTrue, CLabel ifFalse );
-    void SEQ( CIRStm left, CIRStm right );
-    void LABEL( CLabel label );*/
-
+    IIRStm() {}
+    virtual ~IIRStm() {}
 };
 
 class CIRStmList {
 public:
-    //CIRStmList( CIRStm head, CIRStmList tail );
+    CIRStmList( IIRStm* _head, CIRStmList* _tail ) : head( _head ), tail( _tail ) {}
+
 private:
+    IIRStm* head;
+    CIRStmList* tail;
 };
 

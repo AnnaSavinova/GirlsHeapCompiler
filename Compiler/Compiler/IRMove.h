@@ -1,10 +1,13 @@
 #pragma once
-#include "IIRStm.h"
+#include "common.h"
 
-class CIRMove :
-    public IIRStm {
+class CIRMove : public IIRStm {
 public:
-    CIRMove( IIRExp dst, IIRExp src );
+    CIRMove( IIRExp* dst, IIRExp* src );
     ~CIRMove();
+
+private:
+    IIRExp* dst;
+    IIRExp* src;
 };
 

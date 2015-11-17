@@ -3,5 +3,5 @@
 CIRExp::~CIRExp()
 {}
 
-CIRExp::CIRExp( IIRExp exp )
+CIRExp::CIRExp( IIRExp* _exp ) : exp(_exp)
 {}

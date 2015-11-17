@@ -1,10 +1,12 @@
 #pragma once
-#include "IIRExp.h"
+#include "common.h"
 
-class CIRExp :
-    public IIRExp {
+class CIRExp : public IIRStm {
 public:
-    CIRExp( IIRExp exp );
+    CIRExp( const IIRExp* exp );
     ~CIRExp();
+
+private:
+    const IIRExp* exp;
 };
 
