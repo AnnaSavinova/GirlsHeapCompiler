@@ -10,3 +10,6 @@
 #include "Grammar.h"
 #include "IVisitor.h"
 #include "Symbol.h"
+
+#include "IIRExp.h"
+#include "IIRStm.h"
