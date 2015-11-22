@@ -20,7 +20,10 @@ public:
 class CIRExpList
 {
 public:
-	CIRExpList( IIRExp head, CIRExpList tail );
+	CIRExpList( IIRExp* head, CIRExpList* tail );
+  ~CIRExpList();
+
+  std::list<IIRExp> GetExpList();
 
 private:
 	std::list<IIRExp> expList;

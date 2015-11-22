@@ -1,5 +1,6 @@
 #pragma once
 #include "Frame.h"
+#include <list>
 
 class IIRStm {
 public:
@@ -9,10 +10,10 @@ public:
 
 class CIRStmList {
 public:
-    CIRStmList( IIRStm* _head, CIRStmList* _tail ) : head( _head ), tail( _tail ) {}
+    CIRStmList(IIRStm* head, CIRStmList* tail);
+    std::list<IIRStm> GetStmList();
 
 private:
-    IIRStm* head;
-    CIRStmList* tail;
+    std::list<IIRStm> stmList;
 };
 
