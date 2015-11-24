@@ -213,6 +213,7 @@ Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-", yylineno ); }
 	| Exp '+' Exp { $$ = new CBinExp( $1, $3, "+", yylineno ); }
 	| Exp '<' Exp { $$ = new CBinExp( $1, $3, "<", yylineno ); }
 	| Exp '&' Exp { $$ = new CBinExp( $1, $3, "&", yylineno ); }
+	| Exp '|' Exp { $$ = new CBinExp( $1, $3, "|", yylineno ); }
 	| Exp '-' Exp { $$ = new CBinExp( $1, $3, "-", yylineno ); }
 	| Exp '*' Exp { $$ = new CBinExp( $1, $3, "*", yylineno ); }
 	| Exp '/' Exp { $$ = new CBinExp( $1, $3, "/", yylineno ); }
