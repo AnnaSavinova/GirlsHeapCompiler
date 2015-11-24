@@ -127,30 +127,8 @@
     <ClCompile Include="IRStmConverter.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>
-    <ClCompile Include="IRTranslator.cpp" />
-    <ClCompile Include="IRConst.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRBinOp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRName.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTemp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRMem.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRCall.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRESeq.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IIRStm.cpp">
-      <Filter>Исходный код\IRT</Filter>
+    <ClCompile Include="IRTranslator.cpp">
+      <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,27 +279,8 @@
     <ClInclude Include="IRStmConverter.h">
       <Filter>Заголовочные файлы\IRT</Filter>
     </ClInclude>
-    <ClInclude Include="IRTranslator.h" />
-    <ClInclude Include="IRConst.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
-    <ClInclude Include="IRName.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
-    <ClInclude Include="IRTemp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
-    <ClInclude Include="IRBinOp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
-    <ClInclude Include="IRMem.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
-    <ClInclude Include="IRCall.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
-    </ClInclude>
-    <ClInclude Include="IRESeq.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+    <ClInclude Include="IRTranslator.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
