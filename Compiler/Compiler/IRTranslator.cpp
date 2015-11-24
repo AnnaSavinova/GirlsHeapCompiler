@@ -18,7 +18,9 @@ void CIRTranslator::Visit( const CConstructor * constructor )
 {}
 
 void CIRTranslator::Visit( const CElementAssignment * elemAssign )
-{}
+{
+    elemAssign->Exp1.Accept( this );
+}
 
 void CIRTranslator::Visit( const CExpList * expList )
 {}

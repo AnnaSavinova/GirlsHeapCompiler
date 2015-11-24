@@ -1,5 +1,8 @@
 #pragma once
 #include "classes.h"
+#include <stack>
+#include "IRClasses.h"
+
 class CIRTranslator : public IVisitor {
 public:
     void Visit( const CAssignmentStatement* assigmentStatement );
@@ -28,5 +31,9 @@ public:
     void Visit( const CVarDecl* varDecl );
     void Visit( const CVarDeclList* varDecls );
     void Visit( const CWhileStatement* whileStatement );
+
+private:
+    std::stack< IIRExp > exps;
+    std::stack< IIRStm > stms;
 };
 
