@@ -146,6 +146,7 @@
     <ClInclude Include="IRBinOp.h" />
     <ClInclude Include="IRCall.h" />
     <ClInclude Include="IRCjump.h" />
+    <ClInclude Include="IRClasses.h" />
     <ClInclude Include="IRConst.h" />
     <ClInclude Include="IREnums.h" />
     <ClInclude Include="IRESeq.h" />
