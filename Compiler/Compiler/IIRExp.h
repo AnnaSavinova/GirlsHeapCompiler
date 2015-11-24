@@ -10,7 +10,7 @@ public:
 	virtual ~IIRExp();
 	/*CONST( int value );
 	NAME( CLabel label );
-	TEMP( CTemp temp );
+	TEMP( CTemp temp ); 
 	BINOP( int binop, CIRExp left, CIRExp right );
 	MEM( CIRExp exp );
 	CALL( CIRExp func, CIRExpList args );
@@ -20,10 +20,7 @@ public:
 class CIRExpList
 {
 public:
-	CIRExpList( IIRExp* head, CIRExpList* tail );
-  ~CIRExpList();
-
-  std::list<IIRExp> GetExpList();
+	CIRExpList( IIRExp head, CIRExpList tail );
 
 private:
 	std::list<IIRExp> expList;
