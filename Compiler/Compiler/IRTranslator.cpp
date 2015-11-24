@@ -1,7 +1,9 @@
 #include "IRTranslator.h"
 
 void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )
-{}
+{
+
+}
 
 void CIRTranslator::Visit( const CBinExp * binExp )
 {}
