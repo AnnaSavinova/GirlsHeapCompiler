@@ -100,7 +100,19 @@ void CIRTranslator::Visit( const CType * type )
 
 void CIRTranslator::Visit( const CUnExp * unExp )
 {
+    unExp->Expression()->Accept( this );
 
+    IIRExp* exp = exps.top();
+    exps.pop();
+
+    EBinOp operation;
+    if ( unExp->Operation() == "-" ) {
+      exps.push( new CIRMem( new CIRBinOp( MINUS, new CIRConst( 0 ), exp ) ) );
+    } else if (unExp->Operation() == "!") {
+      exps.push( new CIRMem( new CIRBinOp( OR, new CIRConst( 0 ), exp) ) );
+    } else {
+      // тогда это странный уноп
+    }
 }
 
 void CIRTranslator::Visit( const CVarDecl * varDecl )

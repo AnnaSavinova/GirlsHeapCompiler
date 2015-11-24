@@ -33,7 +33,7 @@ public:
     void Visit( const CWhileStatement* whileStatement );
 
 private:
-    std::stack< IIRExp > exps;
-    std::stack< IIRStm > stms;
+    std::stack< IIRExp* > exps;
+    std::stack< IIRStm* > stms;
 };
 
