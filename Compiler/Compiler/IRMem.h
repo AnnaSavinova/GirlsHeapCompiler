@@ -3,7 +3,7 @@
 
 class CIRMem : public IIRExp {
 public:
-  CIRMem(IIRExp* _expression);
+  CIRMem( const IIRExp* _expression );
   ~CIRMem();
 
 private:

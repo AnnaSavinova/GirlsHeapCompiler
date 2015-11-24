@@ -1,8 +1,11 @@
 #include "IRTranslator.h"
 
+CIRTranslator::CIRTranslator( const CTable * _symbTable ) : symbTable( _symbTable )
+{}
+
 void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )
 {
-
+    assigmentStatement
 }
 
 void CIRTranslator::Visit( const CBinExp * binExp )
@@ -12,7 +15,11 @@ void CIRTranslator::Visit( const CClassDecl * classDecl )
 {}
 
 void CIRTranslator::Visit( const CClassDeclList * classDecls )
-{}
+{
+    for( size_t i = 0; i < classDecls->ClassDeclList().size(); ++i ) {
+        classDecls->ClassDeclList()[i]->Accept( this );
+    }
+}
 
 void CIRTranslator::Visit( const CConstructor * constructor )
 {}
@@ -20,6 +27,18 @@ void CIRTranslator::Visit( const CConstructor * constructor )
 void CIRTranslator::Visit( const CElementAssignment * elemAssign )
 {
     elemAssign->Exp1.Accept( this );
+    IIRExp* index = exps.top();
+    exps.pop();
+
+    IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::WordSize() ) );
+    IIRExp* array = new CIRMem( frames.top()->Local( elemAssign->Id() )->GetExp( frames.top()->FP() ) );
+    IIRExp* lExp = new CIRMem( new CIRBinOp( PLUS, array, offset ) );
+
+    elemAssign->Exp2.Accept( this );
+    IIRExp* rExp = exps.top();
+    exps.pop();
+
+    stms.push( new CIRMove( lExp, rExp ) );
 }
 
 void CIRTranslator::Visit( const CExpList * expList )

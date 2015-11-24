@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 #include "Symbol.h"
 
 class IIRExp;
@@ -50,12 +51,14 @@ public:
     //Доступ к формальным параметрам
     int FormalsCount() const;
     const IAccess* Formal( size_t index ) const;
+    const IAccess* Local( const CSymbol* ) const;
     const CTemp* FP() const;
-    int WordSize() const;
+    static int WordSize();
 private:
     std::vector< IAccess* > formals;
+    std::map< const CSymbol*, const IAccess* > locals;
     const CTemp* fp;
-    int wordSize;
+    static int wordSize;
 };
 
 

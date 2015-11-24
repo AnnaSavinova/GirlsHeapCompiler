@@ -2,9 +2,12 @@
 #include "classes.h"
 #include <stack>
 #include "IRClasses.h"
+#include "SymbolsTable.h"
 
 class CIRTranslator : public IVisitor {
 public:
+    CIRTranslator( const CTable* symbTable );
+
     void Visit( const CAssignmentStatement* assigmentStatement );
     void Visit( const CBinExp* binExp );
     void Visit( const CClassDecl* classDecl );
@@ -33,7 +36,11 @@ public:
     void Visit( const CWhileStatement* whileStatement );
 
 private:
-    std::stack< IIRExp > exps;
-    std::stack< IIRStm > stms;
+    std::stack< IIRExp* > exps;
+    std::stack< IIRStm* > stms;
+
+    std::stack< CFrame* > frames;
+
+    const CTable* symbTable;
 };
 

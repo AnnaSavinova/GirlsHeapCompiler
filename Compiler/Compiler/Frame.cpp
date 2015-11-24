@@ -13,12 +13,22 @@ const IAccess * CFrame::Formal( size_t index ) const
     return nullptr;
 }
 
+const IAccess * CFrame::Local( const CSymbol * var ) const
+{
+    auto access = locals.find( var );
+    if( access != locals.end() ) {
+        return access->second;
+    } else {
+        return nullptr;
+    }
+}
+
 const CTemp* CFrame::FP() const
 {
     return fp;
 }
 
-int CFrame::WordSize() const
+int CFrame::WordSize()
 {
     return wordSize;
 }
