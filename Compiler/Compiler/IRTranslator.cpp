@@ -42,12 +42,12 @@ void CIRTranslator::Visit( const CMainClass * mainClass )
 
 void CIRTranslator::Visit( const CMethodCall * methodCall )
 {
-
+    // TODO!
 }
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
 {
-
+    // TODO!
 }
 
 void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
@@ -59,17 +59,17 @@ void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 
 void CIRTranslator::Visit( const CNewInt * newInt )
 {
-
+    // TODO!
 }
 
 void CIRTranslator::Visit( const CNumber * number )
 {
-    
+    stms.emplace( new CIRConst( number->Number() ) );
 }
 
 void CIRTranslator::Visit( const CPrintStatement * printStatement )
 {
-    
+    // TODO!
 }
 
 void CIRTranslator::Visit( const CProgram * program )
@@ -117,6 +117,7 @@ void CIRTranslator::Visit( const CUnExp * unExp )
 
 void CIRTranslator::Visit( const CVarDecl * varDecl )
 {
+    // TODO!
 }
 
 void CIRTranslator::Visit( const CVarDeclList * varDecls )
@@ -128,5 +129,5 @@ void CIRTranslator::Visit( const CVarDeclList * varDecls )
 
 void CIRTranslator::Visit( const CWhileStatement * whileStatement )
 {
-
+    // TODO!
 }
