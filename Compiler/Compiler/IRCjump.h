@@ -3,11 +3,11 @@
 
 class CIRCjump : public IIRStm {
 public:
-    CIRCjump( ECondOp relop, IIRExp* left, IIRExp* right, CLabel* ifTrue, CLabel* ifFalse );
+    CIRCjump( EBinOp relop, IIRExp* left, IIRExp* right, CLabel* ifTrue, CLabel* ifFalse );
     ~CIRCjump();
 
 private:
-    ECondOp relop;
+    EBinOp relop;
     IIRExp* left;
     IIRExp* right;
     CLabel* ifTrue;

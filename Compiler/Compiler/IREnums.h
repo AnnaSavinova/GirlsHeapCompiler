@@ -9,10 +9,7 @@ enum EBinOp {
     OR,
     LSHIFT,
     RSHIFT,
-    XOR
-};
-
-enum ECondOp {
+    XOR,
     EQ,
     NE,
     LT,
@@ -24,3 +21,16 @@ enum ECondOp {
     UGT,
     UGE
 };
+
+//enum ECondOp {
+//    EQ,
+//    NE,
+//    LT,
+//    GT,
+//    LE,
+//    GE,
+//    ULT,
+//    ULE,
+//    UGT,
+//    UGE
+//};

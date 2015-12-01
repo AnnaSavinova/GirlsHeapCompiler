@@ -22,6 +22,10 @@ OPERANDS [-+*/!.,;:=<]
 	return '&';
 }
 
+"||" {
+	return '|';
+}
+
 {BRACKETS} {
 	//std::cout << yytext << std::endl;
 	return *yytext;

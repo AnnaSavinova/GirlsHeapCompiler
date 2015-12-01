@@ -26,15 +26,31 @@ void CIRTranslator::Visit( const CBinExp * binExp )
     IIRExp* right = exps.top();
     exps.pop();
 
-    EBinOp operation;
     if( binExp->Operation() == "+" ) {
         exps.push( new CIRMem( new CIRBinOp( PLUS, left, right ) ) );
     } else if( binExp->Operation() == "-" ) {
         exps.push( new CIRMem( new CIRBinOp( MINUS, left, right ) ) );
     } else if( binExp->Operation() == "*" ) {
         exps.push( new CIRMem( new CIRBinOp( MUL, left, right ) ) );
-    } else if( binExp->Operation() == "*" ) {
-        exps.push( new CIRMem( new CIRBinOp( MUL, left, right ) ) );
+    } else if( binExp->Operation() == "<" ) {
+        exps.push( new CIRMem( new CIRBinOp( LE, left, right ) ) );
+    } else if( binExp->Operation() == "&" ) {
+        exps.push( new CIRMem( new CIRBinOp( AND, left, right ) ) );
+    } else if( binExp->Operation() == "|" ) {
+        exps.push( new CIRMem( new CIRBinOp( OR, left, right ) ) );
+    } else if( binExp->Operation() == "[]" ) {
+        binExp->Expression1()->Accept( this );
+        IIRExp* array = exps.top();
+        exps.pop();
+
+        binExp->Expression2()->Accept( this );
+        IIRExp* index = exps.top();
+        exps.pop();
+
+        IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::WordSize() ) );
+        exps.push( new CIRMem( new CIRBinOp( PLUS, array, offset ) ) );
+    } else {
+        //пичаль
     }
 }
 
