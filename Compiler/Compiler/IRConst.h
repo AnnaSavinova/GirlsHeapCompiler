@@ -3,7 +3,7 @@
 
 class CIRConst : public IIRExp {
 public:
-    CIRConst( int value );
+    CIRConst( const int value );
     ~CIRConst();
 
 private:

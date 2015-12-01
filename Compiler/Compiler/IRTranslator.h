@@ -2,9 +2,12 @@
 #include "classes.h"
 #include <stack>
 #include "IRClasses.h"
+#include "SymbolsTable.h"
 
 class CIRTranslator : public IVisitor {
 public:
+    CIRTranslator( const CTable* symbTable );
+
     void Visit( const CAssignmentStatement* assigmentStatement );
     void Visit( const CBinExp* binExp );
     void Visit( const CClassDecl* classDecl );
@@ -35,5 +38,17 @@ public:
 private:
     std::stack< IIRExp* > exps;
     std::stack< IIRStm* > stms;
+
+    std::stack< CFrame* > frames;
+
+    const CTable* symbTable;
+
+    enum EVariablePlace {
+        E_LOCAL,
+        E_FORMAL,
+        E_CLASS
+    };
+
+    EVariablePlace getVariablePlace( const CSymbol* var ) const;
 };
 
