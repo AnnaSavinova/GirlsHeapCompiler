@@ -10,7 +10,11 @@ int CFrame::FormalsCount() const
 
 const IAccess * CFrame::Formal( size_t index ) const
 {
-    return nullptr;
+	if( index < formals.size() ) {
+		return nullptr;
+	} else {
+		return formals[index];
+	}
 }
 
 const IAccess * CFrame::Local( const CSymbol * var ) const
