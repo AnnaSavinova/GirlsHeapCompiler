@@ -12,7 +12,7 @@ extern int yylineno;
 
 int CLabel::nextUniqueId = 0;
 int CTemp::nextUniqueId = 0;
-
+int CFrame::wordSize = 4;
 void yyerror( int*, const char* str );
 %}
 
