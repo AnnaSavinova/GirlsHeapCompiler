@@ -58,12 +58,14 @@ public:
     const CTemp* FP() const;
     static int WordSize();
 private:
-    std::map<  const CSymbol*, const IAccess* > formals;
+    std::map< const CSymbol*, const IAccess* > formals;
     std::map< const CSymbol*, const IAccess* > locals;
     std::map< const CSymbol*, const IAccess* > temporaries;
     const CTemp* fp;
     static int wordSize;
     const IIRStm* root;
+    const CSymbol* name;
+    int formalsCount;
 };
 
 

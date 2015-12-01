@@ -1,6 +1,8 @@
 #include "Frame.h"
 
-CFrame::CFrame( const CSymbol* name, int formalsCount, const IIRStm* root )
+
+CFrame::CFrame(const CSymbol * name, int formalsCount, const IIRStm * root)
+  : name(name), formalsCount(formalsCount), root(root)
 {}
 
 int CFrame::FormalsCount() const
@@ -40,11 +42,11 @@ const IAccess * CFrame::Temporary( const CSymbol * var ) const
 
 const IAccess* CFrame::FindVar( const CSymbol * var ) const
 {
-	const IAccess* formal = Formal( var );
-	if( formal != nullptr ) {
-		return formal;
+	const IAccess* local = Local( var );
+	if( local != nullptr ) {
+		return local;
 	} else {
-		return Local( var );
+		return Formal( var );
 	}
 }
 
