@@ -3,11 +3,11 @@
 
 class CIRMove : public IIRStm {
 public:
-    CIRMove( IIRExp* dst, IIRExp* src );
+    CIRMove( const IIRExp* dst, const IIRExp* src );
     ~CIRMove();
 
 private:
-    IIRExp* dst;
-    IIRExp* src;
+    const IIRExp* dst;
+    const IIRExp* src;
 };
 

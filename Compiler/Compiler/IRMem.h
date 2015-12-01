@@ -7,6 +7,6 @@ public:
   ~CIRMem();
 
 private:
-  IIRExp* expression;
+  const IIRExp* expression;
 };
 
