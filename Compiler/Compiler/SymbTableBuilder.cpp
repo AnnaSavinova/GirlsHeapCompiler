@@ -47,7 +47,7 @@ void CSymbTableBuilder::Visit( const CClassDecl * classDecl )
 void CSymbTableBuilder::Visit( const CClassDeclList * classDecls )
 {
     std::vector<IClassDecl*> classDeclList = classDecls->ClassDeclList();
-    for( int i = 0; i < classDeclList.size(); ++i ) {
+    for( size_t i = 0; i < classDeclList.size(); ++i ) {
         classDeclList[i]->Accept( this );
     }
 }
@@ -66,7 +66,7 @@ void CSymbTableBuilder::Visit( const CElementAssignment * elemAssign )
 void CSymbTableBuilder::Visit( const CExpList * expList )
 {
     std::vector<IExp*> exps = expList->Expressions();
-    for( int i = 0; i < exps.size(); ++i ) {
+    for( size_t i = 0; i < exps.size(); ++i ) {
         exps[i]->Accept( this );
     }
 }
@@ -75,7 +75,7 @@ void CSymbTableBuilder::Visit( const CFormalList * formalList )
 {
     std::vector<CFormalListElement*> formals = formalList->List();
 
-    for( int i = 0; i < formals.size(); ++i ) {
+    for( size_t i = 0; i < formals.size(); ++i ) {
         formals[i]->type->Accept( this );
         CType* t = lastTypeValue;
 
@@ -164,7 +164,7 @@ void CSymbTableBuilder::Visit( const CMethodDecl * methodDecl )
 void CSymbTableBuilder::Visit( const CMethodDeclList * methodDecls )
 {
     std::vector< IMethodDecl* > methodDeclList = methodDecls->MethodDeclList();
-    for( int i = 0; i < methodDeclList.size(); ++i ) {
+    for( size_t i = 0; i < methodDeclList.size(); ++i ) {
         methodDeclList[i]->Accept( this );
     }
 }
@@ -205,7 +205,7 @@ void CSymbTableBuilder::Visit( const CStatementList * statementList )
 {
     std::vector< IStatement* > statements = statementList->StatementList();
 
-    for( int i = 0; i < statements.size(); ++i ) {
+    for( size_t i = 0; i < statements.size(); ++i ) {
         statements[i]->Accept( this );
     }
 }
@@ -240,7 +240,7 @@ void CSymbTableBuilder::Visit( const CVarDecl * varDecl )
 void CSymbTableBuilder::Visit( const CVarDeclList * varDecls )
 {
     std::vector< IVarDecl* > varDeclList = varDecls->VarDeclList();
-    for( int i = 0; i < varDeclList.size(); ++i ) {
+    for( size_t i = 0; i < varDeclList.size(); ++i ) {
         varDeclList[i]->Accept( this );
     }
 }

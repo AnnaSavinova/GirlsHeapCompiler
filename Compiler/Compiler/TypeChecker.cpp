@@ -92,7 +92,7 @@ void CTypeChecker::Visit( const CClassDecl * classDecl )
 void CTypeChecker::Visit( const CClassDeclList * classDecls )
 {
 	std::vector<IClassDecl*> classDeclList = classDecls->ClassDeclList();
-	for( int i = 0; i < classDeclList.size(); ++i ) {
+	for( size_t i = 0; i < classDeclList.size(); ++i ) {
 		classDeclList[i]->Accept( this );
 	}
 }
@@ -146,7 +146,7 @@ void CTypeChecker::Visit( const CExpList * expList )
 	CMethodInfo* tmp = currMethod;
 	methods.pop();
 //	currMethod = methods.top();
-	for( int i = 0; i < exps.size(); ++i ) {
+	for( size_t i = 0; i < exps.size(); ++i ) {
 		std::string expectedType = tmp->FormalArgsOrdered()[i]->Type();
 
 		exps[i]->Accept( this );
@@ -162,7 +162,7 @@ void CTypeChecker::Visit( const CFormalList * formalList )
 {
 	std::vector<CFormalListElement*> formals = formalList->List();
 	
-	for( int i = 0; i < formals.size(); ++i ) {
+	for( size_t i = 0; i < formals.size(); ++i ) {
 		formals[i]->type->Accept( this );
 		CType* t = lastTypeValue;
 
@@ -290,7 +290,7 @@ void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 void CTypeChecker::Visit( const CMethodDeclList * methodDecls )
 {
 	std::vector< IMethodDecl* > methodDeclList = methodDecls->MethodDeclList();
-	for( int i = 0; i < methodDeclList.size(); ++i ) {
+	for( size_t i = 0; i < methodDeclList.size(); ++i ) {
 		methodDeclList[i]->Accept( this );
 	}
 }
@@ -336,7 +336,7 @@ void CTypeChecker::Visit( const CStatementList * statementList )
 {
 	std::vector< IStatement* > statements = statementList->StatementList();
 
-	for( int i = 0; i < statements.size(); ++i ) {
+	for( size_t i = 0; i < statements.size(); ++i ) {
 		statements[i]->Accept( this );
 	}
 }
@@ -365,7 +365,7 @@ void CTypeChecker::Visit( const CVarDecl * varDecl )
 void CTypeChecker::Visit( const CVarDeclList * varDecls )
 {
 	std::vector< IVarDecl* > varDeclList = varDecls->VarDeclList();
-	for( int i = 0; i < varDeclList.size(); ++i ) {
+	for( size_t i = 0; i < varDeclList.size(); ++i ) {
 		varDeclList[i]->Accept( this );
 	}
 }
