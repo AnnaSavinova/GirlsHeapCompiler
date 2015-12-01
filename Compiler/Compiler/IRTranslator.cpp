@@ -150,3 +150,13 @@ void CIRTranslator::Visit( const CWhileStatement * whileStatement )
 {
     // TODO!
 }
+
+CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * var ) const
+{
+    if( frames.top()->Local( var ) != nullptr ) {
+        return E_LOCAL;
+    }
+
+    for( size_t i = 0; i < frames.top()->FormalsCount(); ++i ) {
+    }
+}

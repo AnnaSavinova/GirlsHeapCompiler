@@ -42,5 +42,13 @@ private:
     std::stack< CFrame* > frames;
 
     const CTable* symbTable;
+
+    enum EVariablePlace {
+        E_LOCAL,
+        E_FORMAL,
+        E_CLASS
+    };
+
+    EVariablePlace getVariablePlace( const CSymbol* var ) const;
 };
 
