@@ -1,6 +1,6 @@
 #include "Frame.h"
 
-CFrame::CFrame( const CSymbol * name, int formalsCount )
+CFrame::CFrame( const CSymbol* name, int formalsCount, const IIRStm* root )
 {}
 
 int CFrame::FormalsCount() const

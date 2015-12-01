@@ -48,22 +48,22 @@ public:
 
 class CFrame {
 public:
-    CFrame( const CSymbol* name, int formalsCount );
+    CFrame( const CSymbol* name, int formalsCount, const IIRStm* root );
     //Доступ к формальным параметрам
     int FormalsCount() const;
     const IAccess* Formal( const CSymbol* ) const;
     const IAccess* Local( const CSymbol* ) const;
-	const IAccess* Temporary( const CSymbol* ) const;
-	const IAccess* FindVar( const CSymbol* ) const;
+    const IAccess* Temporary( const CSymbol* ) const;
+    const IAccess* FindVar( const CSymbol* ) const;
     const CTemp* FP() const;
     static int WordSize();
 private:
     std::map<  const CSymbol*, const IAccess* > formals;
     std::map< const CSymbol*, const IAccess* > locals;
-	std::map< const CSymbol*, const IAccess* > temporaries;
+    std::map< const CSymbol*, const IAccess* > temporaries;
     const CTemp* fp;
-	const IIRStm* root;
     static int wordSize;
+    const IIRStm* root;
 };
 
 

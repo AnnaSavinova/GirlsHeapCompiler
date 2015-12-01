@@ -216,7 +216,6 @@ Exp: '-' Exp %prec UMINUS { $$ = new CUnExp( $2, "-", yylineno ); }
 	| Exp '|' Exp { $$ = new CBinExp( $1, $3, "|", yylineno ); }
 	| Exp '-' Exp { $$ = new CBinExp( $1, $3, "-", yylineno ); }
 	| Exp '*' Exp { $$ = new CBinExp( $1, $3, "*", yylineno ); }
-	| Exp '/' Exp { $$ = new CBinExp( $1, $3, "/", yylineno ); }
 	| Exp '[' Exp ']' { $$ = new CBinExp( $1, $3, "[]", yylineno ); }
 	| Exp '.' LENGTH { $$ = new CLengthExp( $1, yylineno ); }
 	| Exp '.' ID '(' ExpList ')' { $$ = new CMethodCall( $1, $3, $5, yylineno ); }

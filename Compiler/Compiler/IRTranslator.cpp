@@ -15,7 +15,28 @@ void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )
 }
 
 void CIRTranslator::Visit( const CBinExp * binExp )
-{}
+{
+    binExp->Expression1()->Accept( this );
+
+    IIRExp* left = exps.top();
+    exps.pop();
+
+    binExp->Expression2()->Accept( this );
+
+    IIRExp* right = exps.top();
+    exps.pop();
+
+    EBinOp operation;
+    if( binExp->Operation() == "+" ) {
+        exps.push( new CIRMem( new CIRBinOp( PLUS, left, right ) ) );
+    } else if( binExp->Operation() == "-" ) {
+        exps.push( new CIRMem( new CIRBinOp( MINUS, left, right ) ) );
+    } else if( binExp->Operation() == "*" ) {
+        exps.push( new CIRMem( new CIRBinOp( MUL, left, right ) ) );
+    } else if( binExp->Operation() == "*" ) {
+        exps.push( new CIRMem( new CIRBinOp( MUL, left, right ) ) );
+    }
+}
 
 void CIRTranslator::Visit( const CClassDecl * classDecl )
 {}
@@ -81,7 +102,7 @@ void CIRTranslator::Visit( const CMethodDecl * methodDecl )
 
 void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 {
-    for ( auto methodDecl : methodDecls->MethodDeclList() ) {
+    for( auto methodDecl : methodDecls->MethodDeclList() ) {
         methodDecl->Accept( this );
     }
 }
@@ -104,8 +125,8 @@ void CIRTranslator::Visit( const CPrintStatement * printStatement )
 void CIRTranslator::Visit( const CProgram * program )
 {
     program->MainClass()->Accept( this );
-    
-    if ( program->ClassDeclList() != nullptr ) {
+
+    if( program->ClassDeclList() != nullptr ) {
         program->ClassDeclList()->Accept( this );
     }
 }
@@ -117,7 +138,7 @@ void CIRTranslator::Visit( const CStatementBlock * statementBlock )
 
 void CIRTranslator::Visit( const CStatementList * statementList )
 {
-    for ( auto stm : statementList->StatementList() ) {
+    for( auto stm : statementList->StatementList() ) {
         stm->Accept( this );
     }
 }
@@ -135,12 +156,12 @@ void CIRTranslator::Visit( const CUnExp * unExp )
     exps.pop();
 
     EBinOp operation;
-    if ( unExp->Operation() == "-" ) {
-      exps.push( new CIRMem( new CIRBinOp( MINUS, new CIRConst( 0 ), exp ) ) );
-    } else if (unExp->Operation() == "!") {
-      exps.push( new CIRMem( new CIRBinOp( OR, new CIRConst( 0 ), exp) ) );
+    if( unExp->Operation() == "-" ) {
+        exps.push( new CIRMem( new CIRBinOp( MINUS, new CIRConst( 0 ), exp ) ) );
+    } else if( unExp->Operation() == "!" ) {
+        exps.push( new CIRMem( new CIRBinOp( OR, new CIRConst( 0 ), exp ) ) );
     } else {
-      // тогда это странный уноп
+        // тогда это странный уноп
     }
 }
 
