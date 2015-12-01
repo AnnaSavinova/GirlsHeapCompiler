@@ -148,14 +148,12 @@ void CIRTranslator::Visit( const CUnExp * unExp )
 
 void CIRTranslator::Visit( const CVarDecl * varDecl )
 {
-    // TODO!
+    throw std::logic_error( "Unimplemented method Visit( CVarDecl )" );
 }
 
 void CIRTranslator::Visit( const CVarDeclList * varDecls )
 {
-    for ( auto varDecl : varDecls->VarDeclList() ) {
-        varDecl->Accept( this );
-    }
+    throw std::logic_error( "Unimplemented method Visit( CVarDeclList )" );
 }
 
 void CIRTranslator::Visit( const CWhileStatement * whileStatement )
