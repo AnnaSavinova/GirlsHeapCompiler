@@ -88,7 +88,11 @@ void CIRTranslator::Visit( const CLengthExp * lengthExp )
 {}
 
 void CIRTranslator::Visit( const CMainClass * mainClass )
-{}
+{
+    mainClass->Statements()->Accept( this );
+    frames.push(new CFrame( mainClass->Id(), 0, stms.top() ) );
+    stms.pop();
+}
 
 void CIRTranslator::Visit( const CMethodCall * methodCall )
 {
