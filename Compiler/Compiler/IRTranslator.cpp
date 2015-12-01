@@ -5,14 +5,12 @@ CIRTranslator::CIRTranslator( const CTable * _symbTable ) : symbTable( _symbTabl
 
 void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )
 {
-    // для левой части берем аксессор из фрейма и выражение из него
-    const IIRExp* left( frames.top()->Local( assigmentStatement->Id() )->GetExp( frames.top()->FP() ) );
+    const IIRExp* left( frames.top()->FindVar( assigmentStatement->Id() )->GetExp( frames.top()->FP() ) );
 
     assigmentStatement->Expression()->Accept( this );
     const IIRExp* right = exps.top();
     exps.pop();
 
-    // записываем результат в стек
     stms.push( new CIRMove( left, right ) );
 }
 
@@ -39,7 +37,7 @@ void CIRTranslator::Visit( const CElementAssignment * elemAssign )
     exps.pop();
 
     IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::WordSize() ) );
-    IIRExp* array = new CIRMem( frames.top()->Local( elemAssign->Id() )->GetExp( frames.top()->FP() ) );
+    IIRExp* array = new CIRMem( frames.top()->FindVar( elemAssign->Id() )->GetExp( frames.top()->FP() ) );
     IIRExp* lExp = new CIRMem( new CIRBinOp( PLUS, array, offset ) );
 
     elemAssign->Exp2()->Accept( this );
@@ -95,7 +93,7 @@ void CIRTranslator::Visit( const CNewInt * newInt )
 
 void CIRTranslator::Visit( const CNumber * number )
 {
-    stms.emplace( new CIRConst( number->Number() ) );
+    exps.push( new CIRConst( number->Number() ) );
 }
 
 void CIRTranslator::Visit( const CPrintStatement * printStatement )
@@ -161,7 +159,7 @@ void CIRTranslator::Visit( const CWhileStatement * whileStatement )
     // TODO!
 }
 
-CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * var ) const
+/*CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * var ) const
 {
     if( frames.top()->Local( var ) != nullptr ) {
         return E_LOCAL;
@@ -169,4 +167,4 @@ CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * v
 
     for( size_t i = 0; i < frames.top()->FormalsCount(); ++i ) {
     }
-}
+}*/

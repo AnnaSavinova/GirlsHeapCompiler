@@ -49,6 +49,6 @@ private:
         E_CLASS
     };
 
-    EVariablePlace getVariablePlace( const CSymbol* var ) const;
+    //EVariablePlace getVariablePlace( const CSymbol* var ) const;
 };
 
