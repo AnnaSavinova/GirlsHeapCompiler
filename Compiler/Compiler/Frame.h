@@ -2,9 +2,9 @@
 #include <vector>
 #include <map>
 #include "Symbol.h"
-#include "IRClasses.h"
 
 class IIRExp;
+class IIRStm;
 
 // Временная переменная
 class CTemp {
@@ -62,7 +62,7 @@ private:
     std::map< const CSymbol*, const IAccess* > locals;
 	std::map< const CSymbol*, const IAccess* > temporaries;
     const CTemp* fp;
-	const IIRStm root;
+	const IIRStm* root;
     static int wordSize;
 };
 
