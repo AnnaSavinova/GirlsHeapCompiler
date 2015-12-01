@@ -8,12 +8,13 @@ int CFrame::FormalsCount() const
     return formals.size();
 }
 
-const IAccess * CFrame::Formal( size_t index ) const
+const IAccess * CFrame::Formal( const CSymbol* var ) const
 {
-	if( index < formals.size() ) {
-		return nullptr;
+	auto access = formals.find( var );
+	if( access != formals.end() ) {
+		return access->second;
 	} else {
-		return formals[index];
+		return nullptr;
 	}
 }
 
@@ -25,6 +26,26 @@ const IAccess * CFrame::Local( const CSymbol * var ) const
     } else {
         return nullptr;
     }
+}
+
+const IAccess * CFrame::Temporary( const CSymbol * var ) const
+{
+	auto access = temporaries.find( var );
+	if( access != temporaries.end() ) {
+		return access->second;
+	} else {
+		return nullptr;
+	}
+}
+
+const IAccess* CFrame::FindVar( const CSymbol * var ) const
+{
+	const IAccess* formal = Formal( var );
+	if( formal != nullptr ) {
+		return formal;
+	} else {
+		return Local( var );
+	}
 }
 
 const CTemp* CFrame::FP() const

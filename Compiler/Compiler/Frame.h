@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include "Symbol.h"
+#include "IRClasses.h"
 
 class IIRExp;
 
@@ -50,14 +51,18 @@ public:
     CFrame( const CSymbol* name, int formalsCount );
     //Доступ к формальным параметрам
     int FormalsCount() const;
-    const IAccess* Formal( size_t index ) const;
+    const IAccess* Formal( const CSymbol* ) const;
     const IAccess* Local( const CSymbol* ) const;
+	const IAccess* Temporary( const CSymbol* ) const;
+	const IAccess* FindVar( const CSymbol* ) const;
     const CTemp* FP() const;
     static int WordSize();
 private:
-    std::vector< IAccess* > formals;
+    std::map<  const CSymbol*, const IAccess* > formals;
     std::map< const CSymbol*, const IAccess* > locals;
+	std::map< const CSymbol*, const IAccess* > temporaries;
     const CTemp* fp;
+	const IIRStm root;
     static int wordSize;
 };
 
