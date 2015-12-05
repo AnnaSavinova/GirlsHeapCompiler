@@ -55,7 +55,15 @@ void CIRTranslator::Visit( const CBinExp * binExp )
 }
 
 void CIRTranslator::Visit( const CClassDecl * classDecl )
-{}
+{
+    currentClass = symbTable->FindClass( classDecl->Id() );
+
+    if( classDecl->MethodDeclList() != nullptr ) {
+        classDecl->MethodDeclList()->Accept( this );
+    }
+
+    currentClass = nullptr;
+}
 
 void CIRTranslator::Visit( const CClassDeclList * classDecls )
 {
@@ -92,16 +100,50 @@ void CIRTranslator::Visit( const CExpList * expList )
 }
 
 void CIRTranslator::Visit( const CFormalList * formalList )
-{}
+{
+    throw std::logic_error( "Unimplemented method Visit( CFormalList )" );
+}
 
 void CIRTranslator::Visit( const CId * id )
-{}
+{
+    throw std::logic_error( "Unimplemented method Visit( CId )" );
+}
 
 void CIRTranslator::Visit( const CIfStatement * ifStatement )
-{}
+{
+    ifStatement->Expression()->Accept( this );
+    IIRExp* condition = exps.top();
+    exps.pop();
+
+    ifStatement->ThenStatement()->Accept( this );
+    ifStatement->ElseStatement()->Accept( this );
+    IIRStm* falseStatement = stms.top();
+    stms.pop();
+    IIRStm* trueStatement = stms.top();
+    stms.pop();
+
+    CIRLabel* trueLabel = new CIRLabel( new CLabel() );
+    CIRLabel* falseLabel = new CIRLabel( new CLabel() );
+    CIRLabel* endLabel = new CIRLabel( new CLabel() );
+
+    trueStatement = new CIRSeq( trueLabel, new CIRSeq( trueStatement, endLabel ) );
+    falseStatement = new CIRSeq( falseLabel, new CIRSeq( falseStatement, endLabel ) );
+
+    stms.emplace( new CIRCjump( LE, condition, new CIRConst( 1 ), trueLabel, falseLabel ) );
+}
 
 void CIRTranslator::Visit( const CLengthExp * lengthExp )
-{}
+{
+    lengthExp->Expression()->Accept( this );
+    IIRExp* arrayPtr = exps.top();
+    exps.pop();
+
+    CIRTemp* lengthVar = new CIRTemp( new CTemp() );
+
+    CIRMove* move = new CIRMove( lengthVar, arrayPtr );
+
+    exps.push( new CIRESeq( move, lengthVar ) );
+}
 
 void CIRTranslator::Visit( const CMainClass * mainClass )
 {
@@ -112,7 +154,26 @@ void CIRTranslator::Visit( const CMainClass * mainClass )
 
 void CIRTranslator::Visit( const CMethodCall * methodCall )
 {
-    // TODO!
+    // получаем объект, у которого вызывается метод
+    methodCall->Exp()->Accept( this );
+    IIRExp* object = exps.top();
+    exps.pop();
+
+    // имя метода
+    CSymbol* method = methodCall->Id();
+
+    CIRExpList* arguments;
+    // парсим аргументы (если они есть)
+    if( methodCall->Args() != nullptr ) {
+        methodCall->Args()->Accept( this );
+        arguments = lists.top();
+        lists.pop();
+    } else {
+        arguments = new CIRExpList( nullptr, nullptr );
+    }
+
+    CIRTemp* resultVar = new CIRTemp( new CTemp() );
+    exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( method, arguments ) ), resultVar ) );
 }
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
@@ -129,7 +190,14 @@ void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 
 void CIRTranslator::Visit( const CNewInt * newInt )
 {
-    // TODO!
+    newInt->Expression()->Accept( this );
+    IIRExp* count = exps.top();
+    exps.pop();
+
+    IIRExp* allocationSize = new CIRBinOp( PLUS, count, new CIRConst( 1 ) );
+
+    // TODO как-то выделить память
+
 }
 
 void CIRTranslator::Visit( const CNumber * number )
@@ -139,7 +207,12 @@ void CIRTranslator::Visit( const CNumber * number )
 
 void CIRTranslator::Visit( const CPrintStatement * printStatement )
 {
-    // TODO!
+    printStatement->Expression()->Accept( this );
+    IIRExp* toPrint = exps.top();
+    exps.pop();
+
+    // TODO как-то вызывать
+    
 }
 
 void CIRTranslator::Visit( const CProgram * program )
@@ -175,7 +248,6 @@ void CIRTranslator::Visit( const CUnExp * unExp )
     IIRExp* exp = exps.top();
     exps.pop();
 
-    EBinOp operation;
     if( unExp->Operation() == "-" ) {
         exps.push( new CIRMem( new CIRBinOp( MINUS, new CIRConst( 0 ), exp ) ) );
     } else if( unExp->Operation() == "!" ) {
@@ -197,7 +269,26 @@ void CIRTranslator::Visit( const CVarDeclList * varDecls )
 
 void CIRTranslator::Visit( const CWhileStatement * whileStatement )
 {
-    // TODO!
+    whileStatement->Expression()->Accept( this );
+    whileStatement->Statement()->Accept( this );
+
+    IIRStm* statements = stms.top();
+    stms.pop();
+
+    IIRExp* condition = exps.top();
+    exps.pop();
+
+    CIRLabel* begin = new CIRLabel( new CLabel() );
+    CIRLabel* ifTrue = new CIRLabel( new CLabel() );
+    CIRLabel* end = new CIRLabel( new CLabel() );
+    
+    IIRStm* cycleStep = new CIRSeq( ifTrue, statements );
+    IIRStm* checkCondition = new CIRCjump( LE, condition, new CIRConst( 1 ), ifTrue, end );
+    
+    //TODO что-то с безусловным переходом на начало IIRStm* jumpToBegin
+    IIRStm* jumpToBegin;
+
+    stms.emplace( new CIRSeq( begin, new CIRSeq( checkCondition, new CIRSeq( cycleStep, jumpToBegin ) ) ) );
 }
 
 /*CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * var ) const

@@ -38,10 +38,12 @@ public:
 private:
     std::stack< IIRExp* > exps;
     std::stack< IIRStm* > stms;
+    std::stack< CIRExpList* > lists;
 
     std::stack< CFrame* > frames;
 
     const CTable* symbTable;
+    CClassInfo* currentClass;
 
     enum EVariablePlace {
         E_LOCAL,

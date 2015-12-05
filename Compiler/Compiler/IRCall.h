@@ -3,11 +3,11 @@
 
 class CIRCall : public IIRExp {
 public:
-    CIRCall( IIRExp* _func/*, IRExpList* args*/ );
+    CIRCall( CSymbol* _func, CIRExpList* args );
     ~CIRCall();
 
 private:
-    IIRExp* func;
-    // IRExpList* args;
+    CSymbol* func;
+    CIRExpList* args;
 };
 
