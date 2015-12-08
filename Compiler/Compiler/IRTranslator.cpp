@@ -107,7 +107,7 @@ void CIRTranslator::Visit( const CExpList * expList )
 
 void CIRTranslator::Visit( const CFormalList * formalList )
 {
-    throw std::logic_error( "Unimplemented method Visit( CFormalList )" );
+	//nothing to do here
 }
 
 void CIRTranslator::Visit( const CId * id )
