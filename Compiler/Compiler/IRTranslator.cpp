@@ -143,7 +143,7 @@ void CIRTranslator::Visit( const CIfStatement * ifStatement )
     trueStatement = new CIRSeq( trueLabel, new CIRSeq( trueStatement, endLabel ) );
     falseStatement = new CIRSeq( falseLabel, new CIRSeq( falseStatement, endLabel ) );
 
-    stms.emplace( new CIRCjump( NE, condition, new CIRConst( 0 ), trueLabel, falseLabel ) );
+    stms.push( new CIRCjump( NE, condition, new CIRConst( 0 ), trueLabel, falseLabel ) );
 }
 
 void CIRTranslator::Visit( const CLengthExp * lengthExp )
