@@ -13,12 +13,17 @@ public:
 class CIRExpList
 {
 public:
-	CIRExpList( IIRExp* head, CIRExpList* tail );
-  ~CIRExpList();
+	CIRExpList( IIRExp* _head, CIRExpList* _tail );
+	CIRExpList( std::vector<IIRExp*>& vectorExp );
+	~CIRExpList();
 
-  std::list<IIRExp> GetExpList();
+	IIRExp* GetHead();
+	CIRExpList* GetTail();
+
+//	std::list<IIRExp> GetExpList();
 
 private:
-	std::list<IIRExp> expList;
+	IIRExp* head;
+	CIRExpList* tail;
 };
 
