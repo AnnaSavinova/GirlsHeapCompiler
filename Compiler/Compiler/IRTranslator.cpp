@@ -198,7 +198,7 @@ void CIRTranslator::Visit( const CNewInt * newInt )
 
     IIRExp* allocationSize = new CIRBinOp( PLUS, count, new CIRConst( 1 ) );
 
-    stms.emplace( new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
+    exps.emplace( new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
 
 }
 
@@ -213,7 +213,7 @@ void CIRTranslator::Visit( const CPrintStatement * printStatement )
     IIRExp* toPrint = exps.top();
     exps.pop();
 
-    stms.emplace( new CIRCall( symbolStorage.Get("print"), new CIRExpList( toPrint, nullptr ) ) );
+    exps.emplace( new CIRCall( symbolStorage.Get("print"), new CIRExpList( toPrint, nullptr ) ) );
 }
 
 void CIRTranslator::Visit( const CProgram * program )
