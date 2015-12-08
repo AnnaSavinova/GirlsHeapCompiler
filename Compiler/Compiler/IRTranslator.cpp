@@ -180,7 +180,21 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
 {
-    // TODO!
+  CMethodInfo* methodInfo = currentClass->FindMethod(methodDecl->Id());
+
+  if (methodInfo == nullptr) {
+    throw std::logic_error("Method " + methodDecl->Id()->String() + " wasn't found in " + currentClass->Name()->String());
+  }
+
+  // если метод содержит команды, то парсим их
+  IIRStm* statements = nullptr;
+  if (methodDecl->StatementList() != nullptr) {
+    methodDecl->StatementList()->Accept(this);
+    statements = stms.top();
+    stms.pop();
+  }
+
+  frames.push(new CFrame(methodDecl->Id(), methodInfo->FormalArgs().size(), statements));
 }
 
 void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
