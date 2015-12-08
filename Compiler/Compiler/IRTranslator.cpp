@@ -73,7 +73,9 @@ void CIRTranslator::Visit( const CClassDeclList * classDecls )
 }
 
 void CIRTranslator::Visit( const CConstructor * constructor )
-{}
+{
+    //TODO
+}
 
 void CIRTranslator::Visit( const CElementAssignment * elemAssign )
 {
@@ -210,7 +212,7 @@ void CIRTranslator::Visit( const CNewInt * newInt )
 
     IIRExp* allocationSize = new CIRBinOp( PLUS, count, new CIRConst( 1 ) );
 
-    // TODO как-то выделить память
+    stms.emplace( new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
 
 }
 
@@ -225,8 +227,7 @@ void CIRTranslator::Visit( const CPrintStatement * printStatement )
     IIRExp* toPrint = exps.top();
     exps.pop();
 
-    // TODO как-то вызывать
-    
+    stms.emplace( new CIRCall( symbolStorage.Get("print"), new CIRExpList( toPrint, nullptr ) ) );
 }
 
 void CIRTranslator::Visit( const CProgram * program )
@@ -301,7 +302,7 @@ void CIRTranslator::Visit( const CWhileStatement * whileStatement )
     
     //TODO что-то с безусловным переходом на начало IIRStm* jumpToBegin
     IIRStm* jumpToBegin;
-
+    
     stms.emplace( new CIRSeq( begin, new CIRSeq( checkCondition, new CIRSeq( cycleStep, jumpToBegin ) ) ) );
 }
 
