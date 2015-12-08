@@ -112,7 +112,7 @@ void CIRTranslator::Visit( const CFormalList * formalList )
 
 void CIRTranslator::Visit( const CId * id )
 {
-    throw std::logic_error( "Unimplemented method Visit( CId )" );
+    throw std::logic_error( "Translator shouldn't visit CId" );
 }
 
 void CIRTranslator::Visit( const CIfStatement * ifStatement )
@@ -135,7 +135,7 @@ void CIRTranslator::Visit( const CIfStatement * ifStatement )
     trueStatement = new CIRSeq( trueLabel, new CIRSeq( trueStatement, endLabel ) );
     falseStatement = new CIRSeq( falseLabel, new CIRSeq( falseStatement, endLabel ) );
 
-    stms.emplace( new CIRCjump( LE, condition, new CIRConst( 1 ), trueLabel, falseLabel ) );
+    stms.emplace( new CIRCjump( NE, condition, new CIRConst( 0 ), trueLabel, falseLabel ) );
 }
 
 void CIRTranslator::Visit( const CLengthExp * lengthExp )
