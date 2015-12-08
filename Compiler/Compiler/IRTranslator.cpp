@@ -107,7 +107,7 @@ void CIRTranslator::Visit( const CExpList * expList )
 
 void CIRTranslator::Visit( const CFormalList * formalList )
 {
-	//nothing to do here
+	throw std::logic_error( "Translator shouldn't visit formalList" );
 }
 
 void CIRTranslator::Visit( const CId * id )
@@ -256,7 +256,7 @@ void CIRTranslator::Visit( const CStatementList * statementList )
 
 void CIRTranslator::Visit( const CType * type )
 {
-    throw std::logic_error( "Unimplemented method Visit( CType )" );
+    throw std::logic_error( "Translator shouldn't visit CType" );
 }
 
 void CIRTranslator::Visit( const CUnExp * unExp )
@@ -277,12 +277,12 @@ void CIRTranslator::Visit( const CUnExp * unExp )
 
 void CIRTranslator::Visit( const CVarDecl * varDecl )
 {
-    throw std::logic_error( "Unimplemented method Visit( CVarDecl )" );
+    throw std::logic_error( "Translator shouldn't visit CVarDecl" );
 }
 
 void CIRTranslator::Visit( const CVarDeclList * varDecls )
 {
-    throw std::logic_error( "Unimplemented method Visit( CVarDeclList )" );
+    throw std::logic_error( "Translator shouldn't visit CVarDeclList" );
 }
 
 void CIRTranslator::Visit( const CWhileStatement * whileStatement )
