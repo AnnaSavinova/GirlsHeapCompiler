@@ -96,9 +96,13 @@ void CIRTranslator::Visit( const CElementAssignment * elemAssign )
 
 void CIRTranslator::Visit( const CExpList * expList )
 {
+	std::vector<IIRExp*> vectorExp;
     for( size_t i = 0; i < expList->Expressions().size(); ++i ) {
         expList->Expressions()[i]->Accept( this );
+		vectorExp.push_back( exps.top() );
+		exps.pop();
     }
+	lists.push( new CIRExpList( vectorExp ) );
 }
 
 void CIRTranslator::Visit( const CFormalList * formalList )
