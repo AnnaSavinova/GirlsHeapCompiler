@@ -4,6 +4,7 @@
 class CIRSeq : public IIRStm {
 public:
     CIRSeq( IIRStm* left, IIRStm* right );
+    CIRSeq( std::list<IIRStm*> list );
     ~CIRSeq();
 
 private:
