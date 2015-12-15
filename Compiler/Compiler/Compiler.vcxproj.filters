@@ -154,6 +154,12 @@
     <ClCompile Include="IRTemp.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>
+    <ClCompile Include="IRTreePrettyPrinter.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="Digrapg.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -329,6 +335,12 @@
     </ClInclude>
     <ClInclude Include="IRClasses.h">
       <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="IRTreePrettyPrinter.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="Digrapg.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

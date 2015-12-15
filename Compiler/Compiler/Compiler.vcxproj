@@ -73,6 +73,7 @@
     <ClCompile Include="ClassDecl.cpp" />
     <ClCompile Include="ClassDeclList.cpp" />
     <ClCompile Include="Constructor.cpp" />
+    <ClCompile Include="Digrapg.cpp" />
     <ClCompile Include="ElementAssignment.cpp" />
     <ClCompile Include="ExpList.cpp" />
     <ClCompile Include="FormalList.cpp" />
@@ -95,6 +96,7 @@
     <ClCompile Include="IRStmConverter.cpp" />
     <ClCompile Include="IRTemp.cpp" />
     <ClCompile Include="IRTranslator.cpp" />
+    <ClCompile Include="IRTreePrettyPrinter.cpp" />
     <ClCompile Include="LengthExp.cpp" />
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="MethodCall.cpp" />
@@ -135,6 +137,7 @@
     <ClInclude Include="ClassDeclList.h" />
     <ClInclude Include="classes.h" />
     <ClInclude Include="Constructor.h" />
+    <ClInclude Include="Digrapg.h" />
     <ClInclude Include="ElementAssignment.h" />
     <ClInclude Include="ExpList.h" />
     <ClInclude Include="FormalList.h" />
@@ -160,6 +163,7 @@
     <ClInclude Include="IRStmConverter.h" />
     <ClInclude Include="IRTemp.h" />
     <ClInclude Include="IRTranslator.h" />
+    <ClInclude Include="IRTreePrettyPrinter.h" />
     <ClInclude Include="IVisitor.h" />
     <ClInclude Include="LengthExp.h" />
     <ClInclude Include="MainClass.h" />
