@@ -2,9 +2,11 @@
 #include <vector>
 #include <map>
 #include "Symbol.h"
+#include <list>
 
 class IIRExp;
 class IIRStm;
+class CIRMem;
 
 // Временная переменная
 class CTemp {
@@ -46,9 +48,31 @@ public:
     virtual ~IAccess() {}
 };
 
+
+class CInFrame : public IAccess
+{
+public:
+    const IIRExp* GetExp( const CTemp* framePtr ) const;
+    ~CInFrame();
+private:
+    int offset;
+};
+
+
+class CInReg : public IAccess
+{
+public:
+    const IIRExp* GetExp( const CTemp* framePtr ) const;
+    ~CInReg();
+private:
+    CTemp * reg;
+};
+
+
 class CFrame {
 public:
     CFrame( const CSymbol* name, int formalsCount, const IIRStm* root );
+    CFrame( const CSymbol* name, std::list<CSymbol*> arguments );
     //Доступ к формальным параметрам
     int FormalsCount() const;
     const IAccess* Formal( const CSymbol* ) const;

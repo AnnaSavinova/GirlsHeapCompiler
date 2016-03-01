@@ -69,7 +69,7 @@ void CIRTranslator::Visit( const CClassDeclList * classDecls )
 {
     std::list<IIRStm*> list;
 
-    for ( auto classDecl : classDecls->ClassDeclList() ) {
+    for( auto classDecl : classDecls->ClassDeclList() ) {
         classDecl->Accept( this );
         list.push_back( stms.top() );
         list.pop_back();
@@ -121,12 +121,12 @@ void CIRTranslator::Visit( const CExpList * expList )
 
 void CIRTranslator::Visit( const CFormalList * formalList )
 {
-	throw std::logic_error( "Translator shouldn't visit formalList" );
+    throw std::logic_error( "Translator shouldn't visit formalList" );
 }
 
 void CIRTranslator::Visit( const CId * id )
 {
-    throw std::logic_error( "Translator shouldn't visit CId" );
+    exps.push( const_cast< IIRExp* >(frames.top()->FindVar( id->Id() )->GetExp( frames.top()->FP() )) );
 }
 
 void CIRTranslator::Visit( const CIfStatement * ifStatement )
@@ -181,6 +181,11 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
     // имя метода
     CSymbol* method = methodCall->Id();
+    CMethodInfo* methodInfo = currentClass->FindMethod( method );
+
+    if( methodInfo == nullptr ) {
+        throw std::logic_error( "Method " + method->String() + " wasn't found in " + currentClass->Name()->String() );
+    }
 
     CIRExpList* arguments;
     // парсим аргументы (если они есть)
@@ -192,8 +197,13 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
         arguments = new CIRExpList( nullptr, nullptr );
     }
 
+    arguments = new CIRExpList( object, arguments );
+
     CIRTemp* resultVar = new CIRTemp( new CTemp() );
     exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( method, arguments ) ), resultVar ) );
+
+    frames.push( new CFrame( method, methodInfo->FormalArgs().size(), statements ) );
+
 }
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
@@ -212,14 +222,13 @@ void CIRTranslator::Visit( const CMethodDecl * methodDecl )
         stms.pop();
     }
 
-    frames.push( new CFrame( methodDecl->Id(), methodInfo->FormalArgs().size(), statements ) );
 }
 
 void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 {
     std::list<IIRStm*> list;
 
-    for ( auto methodDecl : methodDecls->MethodDeclList() ) {
+    for( auto methodDecl : methodDecls->MethodDeclList() ) {
         methodDecl->Accept( this );
         list.push_back( stms.top() );
         list.pop_back();
@@ -255,7 +264,7 @@ void CIRTranslator::Visit( const CPrintStatement * printStatement )
     IIRExp* toPrint = exps.top();
     exps.pop();
 
-    exps.push( new CIRCall( symbolStorage.Get( "print" ), new CIRExpList( toPrint, nullptr ) ) );
+    stms.push( new CIRExp( new CIRCall( symbolStorage.Get( "print" ), new CIRExpList( toPrint, nullptr ) ) ) );
 }
 
 void CIRTranslator::Visit( const CProgram * program )
@@ -329,7 +338,7 @@ void CIRTranslator::Visit( const CWhileStatement * whileStatement )
     IIRStm* checkCondition = new CIRCjump( LE, condition, new CIRConst( 1 ), ifTrue, end );
 
     //TODO что-то с безусловным переходом на начало IIRStm* jumpToBegin
-    IIRStm* jumpToBegin;
+    IIRStm* jumpToBegin = new CIRJump( begin );
 
     stms.push( new CIRSeq( begin, new CIRSeq( checkCondition, new CIRSeq( cycleStep, jumpToBegin ) ) ) );
 }

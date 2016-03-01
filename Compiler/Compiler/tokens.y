@@ -6,6 +6,7 @@
 #include "PrettyPrinter.h"
 #include "SymbTableBuilder.h"
 #include "TypeChecker.h"
+#include "IRTranslator.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -261,6 +262,9 @@ int main()
 
 	CTypeChecker checker( tableBuilder.GetSymbolTable() );
 	checker.Visit( (CProgram*) program );
+
+	CIRTranslator IRTranslator( tableBuilder.GetSymbolTable() );
+	IRTranslator.Visit( (CProgram*) program );
 
 	system("pause");
 	return 0;

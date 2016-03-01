@@ -5,6 +5,12 @@ CFrame::CFrame(const CSymbol * name, int formalsCount, const IIRStm * root)
   : name(name), formalsCount(formalsCount), root(root)
 {}
 
+CFrame::CFrame( const CSymbol* name, std::list<CSymbol*> arguments )
+{
+
+}
+
+
 int CFrame::FormalsCount() const
 {
     return formals.size();
@@ -79,3 +85,13 @@ CTemp::CTemp( const CSymbol * symbol ) : name( symbol->String() )
 
 CTemp::~CTemp()
 {}
+
+const IIRExp * CInReg::GetExp( const CTemp * framePtr ) const
+{
+//    CIRMem
+}
+
+const IIRExp * CInFrame::GetExp( const CTemp * framePtr ) const
+{
+    return nullptr;
+}

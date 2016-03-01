@@ -1,13 +1,14 @@
 #pragma once
 #include "common.h"
 
+class CIRLabel;
+
 class CIRJump : public IIRStm {
 public:
-    CIRJump( IIRExp* exp, std::vector< CTemp* > targets );
+    CIRJump( CIRLabel* _label );
     ~CIRJump();
 
 private:
-    IIRExp* exp;
-    std::vector< CTemp* > targets;
+	CIRLabel* label;
 };
 
