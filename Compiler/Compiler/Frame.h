@@ -52,8 +52,9 @@ public:
 class CInFrame : public IAccess
 {
 public:
+    explicit CInFrame( int _offset );
     const IIRExp* GetExp( const CTemp* framePtr ) const;
-    ~CInFrame();
+    //~CInFrame();
 private:
     int offset;
 };
@@ -63,7 +64,7 @@ class CInReg : public IAccess
 {
 public:
     const IIRExp* GetExp( const CTemp* framePtr ) const;
-    ~CInReg();
+    ///~CInReg();
 private:
     CTemp * reg;
 };

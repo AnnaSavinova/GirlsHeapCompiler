@@ -88,7 +88,13 @@ CTemp::~CTemp()
 
 const IIRExp * CInReg::GetExp( const CTemp * framePtr ) const
 {
+    return nullptr;
 //    CIRMem
+}
+
+CInFrame::CInFrame( int _offset )
+{
+    offset = _offset;
 }
 
 const IIRExp * CInFrame::GetExp( const CTemp * framePtr ) const

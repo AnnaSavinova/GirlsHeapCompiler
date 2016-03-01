@@ -202,7 +202,7 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
     CIRTemp* resultVar = new CIRTemp( new CTemp() );
     exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( method, arguments ) ), resultVar ) );
 
-    frames.push( new CFrame( method, methodInfo->FormalArgs().size(), statements ) );
+    frames.push( new CFrame( method, methodInfo->FormalArgs().size(), stms.top() ) ); // stm.top()??
 
 }
 
