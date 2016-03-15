@@ -167,7 +167,15 @@ void CIRTranslator::Visit( const CLengthExp * lengthExp )
 
 void CIRTranslator::Visit( const CMainClass * mainClass )
 {
-    mainClass->Statements()->Accept( this );
+    CSymbol* id = mainClass->Id();
+    if( symbTable->FindClass( id ) == nullptr ) {
+        std::cerr << "At line " << mainClass->Line() << ": undefined class " << id->String() << std::endl;
+    } else {
+        currentClass = symbTable->FindClass( id );
+        if( mainClass->Statements() != nullptr ) {
+            mainClass->Statements()->Accept( this );
+        }
+    }
     frames.push( new CFrame( mainClass->Id(), 0, stms.top() ) );
     stms.pop();
 }
