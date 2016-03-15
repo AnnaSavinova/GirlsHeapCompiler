@@ -89,6 +89,7 @@ void CIRTranslator::Visit( const CConstructor * constructor )
     IIRStm* first = new CIRMove( tmp, new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
     IIRStm* second = new CIRExp( new CIRCall( symbolStorage.Get( "memset" ), new CIRExpList( std::vector< IIRExp* >{ new CIRConst( 0 ), allocationSize, tmp } ) ) );
     exps.push( new CIRESeq( new CIRSeq( first, second ), tmp ) );
+    lastObjectClass = info;
 }
 
 void CIRTranslator::Visit( const CElementAssignment * elemAssign )

@@ -44,6 +44,7 @@ private:
 
     const CTable* symbTable;
     CClassInfo* currentClass;
+    CClassInfo* lastObjectClass;
 
     enum EVariablePlace {
         E_LOCAL,
