@@ -14,7 +14,7 @@ ID ({LETTER})({LETTER}|{DIGIT}|_)*
 INTEGER ({DIGIT}+)
 COMMENT ((\/\*(([^*\n]*)|([^/\n]*)|(([^*\n]*\*+[^*/\n]+[^*\n]*)*)|([^*\n]*\*+))\*\/)|(\/\/.*))
 BRACKETS [\[\](){}]
-OPERANDS [-+*/!.,;:=<]
+OPERANDS [-+*!.,;:=<]
 
 %%
 "&&" {
