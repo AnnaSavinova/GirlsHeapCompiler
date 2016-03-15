@@ -1,6 +1,6 @@
 #include "IRTranslator.h"
 
-CIRTranslator::CIRTranslator( const CTable * _symbTable ) : symbTable( _symbTable )
+CIRTranslator::CIRTranslator( const CTable * _symbTable, const  std::map< const void*, std::string > _expTypesTable ) : symbTable( _symbTable ), expTypesTable( _expTypesTable )
 {}
 
 void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )

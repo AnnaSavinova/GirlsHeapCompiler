@@ -2302,7 +2302,7 @@ int main()
 	CTypeChecker checker( tableBuilder.GetSymbolTable() );
 	checker.Visit( (CProgram*) program );
 
-	CIRTranslator IRTranslator( tableBuilder.GetSymbolTable() );
+	CIRTranslator IRTranslator( tableBuilder.GetSymbolTable(), checker.GetExpTypesTable() );
 	IRTranslator.Visit( (CProgram*) program );
 
 	system("pause");

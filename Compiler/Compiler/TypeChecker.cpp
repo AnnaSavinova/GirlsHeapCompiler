@@ -192,10 +192,13 @@ void CTypeChecker::Visit( const CId * id )
 	}
 
 	// иначе это имя переменной
-	if( findVar( id->Id() ) != nullptr )
-		lastTypeValue = findVar( id->Id() )->Type();
-	else
-		std::cerr << "At line " << id->Line() << ": undefined id " << id->Id()->String() << std::endl;
+    if( findVar( id->Id() ) != nullptr ) {
+        lastTypeValue = findVar( id->Id() )->Type();
+    }
+    else {
+        std::cerr << "At line " << id->Line() << ": undefined id " << id->Id()->String() << std::endl;
+    }
+    expTypesTable.insert(std::make_pair( reinterpret_cast< const void* > ( id ), lastTypeValue->Type() ) );
 }
 
 void CTypeChecker::Visit( const CIfStatement * ifStatement )
@@ -236,6 +239,7 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 {
 	if( methodCall->Exp() != nullptr ) {
 		methodCall->Exp()->Accept( this );
+        expTypesTable.insert( std::make_pair( reinterpret_cast< const void* > ( methodCall ), lastTypeValue->Type() ) );
 	}
 	CClassInfo* classInfo = symbTable->FindClass( symbolStorage.Get( lastTypeValue->Type() ) );
 	if( classInfo == nullptr ) {
@@ -250,13 +254,10 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 			methods.push( methodInfo );
 			CClassInfo* oldClass = currClass;
 			currClass = classInfo;
-//			currMethod = methodInfo;
 			if( methodCall->Args() != nullptr ) {
 				methodCall->Args()->Accept( this );
 			}
 			lastTypeValue = methods.top()->Type();
-//			currMethod = currMethodCalled;
-//			currMethodCalled = nullptr;
 			methods.pop();
 			currClass = oldClass;
 		}

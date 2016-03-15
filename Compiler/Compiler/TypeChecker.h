@@ -3,11 +3,14 @@
 #include "SymbolsTable.h"
 #include <stack>
 #include <set>
+#include <map>
 
 class CTypeChecker :
 	public IVisitor
 {
 public:
+    std::map< const void*, std::string > GetExpTypesTable() { return expTypesTable; }
+
 	CTypeChecker( const CTable* symbTable );
 	void Visit( const CAssignmentStatement* assigmentStatement );
 	void Visit( const CBinExp* binExp );
@@ -45,5 +48,6 @@ private:
 	std::vector<int> errors;
 
 	CVarInfo* findVar( CSymbol* id );
+    std::map< const void*, std::string > expTypesTable;
 };
 

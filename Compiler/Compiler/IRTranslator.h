@@ -6,7 +6,7 @@
 
 class CIRTranslator : public IVisitor {
 public:
-    CIRTranslator( const CTable* symbTable );
+    CIRTranslator( const CTable* symbTable, const std::map< const void*, std::string > expTypesTable );
 
     void Visit( const CAssignmentStatement* assigmentStatement );
     void Visit( const CBinExp* binExp );
@@ -45,6 +45,7 @@ private:
     const CTable* symbTable;
     CClassInfo* currentClass;
     CClassInfo* lastObjectClass;
+    std::map< const void*, std::string > expTypesTable;
 
     enum EVariablePlace {
         E_LOCAL,
