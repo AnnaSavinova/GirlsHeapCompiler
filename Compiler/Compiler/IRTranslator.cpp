@@ -190,11 +190,11 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
     // имя метода
     CSymbol* method = methodCall->Id();
-    CMethodInfo* methodInfo = currentClass->FindMethod( method );
+    //CMethodInfo* methodInfo = currentClass->FindMethod( method );
 
-    if( methodInfo == nullptr ) {
-        throw std::logic_error( "Method " + method->String() + " wasn't found in " + currentClass->Name()->String() );
-    }
+    //if( methodInfo == nullptr ) {
+    //    throw std::logic_error( "Method " + method->String() + " wasn't found in " + currentClass->Name()->String() );
+    //}
 
     CIRExpList* arguments;
     // парсим аргументы (если они есть)
@@ -211,17 +211,22 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
     CIRTemp* resultVar = new CIRTemp( new CTemp() );
     exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( method, arguments ) ), resultVar ) );
 
-    frames.push( new CFrame( method, methodInfo->FormalArgs().size(), stms.top() ) ); // stm.top()??
+    //    frames.push( new CFrame( method, methodInfo->FormalArgs().size(), stms.top() ) ); // stm.top()??
 
 }
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
 {
-    CMethodInfo* methodInfo = currentClass->FindMethod( methodDecl->Id() );
-
-    if( methodInfo == nullptr ) {
-        throw std::logic_error( "Method " + methodDecl->Id()->String() + " wasn't found in " + currentClass->Name()->String() );
+    methodDecl->Type()->Accept( this );
+    if( methodDecl->FormalList() != nullptr ) {
+        methodDecl->FormalList()->Accept( this );
     }
+    if( methodDecl->VarDeclList() != nullptr ) {
+        methodDecl->VarDeclList()->Accept( this );
+    }
+
+    // new frame Нужно построить frame, записав в него поля класса, родителей класса и т.д., локальные переменные и аргументы
+//    frames.push( CFrame() );
 
     // если метод содержит команды, то парсим их
     IIRStm* statements = nullptr;
