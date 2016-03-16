@@ -74,6 +74,12 @@ void CSymbTableBuilder::Visit( const CExpList * expList )
 void CSymbTableBuilder::Visit( const CFormalList * formalList )
 {
     std::vector<CFormalListElement*> formals = formalList->List();
+    /*if( currMethod == nullptr ) {
+        errors.push_back( formalList->Line() );
+        std::cerr << "At line: " << formalList->Line() << " formal list without method" << std::endl;
+    } else {
+        currMethod->AddFormalArg( new CSymbol( "this" ), new CType ("this", -1 ) );
+    }*/
 
     for( size_t i = 0; i < formals.size(); ++i ) {
         formals[i]->type->Accept( this );

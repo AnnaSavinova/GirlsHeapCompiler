@@ -60,7 +60,7 @@ public:
     CFrame( const CSymbol* _name );
     CFrame( const CClassInfo* curClass, const CMethodInfo* method, const CTable* table );
     //Доступ к формальным параметрам
-    const IAccess* GetField( const CSymbol* ) const;
+    const IAccess* GetField( std::string ) const;
     const CTemp* GetFramePointer() const;
     static int GetWordSize();
     const CTemp* GetThisPointer() const;
@@ -69,7 +69,7 @@ public:
     void AddField( const CSymbol* name, const IAccess* access );
     void SetRootStatement( const IIRStm * _root);
 private:
-    std::map< const CSymbol *, const IAccess * > fields;
+    std::map< std::string, const IAccess * > fields;
     const CTemp* framePointer;
     const CTemp* thisPointer;
     const CTemp* returnValue;

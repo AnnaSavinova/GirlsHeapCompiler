@@ -5,7 +5,7 @@ CIRTranslator::CIRTranslator( const CTable * _symbTable, const  std::map< const 
 
 void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )
 {
-    const IIRExp* left( frames.top()->GetField( assigmentStatement->Id() )->GetExp( frames.top()->GetFramePointer() ) );
+    const IIRExp* left( frames.top()->GetField( assigmentStatement->Id()->String() )->GetExp( frames.top()->GetFramePointer() ) );
 
     assigmentStatement->Expression()->Accept( this );
     const IIRExp* right = exps.top();
@@ -99,7 +99,7 @@ void CIRTranslator::Visit( const CElementAssignment * elemAssign )
     exps.pop();
 
     IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::GetWordSize() ) );
-    IIRExp* array = new CIRMem( frames.top()->GetField( elemAssign->Id() )->GetExp( frames.top()->GetFramePointer() ) );
+    IIRExp* array = new CIRMem( frames.top()->GetField( elemAssign->Id()->String() )->GetExp( frames.top()->GetFramePointer() ) );
     IIRExp* lExp = new CIRMem( new CIRBinOp( PLUS, array, offset ) );
 
     elemAssign->Exp2()->Accept( this );
@@ -127,7 +127,7 @@ void CIRTranslator::Visit( const CFormalList * formalList )
 
 void CIRTranslator::Visit( const CId * id )
 {
-    exps.push( const_cast< IIRExp* >(frames.top()->GetField( id->Id() )->GetExp( frames.top()->GetFramePointer() )) );
+    exps.push( const_cast< IIRExp* >(frames.top()->GetField( id->Id()->String() )->GetExp( frames.top()->GetFramePointer() )) );
 }
 
 void CIRTranslator::Visit( const CIfStatement * ifStatement )
@@ -181,6 +181,7 @@ void CIRTranslator::Visit( const CMainClass * mainClass )
         }
     }
     frames.push( new CFrame( new CSymbol( mainClass->Id()->String() + "@main" ) ) );
+    frames.top()->AddField( new CSymbol( "this" ), 0 );
     frames.top()->SetRootStatement( statements );
 }
 
@@ -193,11 +194,6 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
     // имя метода
     CSymbol* method = methodCall->Id();
-    //CMethodInfo* methodInfo = currentClass->FindMethod( method );
-
-    //if( methodInfo == nullptr ) {
-    //    throw std::logic_error( "Method " + method->String() + " wasn't found in " + currentClass->Name()->String() );
-    //}
 
     CIRExpList* arguments;
     // парсим аргументы (если они есть)
@@ -213,9 +209,6 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
     CIRTemp* resultVar = new CIRTemp( new CTemp() );
     exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( method, arguments ) ), resultVar ) );
-
-    //    frames.push( new CFrame( method, methodInfo->FormalArgs().size(), stms.top() ) ); // stm.top()??
-
 }
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
@@ -264,7 +257,7 @@ void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 
     for( auto methodDecl : methodDecls->MethodDeclList() ) {
         methodDecl->Accept( this );
-        list.push_back( stms.top() );
+        list.push_back( stms.top() ); //что тут происходит? в stms сейчас ничего нет
         list.pop_back();
     }
 

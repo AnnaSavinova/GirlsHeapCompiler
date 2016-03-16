@@ -19,8 +19,9 @@ CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, con
         tempClass = tempClassInfo->BaseClassName();
     }
 
-    // добавляем аргументы метода
+    // добавляем аргументы метода ("this" -- нулевой)
     int inFrameNum = 0;
+    AddField( new CSymbol( "this" ), new CInFrame( inFrameNum++ ) );
     for( auto argument : method->FormalArgs() ) {
         AddField( argument.second->Name(), new CInFrame( inFrameNum++ ) );
     }
@@ -42,15 +43,15 @@ CFrame::CFrame( const CSymbol * _name ) : name(_name)
 
 void CFrame::AddField( const CSymbol * name, const IAccess * access )
 {
-    if( fields.find( name ) != fields.end() ) {
+    if( fields.find( name->String() ) != fields.end() ) {
         throw std::logic_error( "Reduplication of " + name->String() + " in frame " + name->String() );
         return;
     } else {
-        fields.insert( std::make_pair( name, access ) );
+        fields.insert( std::make_pair( name->String(), access ) );
     }
 }
 
-const IAccess * CFrame::GetField( const CSymbol* var ) const
+const IAccess * CFrame::GetField( std::string var ) const
 {
     auto access = fields.find( var );
     if( access != fields.end() ) {
