@@ -5,7 +5,7 @@ CIRTranslator::CIRTranslator( const CTable * _symbTable, const  std::map< const 
 
 void CIRTranslator::Visit( const CAssignmentStatement * assigmentStatement )
 {
-    const IIRExp* left( frames.top()->FindVar( assigmentStatement->Id() )->GetExp( frames.top()->FP() ) );
+    const IIRExp* left( frames.top()->GetField( assigmentStatement->Id() )->GetExp( frames.top()->GetFramePointer() ) );
 
     assigmentStatement->Expression()->Accept( this );
     const IIRExp* right = exps.top();
@@ -47,7 +47,7 @@ void CIRTranslator::Visit( const CBinExp * binExp )
         IIRExp* index = exps.top();
         exps.pop();
 
-        IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::WordSize() ) );
+        IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::GetWordSize() ) );
         exps.push( new CIRMem( new CIRBinOp( PLUS, array, offset ) ) );
     } else {
         //пичаль
@@ -83,7 +83,7 @@ void CIRTranslator::Visit( const CConstructor * constructor )
     CClassInfo* info = symbTable->FindClass( constructor->Id() );
     int size = info->VarList().size();
 
-    IIRExp* allocationSize = new CIRBinOp( MUL, new CIRConst( CFrame::WordSize() ), new CIRConst( size ) );
+    IIRExp* allocationSize = new CIRBinOp( MUL, new CIRConst( CFrame::GetWordSize() ), new CIRConst( size ) );
     CIRTemp* tmp = new CIRTemp( new CTemp );
 
     IIRStm* first = new CIRMove( tmp, new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
@@ -98,8 +98,8 @@ void CIRTranslator::Visit( const CElementAssignment * elemAssign )
     IIRExp* index = exps.top();
     exps.pop();
 
-    IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::WordSize() ) );
-    IIRExp* array = new CIRMem( frames.top()->FindVar( elemAssign->Id() )->GetExp( frames.top()->FP() ) );
+    IIRExp* offset = new CIRBinOp( MUL, index, new CIRConst( CFrame::GetWordSize() ) );
+    IIRExp* array = new CIRMem( frames.top()->GetField( elemAssign->Id() )->GetExp( frames.top()->GetFramePointer() ) );
     IIRExp* lExp = new CIRMem( new CIRBinOp( PLUS, array, offset ) );
 
     elemAssign->Exp2()->Accept( this );
@@ -127,7 +127,7 @@ void CIRTranslator::Visit( const CFormalList * formalList )
 
 void CIRTranslator::Visit( const CId * id )
 {
-    exps.push( const_cast< IIRExp* >(frames.top()->FindVar( id->Id() )->GetExp( frames.top()->FP() )) );
+    exps.push( const_cast< IIRExp* >(frames.top()->GetField( id->Id() )->GetExp( frames.top()->GetFramePointer() )) );
 }
 
 void CIRTranslator::Visit( const CIfStatement * ifStatement )
@@ -169,16 +169,19 @@ void CIRTranslator::Visit( const CLengthExp * lengthExp )
 void CIRTranslator::Visit( const CMainClass * mainClass )
 {
     CSymbol* id = mainClass->Id();
+    IIRStm* statements = nullptr;
     if( symbTable->FindClass( id ) == nullptr ) {
         std::cerr << "At line " << mainClass->Line() << ": undefined class " << id->String() << std::endl;
     } else {
         currentClass = symbTable->FindClass( id );
         if( mainClass->Statements() != nullptr ) {
             mainClass->Statements()->Accept( this );
+            statements = stms.top();
+            stms.pop();
         }
     }
-    frames.push( new CFrame( mainClass->Id(), 0, stms.top() ) );
-    stms.pop();
+    frames.push( new CFrame( new CSymbol( mainClass->Id()->String() + "@main" ) ) );
+    frames.top()->SetRootStatement( statements );
 }
 
 void CIRTranslator::Visit( const CMethodCall * methodCall )
@@ -217,18 +220,20 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
 {
-    methodDecl->Type()->Accept( this );
-    if( methodDecl->FormalList() != nullptr ) {
-        methodDecl->FormalList()->Accept( this );
+    // ищем инфу о методе
+    CMethodInfo* methodInfo = nullptr;
+    for( auto method : currentClass->MethodList() ) {
+        if( method.second->Name() == methodDecl->Name() ) {
+            methodInfo = method.second;
+        }
     }
-    if( methodDecl->VarDeclList() != nullptr ) {
-        methodDecl->VarDeclList()->Accept( this );
+    if( methodInfo == nullptr ) {
+        throw std::logic_error( "Method " + methodDecl->Name()->String() + " wasn't found in " + currentClass->Name()->String() + " in IR" );
     }
+    // создаем новый фрейм, в котором записана инфа о методе
+    frames.push( new CFrame( currentClass, methodInfo, symbTable ) );
 
-    // new frame Нужно построить frame, записав в него поля класса, родителей класса и т.д., локальные переменные и аргументы
-//    frames.push( CFrame() );
-
-    // если метод содержит команды, то парсим их
+    // парсим команды метода, если есть
     IIRStm* statements = nullptr;
     if( methodDecl->StatementList() != nullptr ) {
         methodDecl->StatementList()->Accept( this );
@@ -236,6 +241,21 @@ void CIRTranslator::Visit( const CMethodDecl * methodDecl )
         stms.pop();
     }
 
+    // взяли результат выполнения функции
+    methodDecl->Result()->Accept( this );
+    auto returnedExp = exps.top();
+    exps.pop();
+    // записали во фрейм
+    IIRStm* moveResult = new CIRMove( new CIRTemp( frames.top()->GetReturnValue() ), returnedExp );
+    // если метод не содержал команд, то все он только считает результат и записывает его в фрейм
+    IIRStm* methodStm = moveResult;
+
+    if( statements != nullptr ) {
+        // иначе сначала выполняем команды и потом возимся с результатом
+        methodStm = new CIRSeq( statements, moveResult );
+    }
+
+    frames.top()->SetRootStatement( methodStm );
 }
 
 void CIRTranslator::Visit( const CMethodDeclList * methodDecls )

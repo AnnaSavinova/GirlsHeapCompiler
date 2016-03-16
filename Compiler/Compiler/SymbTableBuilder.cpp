@@ -144,11 +144,11 @@ void CSymbTableBuilder::Visit( const CMethodDecl * methodDecl )
 {
     methodDecl->Type()->Accept( this );
     CType* t = lastTypeValue;
-    if( !currClass->AddMethod( methodDecl->Id(), t ) ) {
+    if( !currClass->AddMethod( methodDecl->Name(), t ) ) {
         errors.push_back( methodDecl->Line() );
         std::cerr << "At line: " << methodDecl->Line() << " duplicate method definition" << std::endl;
     } else {
-        currMethod = currClass->FindMethod( methodDecl->Id() );
+        currMethod = currClass->FindMethod( methodDecl->Name() );
         if( methodDecl->FormalList() != nullptr ) {
             methodDecl->FormalList()->Accept( this );
         }

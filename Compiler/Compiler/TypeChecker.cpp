@@ -266,7 +266,7 @@ void CTypeChecker::Visit( const CMethodCall * methodCall )
 
 void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 {
-	methods.push( currClass->FindMethod( methodDecl->Id() ) );
+	methods.push( currClass->FindMethod( methodDecl->Name() ) );
 //	currMethod = currClass->FindMethod( methodDecl->Id() );
 	if( methodDecl->FormalList() != nullptr ) {
 		methodDecl->FormalList()->Accept( this );
@@ -277,7 +277,7 @@ void CTypeChecker::Visit( const CMethodDecl * methodDecl )
 	if( methodDecl->StatementList() != nullptr ) {
 		methodDecl->StatementList()->Accept( this );
 	}
-	methodDecl->Expression()->Accept( this );
+	methodDecl->Result()->Accept( this );
 	std::string returnType = lastTypeValue->Type();
 	methodDecl->Type()->Accept( this );
 	std::string methodType = lastTypeValue->Type();

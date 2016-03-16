@@ -1,12 +1,13 @@
 #pragma once
 #include "common.h"
+#include "Temp.h"
 
 class CIRTemp : public IIRExp {
 public:
-  CIRTemp(CTemp* _temp);
-  ~CIRTemp();
+    CIRTemp( const CTemp* _temp );
+    ~CIRTemp();
 
 private:
-  CTemp* temp;
+    const CTemp* temp;
 };
 

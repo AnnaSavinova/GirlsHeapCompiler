@@ -10,6 +10,7 @@ public:
 	{
 		return s;
 	}
+
 private:
 	std::string s;
 };

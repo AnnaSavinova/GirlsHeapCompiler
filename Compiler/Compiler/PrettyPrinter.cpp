@@ -155,7 +155,7 @@ void CPrettyPrinter::Visit( const CMethodDecl* methodDecl )
 	std::cout << "public ";
 	
 	methodDecl->Type()->Accept( this );
-	std::cout << " " << methodDecl->Id() << " ( ";
+	std::cout << " " << methodDecl->Name() << " ( ";
 	if ( methodDecl->FormalList() != nullptr ) {
 		methodDecl->FormalList()->Accept( this );
 	}
@@ -170,8 +170,8 @@ void CPrettyPrinter::Visit( const CMethodDecl* methodDecl )
 	}
 
 	std::cout << "return ";
-	if ( methodDecl->Expression() != nullptr ) {
-		methodDecl->Expression()->Accept( this );
+	if ( methodDecl->Result() != nullptr ) {
+		methodDecl->Result()->Accept( this );
 	}
 	std::cout << ";" << std::endl << "}" << std::endl;
 }

@@ -1,69 +1,88 @@
 #include "Frame.h"
 
-
-CFrame::CFrame(const CSymbol * name, int formalsCount, const IIRStm * root)
-  : name(name), formalsCount(formalsCount), root(root)
-{}
-
-CFrame::CFrame( const CSymbol* name, std::list<CSymbol*> arguments )
+CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, const CTable* table )
 {
+    // декорированное имя функции
+    std::string functionDecoratedName = currentClass->Name()->String() + "@" + method->Name()->String();
+    name = new CSymbol( functionDecoratedName );
+    framePointer = new CTemp( new CSymbol( functionDecoratedName + "@framePointer" ) );
+    thisPointer = new CTemp( new CSymbol( functionDecoratedName + "@thisPointer" ) );
+    returnValue = new CTemp( new CSymbol( functionDecoratedName + "@returnValue" ) );
+    // добавляем поля класса и всех его родителей
+    CSymbol* tempClass = currentClass->Name();
+    int inObjectNum = 0;
+    while( tempClass != nullptr ) {
+        CClassInfo* tempClassInfo = table->FindClass( tempClass );
+        for( auto var : tempClassInfo->VarList() ) {
+            AddField( var.second->Name(), new CInObject( inObjectNum++ ) );
+        }
+        tempClass = tempClassInfo->BaseClassName();
+    }
+
+    // добавляем аргументы метода
+    int inFrameNum = 0;
+    for( auto argument : method->FormalArgs() ) {
+        AddField( argument.second->Name(), new CInFrame( inFrameNum++ ) );
+    }
+
+    // добавляем локальные переменные метода
+    for( auto argument : method->LocalArgs() ) {
+        AddField( argument.second->Name(), new CInFrame( inFrameNum++ ) );
+    }
 
 }
 
-
-int CFrame::FormalsCount() const
+CFrame::CFrame( const CSymbol * _name ) : name(_name)
 {
-    return formals.size();
+    std::string functionDecoratedName = name->String();
+    framePointer = new CTemp( new CSymbol( functionDecoratedName + "@framePointer" ) );
+    thisPointer = new CTemp( new CSymbol( functionDecoratedName + "@thisPointer" ) );
+    returnValue = new CTemp( new CSymbol( functionDecoratedName + "@returnValue" ) );
 }
 
-const IAccess * CFrame::Formal( const CSymbol* var ) const
+void CFrame::AddField( const CSymbol * name, const IAccess * access )
 {
-	auto access = formals.find( var );
-	if( access != formals.end() ) {
-		return access->second;
-	} else {
-		return nullptr;
-	}
+    if( fields.find( name ) != fields.end() ) {
+        throw std::logic_error( "Reduplication of " + name->String() + " in frame " + name->String() );
+        return;
+    } else {
+        fields.insert( std::make_pair( name, access ) );
+    }
 }
 
-const IAccess * CFrame::Local( const CSymbol * var ) const
+const IAccess * CFrame::GetField( const CSymbol* var ) const
 {
-    auto access = locals.find( var );
-    if( access != locals.end() ) {
+    auto access = fields.find( var );
+    if( access != fields.end() ) {
         return access->second;
     } else {
         return nullptr;
     }
 }
 
-const IAccess * CFrame::Temporary( const CSymbol * var ) const
+const CTemp* CFrame::GetFramePointer() const
 {
-	auto access = temporaries.find( var );
-	if( access != temporaries.end() ) {
-		return access->second;
-	} else {
-		return nullptr;
-	}
+    return framePointer;
 }
 
-const IAccess* CFrame::FindVar( const CSymbol * var ) const
-{
-	const IAccess* local = Local( var );
-	if( local != nullptr ) {
-		return local;
-	} else {
-		return Formal( var );
-	}
-}
-
-const CTemp* CFrame::FP() const
-{
-    return fp;
-}
-
-int CFrame::WordSize()
+int CFrame::GetWordSize()
 {
     return wordSize;
+}
+
+const CTemp * CFrame::GetThisPointer() const
+{
+    return thisPointer;
+}
+
+const CTemp * CFrame::GetReturnValue() const
+{
+    return returnValue;
+}
+
+void CFrame::SetRootStatement( const IIRStm * _root )
+{
+    root = _root;
 }
 
 CLabel::CLabel() : name( std::to_string( nextUniqueId++ ) )
@@ -88,8 +107,7 @@ CTemp::~CTemp()
 
 const IIRExp * CInReg::GetExp( const CTemp * framePtr ) const
 {
-    return nullptr;
-//    CIRMem
+    throw std::logic_error( "CInReg::GetExp can't be called!" );
 }
 
 CInFrame::CInFrame( int _offset )
@@ -97,7 +115,19 @@ CInFrame::CInFrame( int _offset )
     offset = _offset;
 }
 
-const IIRExp * CInFrame::GetExp( const CTemp * framePtr ) const
+const IIRExp * CInFrame::GetExp( const CTemp * framePointer ) const
 {
-    return nullptr;
+    int offsetInBytes = offset * CFrame::GetWordSize();
+    return new CIRMem( new CIRBinOp( PLUS, new CIRTemp( framePointer ), new CIRConst( offsetInBytes ) ) );
+}
+
+CInObject::CInObject( int _offset )
+{
+    offset = _offset;
+}
+
+const IIRExp * CInObject::GetExp( const CTemp * thisPointer ) const
+{
+    int offsetInBytes = offset * CFrame::GetWordSize();
+    return new CIRMem( new CIRBinOp( PLUS, new CIRTemp( thisPointer ), new CIRConst( offsetInBytes ) ) );
 }

@@ -342,6 +342,9 @@
     <ClInclude Include="Digrapg.h">
       <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
+    <ClInclude Include="Temp.h">
+      <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">

@@ -3,6 +3,7 @@
 #include <stack>
 #include "IRClasses.h"
 #include "SymbolsTable.h"
+#include "Frame.h"
 
 class CIRTranslator : public IVisitor {
 public:

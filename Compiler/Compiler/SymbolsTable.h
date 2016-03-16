@@ -41,9 +41,9 @@ public:
 	CVarInfo* FindLocalArg( CSymbol* name ) const;
 
 	CSymbol* Name() const;
-	std::map<CSymbol*, CVarInfo*>& FormalArgs();
-	std::map<CSymbol*, CVarInfo*>& LocalArgs();
-  std::vector<CType*>& FormalArgsOrdered();
+	const std::map<CSymbol*, CVarInfo*>& FormalArgs() const;
+	const std::map<CSymbol*, CVarInfo*>& LocalArgs() const;
+    std::vector<CType*>& FormalArgsOrdered();
 	CType* Type() const;
 
 private:
@@ -51,7 +51,7 @@ private:
 	CType* type;
 	std::map<CSymbol*, CVarInfo*> formalArgs;
 	std::map<CSymbol*, CVarInfo*> localArgs;
-  std::vector<CType*> formalArgsOrdered;
+    std::vector<CType*> formalArgsOrdered;
 };
 
 class CClassInfo

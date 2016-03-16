@@ -3,17 +3,17 @@
 class CMethodDecl : public IMethodDecl, public CCoord
 {
 public:
-	CMethodDecl( IType* _type, std::string _id, IFormalList* _formalList,
+	CMethodDecl( IType* _type, std::string _name, IFormalList* _formalList,
 		IVarDeclList* _varDeclList, IStatementList* _statementList,
-		IExp* _exp, int _line );
+		IExp* _result, int _line );
 	~CMethodDecl();
 	
 	const IType* Type() const;
-	CSymbol* Id() const;
+	CSymbol* Name() const;
 	const IFormalList* FormalList() const;
 	const IVarDeclList* VarDeclList() const;
 	const IStatementList* StatementList() const;
-	const IExp* Expression() const;
+	const IExp* Result() const;
 	void Accept( IVisitor* visitor ) const
 	{
 		visitor->Visit( this );
@@ -21,9 +21,9 @@ public:
 
 private:
 	IType* type;
-  CSymbol* id;
+    CSymbol* name;
 	IFormalList* formalList;
 	IVarDeclList* varDeclList;
 	IStatementList* statementList;
-	IExp* exp;
+	IExp* result;
 };

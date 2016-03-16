@@ -1,18 +1,18 @@
 #include "MethodDecl.h"
 
-CMethodDecl::CMethodDecl( IType* _type, std::string _id, IFormalList* _formalList,
+CMethodDecl::CMethodDecl( IType* _type, std::string _name, IFormalList* _formalList,
 	IVarDeclList* _varDeclList, IStatementList* _statementList,
-	IExp* _exp, int _line )
+	IExp* _result, int _line )
 {
 	line = _line;
 	assert( _type != nullptr );
-	assert( !_id.empty() );
+	assert( !_name.empty() );
 	type = _type;
-	id = symbolStorage.Get(_id);
+	name = symbolStorage.Get(_name);
 	formalList = _formalList;
 	varDeclList = _varDeclList;
 	statementList = _statementList;
-	exp = _exp;
+	result = _result;
 }
 
 CMethodDecl::~CMethodDecl()
@@ -29,8 +29,8 @@ CMethodDecl::~CMethodDecl()
 	if( statementList != nullptr ) {
 		delete statementList;
 	}
-	if( exp != nullptr ) {
-		delete exp;
+	if( result != nullptr ) {
+		delete result;
 	}
 }
 
@@ -39,9 +39,9 @@ const IType* CMethodDecl::Type() const
 	return type;
 }
 
-CSymbol* CMethodDecl::Id() const
+CSymbol* CMethodDecl::Name() const
 {
-	return id;
+	return name;
 }
 
 const IFormalList* CMethodDecl::FormalList() const
@@ -59,8 +59,8 @@ const IStatementList* CMethodDecl::StatementList() const
 	return statementList;
 }
 
-const IExp* CMethodDecl::Expression() const
+const IExp* CMethodDecl::Result() const
 {
-	return exp;
+	return result;
 }
 

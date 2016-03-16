@@ -35,6 +35,7 @@ bool CClassInfo::AddMethod( CSymbol * name, CType * type )
 {
 	if( methodList.find( name ) != methodList.end() ) {
 		// уже есть такой метод
+        // TODO а правда ли, что методы не могут иметь одинакового имени, если у них разная сигнатура??
 		return false;
 	} else {
 		methodList[name] = new CMethodInfo( name, type );
@@ -57,7 +58,7 @@ CMethodInfo * CClassInfo::FindMethod( CSymbol * name ) const
 	auto found = methodList.find( name );
 	if( found == methodList.end() ) {
 		// не нашел такой метод
-		return false;
+		return nullptr;
 	} else {
 		return found->second;
 	}
@@ -91,7 +92,7 @@ bool CMethodInfo::AddFormalArg( CSymbol * _name, CType * _type )
 		return false;
 	} else {
 		formalArgs[_name] = new CVarInfo( _name, _type );
-    formalArgsOrdered.push_back(_type);
+        formalArgsOrdered.push_back( _type );
 	}
 }
 
@@ -130,12 +131,12 @@ CSymbol * CMethodInfo::Name() const
 	return name;
 }
 
-std::map<CSymbol*, CVarInfo*>& CMethodInfo::FormalArgs()
+const std::map<CSymbol*, CVarInfo*>& CMethodInfo::FormalArgs() const
 {
 	return formalArgs;
 }
 
-std::map<CSymbol*, CVarInfo*>& CMethodInfo::LocalArgs()
+const std::map<CSymbol*, CVarInfo*>& CMethodInfo::LocalArgs() const
 {
 	return localArgs;
 }
