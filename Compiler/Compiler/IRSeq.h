@@ -6,9 +6,12 @@ public:
     CIRSeq( IIRStm* left, IIRStm* right );
     CIRSeq( std::list<IIRStm*> list );
     ~CIRSeq();
+    virtual void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
 
-private:
-    IIRStm* left;
-    IIRStm* right;
+    const IIRStm* left;
+    const IIRStm* right;
 };
 

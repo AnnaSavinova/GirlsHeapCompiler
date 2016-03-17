@@ -80,7 +80,6 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Id.cpp" />
     <ClCompile Include="IIRExp.cpp" />
-    <ClCompile Include="IIRStm.cpp" />
     <ClCompile Include="IRBinOp.cpp" />
     <ClCompile Include="IRCall.cpp" />
     <ClCompile Include="IRCjump.cpp" />

@@ -3,11 +3,14 @@
 
 class CIRCall : public IIRExp {
 public:
-    CIRCall( CSymbol* _func, CIRExpList* args );
+    CIRCall( IIRExp* _func, CIRExpList* args );
     ~CIRCall();
+    virtual void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
 
-private:
-    CSymbol* func;
-    CIRExpList* args;
+    const IIRExp* func;
+    const CIRExpList* args;
 };
 

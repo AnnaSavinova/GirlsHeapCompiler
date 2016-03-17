@@ -6,8 +6,11 @@ class CIRName : public IIRExp {
 public:
     CIRName( CLabel* _label );
     ~CIRName();
+    virtual void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
 
-private:
-    CLabel* label;
+    const CLabel* label;
 };
 

@@ -1,29 +1,29 @@
 #pragma once
-#include "common.h"
-//#include "Frame.h"
 #include <list>
+#include <vector>
+#include "IRTreePrettyPrinter.h"
 
 class IIRExp
 {
 public:
 	IIRExp();
 	virtual ~IIRExp();
+    virtual void Accept ( CIRTreePrettyVisitor* visitor ) const = 0;
 };
 
 class CIRExpList
 {
 public:
-	CIRExpList( IIRExp* _head, CIRExpList* _tail );
+	CIRExpList( const IIRExp* _head, CIRExpList* _tail );
 	CIRExpList( std::vector<IIRExp*>& vectorExp );
 	~CIRExpList();
 
-	IIRExp* GetHead();
-	CIRExpList* GetTail();
+    void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
 
-//	std::list<IIRExp> GetExpList();
-
-private:
-	IIRExp* head;
-	CIRExpList* tail;
+	const IIRExp* head;
+	const CIRExpList* tail;
 };
 

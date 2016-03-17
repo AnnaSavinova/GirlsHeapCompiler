@@ -1,6 +1,8 @@
 #pragma once
 #include "common.h"
 #include "Temp.h"
+#include "IIRExp.h"
+#include "IIRStm.h"
 
 class IIRSubtreeWrapper {
 public:

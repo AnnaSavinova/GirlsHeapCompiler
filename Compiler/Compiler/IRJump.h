@@ -7,8 +7,10 @@ class CIRJump : public IIRStm {
 public:
     CIRJump( CIRLabel* _label );
     ~CIRJump();
-
-private:
-	CIRLabel* label;
+    virtual void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
+	const CIRLabel* label;
 };
 

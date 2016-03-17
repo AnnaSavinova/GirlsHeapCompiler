@@ -74,16 +74,27 @@ void CIRTranslator::Visit( const CClassDeclList * classDecls )
 
 void CIRTranslator::Visit( const CConstructor * constructor )
 {
-    CClassInfo* info = symbTable->FindClass( constructor->Id() );
-    int size = info->VarList().size();
+    int fieldsNumber = 0;
+    CClassInfo* classInfo = symbTable->FindClass( constructor->Id() );
+    while (classInfo != nullptr) {
+        fieldsNumber += classInfo->VarList().size();
+        classInfo = symbTable->FindClass( classInfo->BaseClassName() );
+    }
 
-    IIRExp* allocationSize = new CIRBinOp( MUL, new CIRConst( CFrame::GetWordSize() ), new CIRConst( size ) );
-    CIRTemp* tmp = new CIRTemp( new CTemp );
+    CLabel* mallocLabel = new CLabel( "malloc" );
+    IIRExp* mallocName = new CIRName( mallocLabel );
 
-    IIRStm* first = new CIRMove( tmp, new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
-    IIRStm* second = new CIRExp( new CIRCall( symbolStorage.Get( "memset" ), new CIRExpList( std::vector< IIRExp* >{ new CIRConst( 0 ), allocationSize, tmp } ) ) );
+    CLabel* memsetLabel = new CLabel( "memset" );
+    IIRExp* memsetName = new CIRName( memsetLabel );
+
+    IIRExp* allocationSize = new CIRBinOp( MUL, new CIRConst( CFrame::GetWordSize() ), new CIRConst( fieldsNumber ) );
+    CIRCall* mallocCall = new CIRCall( mallocName, new CIRExpList( allocationSize, nullptr ) );
+    //CIRTemp* tmp = new CIRTemp( frames.top()->GetReturnValue() );  TODO: разобраться, что за tmp
+    CIRTemp* tmp = new CIRTemp( new CTemp() );
+    IIRStm* first = new CIRMove( tmp, mallocCall );
+    IIRStm* second = new CIRExp( new CIRCall( memsetName, new CIRExpList( tmp, new CIRExpList ( allocationSize, nullptr ) ) ) );
     exps.push( new CIRESeq( new CIRSeq( first, second ), tmp ) );
-    lastObjectClass = info;
+    lastObjectClass = symbTable->FindClass( constructor->Id() );
 }
 
 void CIRTranslator::Visit( const CElementAssignment * elemAssign )
@@ -201,8 +212,11 @@ void CIRTranslator::Visit( const CMethodCall * methodCall )
 
     arguments = new CIRExpList( object, arguments );
 
+    CLabel* methodLabel = new CLabel( method->String() );
+    CIRName* methodName = new CIRName( methodLabel );
+
     CIRTemp* resultVar = new CIRTemp( new CTemp() );
-    exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( method, arguments ) ), resultVar ) );
+    exps.push( new CIRESeq( new CIRMove( resultVar, new CIRCall( methodName, arguments ) ), resultVar ) );
 }
 
 void CIRTranslator::Visit( const CMethodDecl * methodDecl )
@@ -259,10 +273,19 @@ void CIRTranslator::Visit( const CNewInt * newInt )
     exps.pop();
 
     IIRExp* allocationSize = new CIRBinOp( PLUS, count, new CIRConst( 1 ) );
-    CIRTemp* tmp = new CIRTemp( new CTemp );
+    IIRExp* realSize = new CIRBinOp( MUL, allocationSize, new CIRConst( CFrame::GetWordSize() ) );
 
-    IIRStm* first = new CIRMove( tmp, new CIRCall( symbolStorage.Get( "malloc" ), new CIRExpList( allocationSize, nullptr ) ) );
-    IIRStm* second = new CIRExp( new CIRCall( symbolStorage.Get( "memset" ), new CIRExpList( std::vector< IIRExp* >{ new CIRConst( 0 ), allocationSize, tmp } ) ) );
+    CLabel* mallocLabel = new CLabel( "malloc" );
+    IIRExp* mallocName = new CIRName( mallocLabel );
+
+    CLabel* memsetLabel = new CLabel( "memset" );
+    IIRExp* memsetName = new CIRName( memsetLabel );
+
+    CIRCall* mallocCall = new CIRCall( mallocName, new CIRExpList( realSize, nullptr ) );
+    //CIRTemp* tmp = new CIRTemp( frames.top()->GetReturnValue() ); TODO: разобраться, что должно быть в tmp
+    CIRTemp* tmp = new CIRTemp( new CTemp() );
+    IIRStm* first = new CIRExp( mallocCall );
+    IIRStm* second = new CIRExp( new CIRCall( memsetName, new CIRExpList( tmp, new CIRExpList ( realSize, nullptr ) ) ) );
     IIRStm* third = new CIRMove( tmp, count );
     second = new CIRSeq( second, third );
     exps.push( new CIRESeq( new CIRSeq( first, second ), tmp ) );
@@ -279,7 +302,10 @@ void CIRTranslator::Visit( const CPrintStatement * printStatement )
     IIRExp* toPrint = exps.top();
     exps.pop();
 
-    stms.push( new CIRExp( new CIRCall( symbolStorage.Get( "print" ), new CIRExpList( toPrint, nullptr ) ) ) );
+    CLabel* printLabel = new CLabel( "print" );
+    IIRExp* printName = new CIRName( printLabel );
+
+    stms.push( new CIRExp( new CIRCall( printName, new CIRExpList( toPrint, nullptr ) ) ) );
 }
 
 void CIRTranslator::Visit( const CProgram * program )

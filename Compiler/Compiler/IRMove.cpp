@@ -7,12 +7,12 @@ CIRMove::CIRMove( const IIRExp* _dst, const IIRExp* _src ) : dst( _dst ), src( _
 CIRMove::~CIRMove()
 {}
 
-const IIRExp * CIRMove::Dst()
+const IIRExp * CIRMove::Dst() const
 {
     return dst;
 }
 
-const IIRExp * CIRMove::Src()
+const IIRExp * CIRMove::Src() const 
 {
     return src;
 }

@@ -5,8 +5,10 @@ class CIRConst : public IIRExp {
 public:
     CIRConst( const int value );
     ~CIRConst();
-
-private:
-    int value;
+    virtual void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
+    const int value;
 };
 

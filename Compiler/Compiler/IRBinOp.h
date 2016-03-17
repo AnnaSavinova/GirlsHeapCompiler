@@ -1,13 +1,18 @@
 #pragma once
 #include "common.h"
 
-class CIRBinOp : public IIRExp {
+class CIRBinOp : public IIRExp
+{
 public:
-  CIRBinOp(EBinOp _operation, IIRExp* _left, IIRExp* _right);
-  ~CIRBinOp();
+    CIRBinOp( EBinOp _operation, IIRExp* _left, IIRExp* _right );
+    ~CIRBinOp();
+    virtual void Accept( CIRTreePrettyVisitor* printer ) const
+    {
+        printer->Visit( this );
+    }
 
-private:
-  EBinOp operation;
-  IIRExp* left, *right;
+    const EBinOp operation;
+    const IIRExp* left;
+    const IIRExp* right;
 };
 

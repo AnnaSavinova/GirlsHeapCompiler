@@ -1,19 +1,10 @@
 #pragma once
-//#include "Frame.h"
 #include <list>
+#include "IRTreePrettyPrinter.h"
 
 class IIRStm {
 public:
     IIRStm() {}
+    virtual void Accept( CIRTreePrettyVisitor* visitor ) const = 0;
     virtual ~IIRStm() {}
 };
-
-class CIRStmList {
-public:
-    CIRStmList(IIRStm* head, CIRStmList* tail);
-    std::list<IIRStm> GetStmList();
-
-private:
-    std::list<IIRStm> stmList;
-};
-

@@ -14,4 +14,6 @@
 #include "IIRExp.h"
 #include "IIRStm.h"
 
+#include "IRTreePrettyPrinter.h"
+
 #include "IREnums.h"

@@ -7,6 +7,7 @@
 #include "SymbTableBuilder.h"
 #include "TypeChecker.h"
 #include "IRTranslator.h"
+#include "IRTreePrettyVisitor.h"
 
 extern "C" int yylex();
 extern int yylineno;

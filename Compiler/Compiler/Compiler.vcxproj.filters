@@ -130,9 +130,6 @@
     <ClCompile Include="IRTranslator.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
-    <ClCompile Include="IIRStm.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
     <ClCompile Include="IRBinOp.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Digrapg.h"
-#include "IRTranslator.h"
 
+class IIRStm;
+class IIRExp;
 class CIRMove;
 class CIRExp;
 class CIRJump;
@@ -11,14 +12,12 @@ class CIRSeq;
 class CIRConst;
 class CIRName;
 class CIRTemp;
-class CIRBinop;
+class CIRBinOp;
 class CIRMem;
 class CIRCall;
-class CIREseq;
+class CIRESeq;
 class CIRExpList;
 class CIRLabel;
-class IIRStm;
-class IIRExp;
 
 class CIRTreePrettyVisitor {
 public:
@@ -44,13 +43,13 @@ public:
 
     void Visit( const CIRTemp* node );
 
-    void Visit( const CIRBinop* node );
+    void Visit( const CIRBinOp* node );
 
     void Visit( const CIRMem* node );
 
     void Visit( const CIRCall* node );
 
-    void Visit( const CIREseq* node );
+    void Visit( const CIRESeq* node );
 
     void Visit( const CIRExpList* node );
 
