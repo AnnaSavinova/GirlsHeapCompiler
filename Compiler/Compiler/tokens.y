@@ -254,8 +254,8 @@ void yyerror( int*, const char* str )
 int main()
 {
     yyparse(0);
-    //CPrettyPrinter printer;
-    //printer.Visit( (CProgram*) program );
+//    CPrettyPrinter printer;
+//    printer.Visit( (CProgram*) program );
 
 	CSymbTableBuilder tableBuilder;
 	tableBuilder.Visit( (CProgram*) program );

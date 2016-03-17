@@ -67,15 +67,9 @@ void CIRTranslator::Visit( const CClassDecl * classDecl )
 
 void CIRTranslator::Visit( const CClassDeclList * classDecls )
 {
-    std::list<IIRStm*> list;
-
     for( auto classDecl : classDecls->ClassDeclList() ) {
         classDecl->Accept( this );
-        list.push_back( stms.top() );
-        list.pop_back();
     }
-
-    stms.push( new CIRSeq( list ) );
 }
 
 void CIRTranslator::Visit( const CConstructor * constructor )
@@ -253,15 +247,9 @@ void CIRTranslator::Visit( const CMethodDecl * methodDecl )
 
 void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 {
-    std::list<IIRStm*> list;
-
     for( auto methodDecl : methodDecls->MethodDeclList() ) {
         methodDecl->Accept( this );
-        list.push_back( stms.top() ); //что тут происходит? в stms сейчас ничего нет
-        list.pop_back();
     }
-
-    stms.push( new CIRSeq( list ) );
 }
 
 void CIRTranslator::Visit( const CNewInt * newInt )
