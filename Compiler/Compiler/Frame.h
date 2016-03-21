@@ -68,6 +68,9 @@ public:
 
     void AddField( const CSymbol* name, const IAccess* access );
     void SetRootStatement( const IIRStm * _root);
+
+    std::string GetName() { return name->String(); }
+    const IIRStm* GetRoot() { return root; }
 private:
     std::map< std::string, const IAccess * > fields;
     const CTemp* framePointer;

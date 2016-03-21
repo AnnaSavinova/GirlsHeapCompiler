@@ -3,11 +3,11 @@
 CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, const CTable* table )
 {
     // декорированное имя функции
-    std::string functionDecoratedName = currentClass->Name()->String() + "@" + method->Name()->String();
+    std::string functionDecoratedName = currentClass->Name()->String() + "___" + method->Name()->String();
     name = new CSymbol( functionDecoratedName );
-    framePointer = new CTemp( new CSymbol( functionDecoratedName + "@framePointer" ) );
-    thisPointer = new CTemp( new CSymbol( functionDecoratedName + "@thisPointer" ) );
-    returnValue = new CTemp( new CSymbol( functionDecoratedName + "@returnValue" ) );
+    framePointer = new CTemp( new CSymbol( functionDecoratedName + "___framePointer" ) );
+    thisPointer = new CTemp( new CSymbol( functionDecoratedName + "___thisPointer" ) );
+    returnValue = new CTemp( new CSymbol( functionDecoratedName + "___returnValue" ) );
     // добавляем поля класса и всех его родителей
     CSymbol* tempClass = currentClass->Name();
     int inObjectNum = 0;
@@ -36,9 +36,9 @@ CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, con
 CFrame::CFrame( const CSymbol * _name ) : name(_name)
 {
     std::string functionDecoratedName = name->String();
-    framePointer = new CTemp( new CSymbol( functionDecoratedName + "@framePointer" ) );
-    thisPointer = new CTemp( new CSymbol( functionDecoratedName + "@thisPointer" ) );
-    returnValue = new CTemp( new CSymbol( functionDecoratedName + "@returnValue" ) );
+    framePointer = new CTemp( new CSymbol( functionDecoratedName + "___framePointer" ) );
+    thisPointer = new CTemp( new CSymbol( functionDecoratedName + "___thisPointer" ) );
+    returnValue = new CTemp( new CSymbol( functionDecoratedName + "___returnValue" ) );
 }
 
 void CFrame::AddField( const CSymbol * name, const IAccess * access )

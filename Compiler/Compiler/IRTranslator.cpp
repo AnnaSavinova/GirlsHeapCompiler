@@ -185,7 +185,7 @@ void CIRTranslator::Visit( const CMainClass * mainClass )
             stms.pop();
         }
     }
-    frames.push( new CFrame( new CSymbol( mainClass->Id()->String() + "@main" ) ) );
+    frames.push( new CFrame( new CSymbol( mainClass->Id()->String() + "___main" ) ) );
     frames.top()->AddField( new CSymbol( "this" ), 0 );
     frames.top()->SetRootStatement( statements );
 }

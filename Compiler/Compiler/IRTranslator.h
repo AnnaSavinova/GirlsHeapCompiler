@@ -36,6 +36,8 @@ public:
     void Visit( const CVarDeclList* varDecls );
     void Visit( const CWhileStatement* whileStatement );
 
+    std::stack< CFrame* >& GetFramesList() { return frames; }
+
 private:
     std::stack< IIRExp* > exps;
     std::stack< IIRStm* > stms;

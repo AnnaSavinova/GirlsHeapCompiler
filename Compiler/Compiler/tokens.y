@@ -7,7 +7,7 @@
 #include "SymbTableBuilder.h"
 #include "TypeChecker.h"
 #include "IRTranslator.h"
-#include "IRTreePrettyVisitor.h"
+#include "IRTreePrettyPrinter.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -266,6 +266,16 @@ int main()
 
 	CIRTranslator IRTranslator( tableBuilder.GetSymbolTable(), checker.GetExpTypesTable() );
 	IRTranslator.Visit( (CProgram*) program );
+
+	// ¬ывод IR-деревьев в "просматриваемый вид".
+	std::stack< CFrame* > frames = IRTranslator.GetFramesList();
+	while( !frames.empty() ) {
+		CFrame* frame = frames.top();
+		frames.pop();
+		CIRTreePrettyVisitor IRTreePrettyPrinter( std::string( "IRTree_" ) + frame->GetName() + std::string( ".dot" ) );
+		frame->GetRoot()->Accept( &IRTreePrettyPrinter );
+		IRTreePrettyPrinter.Flush();
+	}
 
 	system("pause");
 	return 0;
