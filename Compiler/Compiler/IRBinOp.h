@@ -12,7 +12,7 @@ public:
     }
 
     const EBinOp operation;
-    const IIRExp* left;
-    const IIRExp* right;
+    IIRExp* left;
+    IIRExp* right;
 };
 

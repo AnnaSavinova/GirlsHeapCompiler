@@ -4,7 +4,7 @@
 
 class CIRCjump : public IIRStm {
 public:
-    CIRCjump( EBinOp relop, IIRExp* left, IIRExp* right, CIRLabel* ifTrue, CIRLabel* ifFalse );
+    CIRCjump( EBinOp relop, IIRExp* left, IIRExp* right, CLabel* ifTrue, CLabel* ifFalse );
     ~CIRCjump();
     virtual void Accept( CIRTreePrettyVisitor* printer ) const
     {
@@ -14,7 +14,7 @@ public:
     const EBinOp relop;
     const IIRExp* left;
     const IIRExp* right;
-    const CIRLabel* ifTrue;
-    const CIRLabel* ifFalse;
+    const CLabel* ifTrue;
+    const CLabel* ifFalse;
 };
 

@@ -1,15 +1,16 @@
 #pragma once
 #include "IIRSubtreeWrapper.h"
+#include "IRClasses.h"
 
 class CConditionalWrapper : public IIRSubtreeWrapper {
 public:
-    CConditionalWrapper( const IIRExp* _exp ) : exp( _exp ) {}
-    const IIRExp* ToExp() const;
-    const IIRStm* ToStm() const;
-    const IIRStm* ToConditional( const CLabel* t, const CLabel* f ) const;
+    CConditionalWrapper( IIRExp* _exp ) : exp( _exp ) {}
+    IIRExp* ToExp() const;
+    IIRStm* ToStm() const;
+    IIRStm* ToConditional( CLabel* t, CLabel* f ) const;
 private:
-    const IIRExp* exp;
+    IIRExp* exp;
 
-    const IIRStm* binopToConditional( const CIRBinOp* binop, const CLabel* t, const CLabel* f ) const;
-    const IIRStm* andBinopToConditional( const CIRBinOp* binop, const CLabel* t, const CLabel* f ) const;
+    IIRStm* binopToConditional( CIRBinOp* binop, CLabel* t, CLabel* f ) const;
+    IIRStm* andBinopToConditional( CIRBinOp* binop, CLabel* t, CLabel* f ) const;
 };

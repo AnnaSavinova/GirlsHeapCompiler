@@ -4,6 +4,7 @@
 #include "IRClasses.h"
 #include "SymbolsTable.h"
 #include "Frame.h"
+#include "IRConditionalWrapper.h"
 
 class CIRTranslator : public IVisitor {
 public:

@@ -43,8 +43,8 @@ void CIRTreePrettyVisitor::Visit( const CIRCjump* node )
 
     treeRepresentation.AddEdge( lastNodeName, rightString, "right" );
     treeRepresentation.AddEdge( lastNodeName, leftString, "left" );
-    treeRepresentation.AddEdge( lastNodeName, node->ifTrue->label->Name(), "iftrue" );
-    treeRepresentation.AddEdge( lastNodeName, node->ifFalse->label->Name(), "iffalse" );
+    treeRepresentation.AddEdge( lastNodeName, node->ifTrue->Name(), "iftrue" );
+    treeRepresentation.AddEdge( lastNodeName, node->ifFalse->Name(), "iffalse" );
 }
 
 void CIRTreePrettyVisitor::Visit( const CIRSeq* node )

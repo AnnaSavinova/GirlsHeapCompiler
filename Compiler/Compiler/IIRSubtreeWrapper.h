@@ -8,8 +8,8 @@ class IIRSubtreeWrapper {
 public:
     virtual ~IIRSubtreeWrapper() {}
 
-    virtual const IIRExp* ToExp() const = 0; // как Expr
-    virtual const IIRStm* ToStm() const = 0; // как Stm
-    virtual const IIRStm* ToConditional( const CLabel* ifTrue, const CLabel* ifFalse ) const = 0; // как if/jump
+    virtual IIRExp* ToExp() const = 0; // как Expr
+    virtual IIRStm* ToStm() const = 0; // как Stm
+    virtual IIRStm* ToConditional( CLabel* ifTrue, CLabel* ifFalse ) const = 0; // как if/jump
 
 };

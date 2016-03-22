@@ -5,12 +5,12 @@ class CIRStmConverter : public IIRSubtreeWrapper {
 public:
     ~CIRStmConverter();
 
-    CIRStmConverter( const IIRStm* _stm );
-    const IIRExp* ToExp() const;
-    const IIRStm* ToStm() const;
-    const IIRStm* ToConditional( const CLabel* t, const CLabel* f ) const;
+    CIRStmConverter( IIRStm* _stm );
+    IIRExp* ToExp() const;
+    IIRStm* ToStm() const;
+    IIRStm* ToConditional( CLabel* t, CLabel* f ) const;
 
 private:
-    const IIRStm* stm;
+    IIRStm* stm;
 };
 

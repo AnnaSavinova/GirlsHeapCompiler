@@ -3,10 +3,10 @@
 CIRStmConverter::~CIRStmConverter()
 {}
 
-CIRStmConverter::CIRStmConverter( const IIRStm * _stm ) : stm( _stm )
+CIRStmConverter::CIRStmConverter( IIRStm * _stm ) : stm( _stm )
 {}
 
-const IIRExp * CIRStmConverter::ToExp() const
+IIRExp * CIRStmConverter::ToExp() const
 {
     //Exp ê Stm
     assert( false );
@@ -14,12 +14,12 @@ const IIRExp * CIRStmConverter::ToExp() const
     return nullptr;
 }
 
-const IIRStm * CIRStmConverter::ToStm() const
+IIRStm * CIRStmConverter::ToStm() const
 {
     return stm;
 }
 
-const IIRStm * CIRStmConverter::ToConditional( const CLabel * t, const CLabel * f ) const
+IIRStm * CIRStmConverter::ToConditional( CLabel * t, CLabel * f ) const
 {
     return nullptr;
 }
