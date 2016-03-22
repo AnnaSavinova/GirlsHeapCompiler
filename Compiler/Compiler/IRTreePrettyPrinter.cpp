@@ -106,14 +106,23 @@ void CIRTreePrettyVisitor::Visit( const CIRBinOp* node )
             nextNameWithId( "binop__Xor" );
             break;
         case LE:
-            nextNameWithId( "binop__Less" );
+            nextNameWithId( "binop__LessEq" );
             break;
         case GE:
-            nextNameWithId( "binop__Greater" );
+            nextNameWithId( "binop__GreaterEq" );
             break;
         case AND:
             nextNameWithId( "binop__And" );
             break;
+		case LT:
+			nextNameWithId( "binop__Less" );
+			break;
+		case GT:
+			nextNameWithId( "binop__Greater" );
+			break;
+		case OR:
+			nextNameWithId("binop__Or");
+			break;
         default:
             assert( false );
             break;

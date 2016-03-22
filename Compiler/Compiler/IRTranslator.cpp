@@ -414,25 +414,26 @@ void CIRTranslator::Visit(const CVarDeclList * varDecls)
 void CIRTranslator::Visit(const CWhileStatement * whileStatement)
 {
 	whileStatement->Expression()->Accept(this);
-	whileStatement->Statement()->Accept(this);
-
-	IIRStm* statements = stms.top();
-	stms.pop();
-
 	IIRExp* condition = exps.top();
 	exps.pop();
 
-	CIRLabel* begin = new CIRLabel(new CLabel());
-	CIRLabel* ifTrue = new CIRLabel(new CLabel());
-	CIRLabel* end = new CIRLabel(new CLabel());
+	whileStatement->Statement()->Accept(this);
+	IIRStm* statements = stms.top();
+	stms.pop();
 
-	IIRStm* cycleStep = new CIRSeq(ifTrue, statements);
-	IIRStm* checkCondition = nullptr; //new CIRCjump( LE, condition, new CIRConst( 1 ), ifTrue, end );
+	CLabel* beforeLableTemp = new CLabel();
+	CLabel* inLoopLableTemp = new CLabel();
+	CLabel* endLableTemp = new CLabel();
 
-	//TODO что-то с безусловным переходом на начало IIRStm* jumpToBegin
-	IIRStm* jumpToBegin = nullptr;//new CIRJump( begin );
+	CIRLabel* beforeLable = new CIRLabel(beforeLableTemp);
+	CIRLabel* inLoopLable = new CIRLabel(inLoopLableTemp);
+	CIRLabel* endLable = new CIRLabel(endLableTemp);
 
-	stms.push(new CIRSeq(begin, new CIRSeq(checkCondition, new CIRSeq(cycleStep, jumpToBegin))));
+	CConditionalWrapper converter(condition);
+	IIRStm* whileStm = converter.ToConditional(inLoopLableTemp, endLableTemp);
+	IIRStm* conditionStm = new CIRSeq(beforeLable, new CIRSeq(whileStm, inLoopLable));
+	stms.push( new CIRSeq(conditionStm, new CIRSeq(statements,
+		new CIRSeq(new CIRJump(beforeLableTemp), endLable))));
 }
 
 /*CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * var ) const
