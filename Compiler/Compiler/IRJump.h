@@ -1,16 +1,16 @@
 #pragma once
 #include "common.h"
 
-class CIRLabel;
+class CLabel;
 
 class CIRJump : public IIRStm {
 public:
-    CIRJump( CIRLabel* _label );
+    CIRJump( CLabel* _label );
     ~CIRJump();
     virtual void Accept( CIRTreePrettyVisitor* printer ) const
     {
         printer->Visit( this );
     }
-	const CIRLabel* label;
+	const CLabel* label;
 };
 

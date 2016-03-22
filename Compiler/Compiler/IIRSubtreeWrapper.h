@@ -13,4 +13,3 @@ public:
     virtual const IIRStm* ToConditional( const CLabel* ifTrue, const CLabel* ifFalse ) const = 0; // как if/jump
 
 };
-

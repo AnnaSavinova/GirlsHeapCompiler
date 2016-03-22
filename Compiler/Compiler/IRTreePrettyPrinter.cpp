@@ -29,7 +29,7 @@ void CIRTreePrettyVisitor::Visit( const CIRExp* node )
 void CIRTreePrettyVisitor::Visit( const CIRJump* node )
 {
     nextNameWithId( "jump" );
-    treeRepresentation.AddEdge( lastNodeName, node->label->label->Name(), "to_label" );
+    treeRepresentation.AddEdge( lastNodeName, node->label->Name(), "to_label" );
 }
 
 void CIRTreePrettyVisitor::Visit( const CIRCjump* node )

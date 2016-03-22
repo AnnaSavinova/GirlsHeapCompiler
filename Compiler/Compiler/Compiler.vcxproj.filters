@@ -157,6 +157,9 @@
     <ClCompile Include="Digrapg.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
+    <ClCompile Include="IRConditionalWrapper.cpp">
+      <Filter>Исходный код\IRT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -341,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="Temp.h">
       <Filter>Заголовочные файлы\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="IRConditionalWrapper.h">
+      <Filter>Заголовочные файлы\IRT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -142,20 +142,33 @@ void CIRTranslator::Visit( const CIfStatement * ifStatement )
     exps.pop();
 
     ifStatement->ThenStatement()->Accept( this );
-    ifStatement->ElseStatement()->Accept( this );
-    IIRStm* falseStatement = stms.top();
-    stms.pop();
     IIRStm* trueStatement = stms.top();
     stms.pop();
+
+    CLabel* trueLabelTemp = new CLabel();
+    CLabel* falseLabelTemp = new CLabel();
+    CLabel* endLabelTemp = new CLabel();
+
+    CIRJump* trueJumpToEnd = new CIRJump( endLabelTemp );
 
     CIRLabel* trueLabel = new CIRLabel( new CLabel() );
     CIRLabel* falseLabel = new CIRLabel( new CLabel() );
     CIRLabel* endLabel = new CIRLabel( new CLabel() );
 
-    trueStatement = new CIRSeq( trueLabel, new CIRSeq( trueStatement, endLabel ) );
+    trueStatement = new CIRSeq( trueLabel, new CIRSeq( trueStatement, trueJumpToEnd ) );
+
+    IIRStm* falseStatement = nullptr;
+    if( ifStatement->ElseStatement() != nullptr ) {
+        ifStatement->ElseStatement()->Accept( this );
+        falseStatement = stms.top();
+        stms.pop();
+        CIRJump* falseJumpToEnd = new CIRJump( endLabelTemp );
+        falseStatement = new CIRSeq( falseLabel, new CIRSeq( falseStatement, falseJumpToEnd ) );
+    }
     falseStatement = new CIRSeq( falseLabel, new CIRSeq( falseStatement, endLabel ) );
 
-    stms.push( new CIRCjump( NE, condition, new CIRConst( 0 ), trueLabel, falseLabel ) );
+    IIRStm* ifTree = new CIRCjump( NE, condition, new CIRConst( 0 ), trueLabel, falseLabel );
+    stms.push( new CIRSeq( ifTree, new CIRSeq(trueStatement, new CIRSeq (falseStatement, endLabel ) ) ) );
 }
 
 void CIRTranslator::Visit( const CLengthExp * lengthExp )
@@ -327,6 +340,32 @@ void CIRTranslator::Visit( const CStatementList * statementList )
     for( auto stm : statementList->StatementList() ) {
         stm->Accept( this );
     }
+    // ¬ыполн€ем первый
+    statementList->StatementList().front()->Accept( this );
+    IIRStm* listOfStm = stms.top();
+    stms.pop();
+    if( statementList->StatementList().size() == 1 ) {
+        stms.push( listOfStm );
+        return;
+    } else {
+        auto iter = statementList->StatementList().begin();
+        iter++;
+        // начинаем со второго
+        for( ; iter != statementList->StatementList().end(); iter++ ) {
+            ( *iter )->Accept( this );
+            IIRStm* statementToAdd = 0;
+            if( !exps.empty() ) {
+                // Ќам нужны только IStm 
+                statementToAdd = new CIRExp( exps.top() );
+                exps.pop();
+            } else {
+                statementToAdd = stms.top();
+                stms.pop();
+            }
+            listOfStm = new CIRSeq( listOfStm, statementToAdd );
+        }
+        stms.push( listOfStm );
+    }
 }
 
 void CIRTranslator::Visit( const CType * type )
@@ -379,7 +418,7 @@ void CIRTranslator::Visit( const CWhileStatement * whileStatement )
     IIRStm* checkCondition = new CIRCjump( LE, condition, new CIRConst( 1 ), ifTrue, end );
 
     //TODO что-то с безусловным переходом на начало IIRStm* jumpToBegin
-    IIRStm* jumpToBegin = new CIRJump( begin );
+    IIRStm* jumpToBegin = nullptr;//new CIRJump( begin );
 
     stms.push( new CIRSeq( begin, new CIRSeq( checkCondition, new CIRSeq( cycleStep, jumpToBegin ) ) ) );
 }
