@@ -27,22 +27,22 @@ void CIRTranslator::Visit(const CBinExp * binExp)
 	exps.pop();
 
 	if (binExp->Operation() == "+") {
-		exps.push(new CIRMem(new CIRBinOp(PLUS, left, right)));
+		exps.push(new CIRBinOp(PLUS, left, right));
 	}
 	else if (binExp->Operation() == "-") {
-		exps.push(new CIRMem(new CIRBinOp(MINUS, left, right)));
+		exps.push(new CIRBinOp(MINUS, left, right));
 	}
 	else if (binExp->Operation() == "*") {
-		exps.push(new CIRMem(new CIRBinOp(MUL, left, right)));
+		exps.push(new CIRBinOp(MUL, left, right));
 	}
 	else if (binExp->Operation() == "<") {
 		exps.push(new CIRBinOp(LE, left, right));
 	}
 	else if (binExp->Operation() == "&") {
-		exps.push(new CIRMem(new CIRBinOp(AND, left, right)));
+		exps.push(new CIRBinOp(AND, left, right));
 	}
 	else if (binExp->Operation() == "|") {
-		exps.push(new CIRMem(new CIRBinOp(OR, left, right)));
+		exps.push(new CIRBinOp(OR, left, right));
 	}
 	else if (binExp->Operation() == "[]") {
 		binExp->Expression1()->Accept(this);
@@ -54,7 +54,7 @@ void CIRTranslator::Visit(const CBinExp * binExp)
 		exps.pop();
 
 		IIRExp* offset = new CIRBinOp(MUL, index, new CIRConst(CFrame::GetWordSize()));
-		exps.push(new CIRMem(new CIRBinOp(PLUS, array, offset)));
+		exps.push(new CIRBinOp(PLUS, array, offset));
 	}
 	else {
 		//пичаль
@@ -158,9 +158,9 @@ void CIRTranslator::Visit(const CIfStatement * ifStatement)
 
 	CIRJump* trueJumpToEnd = new CIRJump(endLabelTemp);
 
-	CIRLabel* trueLabel = new CIRLabel(new CLabel());
-	CIRLabel* falseLabel = new CIRLabel(new CLabel());
-	CIRLabel* endLabel = new CIRLabel(new CLabel());
+	CIRLabel* trueLabel = new CIRLabel(trueLabelTemp);
+	CIRLabel* falseLabel = new CIRLabel(falseLabelTemp);
+	CIRLabel* endLabel = new CIRLabel(endLabelTemp);
 
 	trueStatement = new CIRSeq(trueLabel, new CIRSeq(trueStatement, trueJumpToEnd));
 
@@ -172,7 +172,6 @@ void CIRTranslator::Visit(const CIfStatement * ifStatement)
 		CIRJump* falseJumpToEnd = new CIRJump(endLabelTemp);
 		falseStatement = new CIRSeq(falseLabel, new CIRSeq(falseStatement, falseJumpToEnd));
 	}
-	falseStatement = new CIRSeq(falseLabel, new CIRSeq(falseStatement, endLabel));
 
 	CConditionalWrapper wrapper(condition);
 	stms.push(new CIRSeq(wrapper.ToConditional(trueLabelTemp, falseLabelTemp), new CIRSeq(trueStatement, new CIRSeq(falseStatement, endLabel))));
