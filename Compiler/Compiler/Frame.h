@@ -80,8 +80,3 @@ private:
     const CSymbol* name;
     const IIRStm* root;
 };
-
-
-
-
-
