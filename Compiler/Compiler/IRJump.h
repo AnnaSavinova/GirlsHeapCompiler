@@ -6,6 +6,8 @@ class CLabel;
 class CIRJump : public IIRStm {
 public:
     CIRJump( CLabel* _label );
+    const CIRExpList* Kids() const;
+    const IIRStm* Build( const CIRExpList* ) const;
     ~CIRJump();
     virtual void Accept( CIRTreePrettyVisitor* printer ) const
     {

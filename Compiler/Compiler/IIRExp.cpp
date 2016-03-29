@@ -10,11 +10,6 @@ IIRExp::~IIRExp()
 {
 }
 
-CIRExpList::CIRExpList( const IIRExp* _head, CIRExpList* _tail )
-{
-	head = _head;
-	tail = _tail;
-}
 
 CIRExpList::CIRExpList( std::vector<IIRExp*>& vectorExp )
 {

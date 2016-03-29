@@ -421,19 +421,19 @@ void CIRTranslator::Visit(const CWhileStatement * whileStatement)
 	IIRStm* statements = stms.top();
 	stms.pop();
 
-	CLabel* beforeLableTemp = new CLabel();
-	CLabel* inLoopLableTemp = new CLabel();
-	CLabel* endLableTemp = new CLabel();
+	CLabel* beforeLabelTemp = new CLabel();
+	CLabel* inLoopLabelTemp = new CLabel();
+	CLabel* endLabelTemp = new CLabel();
 
-	CIRLabel* beforeLable = new CIRLabel(beforeLableTemp);
-	CIRLabel* inLoopLable = new CIRLabel(inLoopLableTemp);
-	CIRLabel* endLable = new CIRLabel(endLableTemp);
+	CIRLabel* beforeLabel = new CIRLabel(beforeLabelTemp);
+	CIRLabel* inLoopLabel = new CIRLabel(inLoopLabelTemp);
+	CIRLabel* endLabel = new CIRLabel(endLabelTemp);
 
 	CConditionalWrapper converter(condition);
-	IIRStm* whileStm = converter.ToConditional(inLoopLableTemp, endLableTemp);
-	IIRStm* conditionStm = new CIRSeq(beforeLable, new CIRSeq(whileStm, inLoopLable));
+	IIRStm* whileStm = converter.ToConditional(inLoopLabelTemp, endLabelTemp);
+	IIRStm* conditionStm = new CIRSeq(beforeLabel, new CIRSeq(whileStm, inLoopLabel));
 	stms.push( new CIRSeq(conditionStm, new CIRSeq(statements,
-		new CIRSeq(new CIRJump(beforeLableTemp), endLable))));
+		new CIRSeq(new CIRJump(beforeLabelTemp), endLabel))));
 }
 
 /*CIRTranslator::EVariablePlace CIRTranslator::getVariablePlace( const CSymbol * var ) const

@@ -3,7 +3,9 @@
 
 class CIRSeq : public IIRStm {
 public:
-    CIRSeq( IIRStm* left, IIRStm* right );
+    CIRSeq( const IIRStm* _left, const IIRStm* _right ) : left( _left ), right( _right ) {};
+    const CIRExpList* Kids() const;
+    const IIRStm* Build( const CIRExpList* ) const;
     CIRSeq( std::list<IIRStm*> list );
     ~CIRSeq();
     virtual void Accept( CIRTreePrettyVisitor* printer ) const

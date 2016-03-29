@@ -18,6 +18,8 @@ class CIRCall;
 class CIRESeq;
 class CIRExpList;
 class CIRLabel;
+class CIRMoveCall;
+class CIRExpCall;
 
 class CIRTreePrettyVisitor {
 public:
@@ -54,6 +56,10 @@ public:
     void Visit( const CIRExpList* node );
 
     void Visit( const CIRLabel* node );
+    
+    void Visit( const CIRMoveCall* node );
+
+    void Visit( const CIRExpCall* node );
 
     void Flush() { treeRepresentation.Flush(); }
 

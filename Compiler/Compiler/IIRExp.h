@@ -7,6 +7,8 @@ class IIRExp
 {
 public:
 	IIRExp();
+    virtual const CIRExpList* Kids() const = 0;
+    virtual const IIRExp* Build( const CIRExpList* ) const = 0;
 	virtual ~IIRExp();
     virtual void Accept ( CIRTreePrettyVisitor* visitor ) const = 0;
 };
@@ -14,7 +16,7 @@ public:
 class CIRExpList
 {
 public:
-	CIRExpList( const IIRExp* _head, CIRExpList* _tail );
+    CIRExpList( const IIRExp* _head, const CIRExpList* _tail ) : head( _head ), tail( _tail ) {};
 	CIRExpList( std::vector<IIRExp*>& vectorExp );
 	~CIRExpList();
 

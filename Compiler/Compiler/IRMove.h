@@ -4,6 +4,8 @@
 class CIRMove : public IIRStm {
 public:
     CIRMove( const IIRExp* dst, const IIRExp* src );
+    const CIRExpList* Kids() const;
+    const IIRStm* Build( const CIRExpList* ) const;
     ~CIRMove();
 
     const IIRExp* Dst() const;

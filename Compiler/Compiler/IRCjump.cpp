@@ -5,3 +5,13 @@ CIRCjump::CIRCjump( EBinOp _relop, IIRExp * _left, IIRExp * _right, CLabel * _if
 
 CIRCjump::~CIRCjump()
 {}
+
+const CIRExpList * CIRCjump::Kids() const
+{
+    return nullptr;
+}
+
+const IIRStm * CIRCjump::Build( const CIRExpList* ) const
+{
+    return nullptr;
+}

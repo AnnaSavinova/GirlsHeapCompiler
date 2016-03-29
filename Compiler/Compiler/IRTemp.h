@@ -6,6 +6,8 @@ class CIRTemp : public IIRExp
 {
 public:
     CIRTemp( const CTemp* _temp );
+    const CIRExpList* Kids() const;
+    const IIRExp* Build( const CIRExpList* ) const;
     ~CIRTemp();
     virtual void Accept( CIRTreePrettyVisitor* printer ) const
     {

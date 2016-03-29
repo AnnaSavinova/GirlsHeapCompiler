@@ -190,6 +190,15 @@ void CIRTreePrettyVisitor::Visit( const CIRLabel* node )
     nextNameWithId( string( "label:" ) + node->label->Name() );
 }
 
+void CIRTreePrettyVisitor::Visit( const CIRMoveCall * node )
+{
+}
+
+void CIRTreePrettyVisitor::Visit( const CIRExpCall * node )
+{
+}
+
+
 void CIRTreePrettyVisitor::nextNameWithId( std::string label )
 {
     lastNodeName = label + string( "__id_" ) + to_string( minId++ );

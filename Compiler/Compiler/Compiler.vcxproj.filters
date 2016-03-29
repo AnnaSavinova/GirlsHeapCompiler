@@ -160,6 +160,9 @@
     <ClCompile Include="IRConditionalWrapper.cpp">
       <Filter>Исходный код\IRT</Filter>
     </ClCompile>
+    <ClCompile Include="IRCanonizator.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -347,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="IRConditionalWrapper.h">
       <Filter>Заголовочные файлы\IRT</Filter>
+    </ClInclude>
+    <ClInclude Include="IRCanonizator.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

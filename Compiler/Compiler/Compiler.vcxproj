@@ -82,6 +82,7 @@
     <ClCompile Include="IIRExp.cpp" />
     <ClCompile Include="IRBinOp.cpp" />
     <ClCompile Include="IRCall.cpp" />
+    <ClCompile Include="IRCanonizator.cpp" />
     <ClCompile Include="IRCjump.cpp" />
     <ClCompile Include="IRConditionalWrapper.cpp" />
     <ClCompile Include="IRConst.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="IIRSubtreeWrapper.h" />
     <ClInclude Include="IRBinOp.h" />
     <ClInclude Include="IRCall.h" />
+    <ClInclude Include="IRCanonizator.h" />
     <ClInclude Include="IRCjump.h" />
     <ClInclude Include="IRClasses.h" />
     <ClInclude Include="IRConditionalWrapper.h" />

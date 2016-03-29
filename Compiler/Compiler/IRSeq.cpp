@@ -1,7 +1,14 @@
 #include "IRSeq.h"
 
-CIRSeq::CIRSeq( IIRStm * _left, IIRStm * _right ) : left( _left ), right( _right )
-{}
+const CIRExpList * CIRSeq::Kids() const
+{
+    return nullptr;
+}
+
+const IIRStm * CIRSeq::Build( const CIRExpList * ) const
+{
+    return nullptr;
+}
 
 CIRSeq::CIRSeq( std::list<IIRStm*> list ) : left(list.front())
 {
