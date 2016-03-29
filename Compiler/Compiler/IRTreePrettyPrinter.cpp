@@ -43,6 +43,25 @@ void CIRTreePrettyVisitor::Visit( const CIRCjump* node )
 
     treeRepresentation.AddEdge( lastNodeName, rightString, "right" );
     treeRepresentation.AddEdge( lastNodeName, leftString, "left" );
+    std::string op;
+    switch( node->relop ) {
+        case AND: op = "AND";
+            break;
+        case OR: op = "OR";
+            break;
+        case XOR: op = "XOR";
+            break;
+        case EQ: op = "EQ";
+            break;
+        case NE: op = "NE";
+            break;
+        case LESS: op = "LT";
+            break;
+        case GT: op = "GT";
+            break;
+        default: op = "Unknown";
+    }
+    treeRepresentation.AddEdge( lastNodeName, op, "operation" );
     treeRepresentation.AddEdge( lastNodeName, node->ifTrue->Name(), "iftrue" );
     treeRepresentation.AddEdge( lastNodeName, node->ifFalse->Name(), "iffalse" );
 }
@@ -105,24 +124,18 @@ void CIRTreePrettyVisitor::Visit( const CIRBinOp* node )
         case XOR:
             nextNameWithId( "binop__Xor" );
             break;
-        case LE:
-            nextNameWithId( "binop__LessEq" );
-            break;
-        case GE:
-            nextNameWithId( "binop__GreaterEq" );
-            break;
         case AND:
             nextNameWithId( "binop__And" );
             break;
-		case LT:
-			nextNameWithId( "binop__Less" );
-			break;
-		case GT:
-			nextNameWithId( "binop__Greater" );
-			break;
-		case OR:
-			nextNameWithId("binop__Or");
-			break;
+        case LESS:
+            nextNameWithId( "binop__Less" );
+            break;
+        case GT:
+            nextNameWithId( "binop__Greater" );
+            break;
+        case OR:
+            nextNameWithId( "binop__Or" );
+            break;
         default:
             assert( false );
             break;

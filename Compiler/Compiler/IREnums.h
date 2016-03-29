@@ -12,14 +12,12 @@ enum EBinOp {
     XOR,
     EQ,
     NE,
-    LT,
-    GT,
-    LE,
-    GE,
+    LESS,
+    GT/*,
     ULT,
     ULE,
     UGT,
-    UGE
+    UGE*/
 };
 
 //enum ECondOp {

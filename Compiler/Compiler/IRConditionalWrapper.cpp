@@ -41,14 +41,10 @@ IIRStm* CConditionalWrapper::binopToConditional( CIRBinOp* binop, CLabel* t, CLa
     switch( binop->operation ) {
         case AND:
             return andBinopToConditional( binop, t, f );
-        case LT:
-            return new CIRCjump( LT, binop->left, binop->right, t, f );
+        case LESS:
+            return new CIRCjump( LESS, binop->left, binop->right, t, f );
         case GT:
             return new CIRCjump( GT, binop->left, binop->right, t, f );
-		case LE:
-			return new CIRCjump(LE, binop->left, binop->right, t, f);
-		case GE:
-			return new CIRCjump(GE, binop->left, binop->right, t, f);
         case PLUS:
         case MINUS:
         case MUL:
