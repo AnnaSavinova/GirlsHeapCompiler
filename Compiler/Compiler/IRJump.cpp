@@ -1,7 +1,7 @@
 #include "IRJump.h"
 
 
-CIRJump::CIRJump( CLabel* _label ) : label( _label )
+CIRJump::CIRJump( const CLabel* _label ) : label( _label )
 {}
 
 const CIRExpList * CIRJump::Kids() const
@@ -11,7 +11,7 @@ const CIRExpList * CIRJump::Kids() const
 
 const IIRStm * CIRJump::Build( const CIRExpList* ) const
 {
-    return nullptr;
+    return new CIRJump(label);
 }
 
 

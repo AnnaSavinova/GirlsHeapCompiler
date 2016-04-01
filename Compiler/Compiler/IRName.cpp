@@ -11,7 +11,7 @@ const CIRExpList * CIRName::Kids() const
 
 const IIRExp * CIRName::Build( const CIRExpList * ) const
 {
-    return nullptr;
+    return this;
 }
 
 CIRName::~CIRName()

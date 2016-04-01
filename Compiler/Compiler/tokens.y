@@ -7,6 +7,7 @@
 #include "SymbTableBuilder.h"
 #include "TypeChecker.h"
 #include "IRTranslator.h"
+#include "IRCanonizator.h"
 #include "IRTreePrettyPrinter.h"
 
 extern "C" int yylex();
@@ -270,7 +271,9 @@ int main()
 	// Вывод IR-деревьев в "просматриваемый вид".
 	std::stack< CFrame* > frames = IRTranslator.GetFramesList();
 	while( !frames.empty() ) {
+		CCanon canonizer;
 		CFrame* frame = frames.top();
+		frame->SetRootStatement(canonizer.Linearize(frame->GetRoot())); // линеаризация IR-дерева фрейма
 		frames.pop();
 		CIRTreePrettyVisitor IRTreePrettyPrinter( std::string( "IRTree_" ) + frame->GetName() + std::string( ".dot" ) );
 		frame->GetRoot()->Accept( &IRTreePrettyPrinter );

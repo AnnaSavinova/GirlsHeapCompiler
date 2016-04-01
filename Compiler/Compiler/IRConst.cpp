@@ -11,7 +11,7 @@ const CIRExpList * CIRConst::Kids() const
 
 const IIRExp * CIRConst::Build( const CIRExpList* ) const
 {
-    return nullptr;
+    return this;
 }
 
 CIRConst::~CIRConst()

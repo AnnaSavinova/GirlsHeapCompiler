@@ -4,7 +4,7 @@
 class CIRBinOp : public IIRExp
 {
 public:
-    CIRBinOp( EBinOp _operation, IIRExp* _left, IIRExp* _right );
+    CIRBinOp( EBinOp _operation, const IIRExp* _left, const IIRExp* _right );
     const CIRExpList* Kids() const;
     const IIRExp* Build( const CIRExpList* ) const;
     ~CIRBinOp();
@@ -14,7 +14,7 @@ public:
     }
 
     const EBinOp operation;
-    IIRExp* left;
-    IIRExp* right;
+    const IIRExp* left;
+    const IIRExp* right;
 };
 

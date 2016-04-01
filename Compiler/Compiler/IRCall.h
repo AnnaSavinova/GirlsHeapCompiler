@@ -3,7 +3,7 @@
 
 class CIRCall : public IIRExp {
 public:
-    CIRCall( IIRExp* _func, CIRExpList* args );
+    CIRCall( const IIRExp* _func, const CIRExpList* args );
     const CIRExpList* Kids() const;
     const IIRExp* Build( const CIRExpList* ) const;
     ~CIRCall();

@@ -28,7 +28,7 @@ IIRExp* CConditionalWrapper::ToExp() const
 
 IIRStm* CConditionalWrapper::ToConditional( CLabel* t, CLabel* f ) const
 {
-    auto asBinop = dynamic_cast< CIRBinOp* >( exp );
+    auto asBinop = dynamic_cast< const CIRBinOp* >( exp );
     if( asBinop != nullptr ) {
         return binopToConditional( asBinop, t, f );
     } else {
@@ -36,7 +36,7 @@ IIRStm* CConditionalWrapper::ToConditional( CLabel* t, CLabel* f ) const
     }
 }
 
-IIRStm* CConditionalWrapper::binopToConditional( CIRBinOp* binop, CLabel* t, CLabel* f ) const
+IIRStm* CConditionalWrapper::binopToConditional( const CIRBinOp* binop, CLabel* t, CLabel* f ) const
 {
     switch( binop->operation ) {
         case AND:
@@ -57,7 +57,7 @@ IIRStm* CConditionalWrapper::binopToConditional( CIRBinOp* binop, CLabel* t, CLa
     }
 }
 
-IIRStm* CConditionalWrapper::andBinopToConditional( CIRBinOp* binop, CLabel* t, CLabel* f ) const
+IIRStm* CConditionalWrapper::andBinopToConditional( const CIRBinOp* binop, CLabel* t, CLabel* f ) const
 {
     CLabel* firstTrueLabel = new CLabel();
     CIRLabel* firstTrueIRLabel = new CIRLabel( firstTrueLabel );

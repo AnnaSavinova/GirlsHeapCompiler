@@ -1,7 +1,7 @@
 #include "IRLabel.h"
 
 
-CIRLabel::CIRLabel( CLabel * _label ) : label( _label )
+CIRLabel::CIRLabel( const CLabel * _label ) : label( _label )
 {}
 
 const CIRExpList * CIRLabel::Kids() const
@@ -11,7 +11,7 @@ const CIRExpList * CIRLabel::Kids() const
 
 const IIRStm * CIRLabel::Build( const CIRExpList* ) const
 {
-    return nullptr;
+    return new CIRLabel(label);
 }
 
 CIRLabel::~CIRLabel()

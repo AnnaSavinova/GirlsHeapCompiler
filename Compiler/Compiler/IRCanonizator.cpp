@@ -28,17 +28,17 @@ const IIRStm* CIRExpCall::Build( const CIRExpList* kids ) const
 }
 
 //nop он и в африке nop.
-CIRStmExpList* nopNull = new CIRStmExpList( new CIRExp( new CIRConst( 0 ) ), 0 );
+CIRStmExpList* CCanon::nopNull = new CIRStmExpList( new CIRExp( new CIRConst( 0 ) ), 0 );
 
 //проверка stmt, является ли оно константой.
-bool IsNop( const IIRStm* a )
+bool CCanon::IsNop( const IIRStm* a )
 {
     return dynamic_cast<const CIRExp*>( a ) != 0
         && dynamic_cast<const CIRConst*>( ( dynamic_cast<const CIRExp*>( a ) )->exp ) != 0;
 }
 
 //если nop, то можно упростить дерево
-const IIRStm* SimplifySeq( const IIRStm* a, const IIRStm* b )
+const IIRStm* CCanon::SimplifySeq( const IIRStm* a, const IIRStm* b )
 {
     if ( IsNop( a ) ) {
         return b;
@@ -50,19 +50,21 @@ const IIRStm* SimplifySeq( const IIRStm* a, const IIRStm* b )
 }
 
 //проверка на коммутативность, чтобы можно было упрощать дерево
-bool Commute( const IIRStm* a, const IIRExp* b )
+bool CCanon::IsCommutable( const IIRStm* a, const IIRExp* b )
 {
     return IsNop( a ) || dynamic_cast<const CIRName*>( b ) != 0 || dynamic_cast<const CIRConst*>( b ) != 0;
 }
 
 //просто рекурсивный обход cseq
-const IIRStm* DoStm( const CIRSeq* s )
+const IIRStm* CCanon::DoStm( const CIRSeq* s )
 {
-    return SimplifySeq( DoStm( dynamic_cast<const CIRSeq*>( s->left ) ), DoStm( dynamic_cast<const CIRSeq*>( s->right ) ) );
+    return s ?
+      SimplifySeq( DoStm( s->left ), DoStm( s->right ) ) :
+      nullptr;
 }
 
 //рекурсивная обработка Move
-const IIRStm* DoStm( const CIRMove* s )
+const IIRStm* CCanon::DoStm( const CIRMove* s )
 {
     if ( dynamic_cast<const CIRTemp*>( s->Dst() ) != 0 &&
         dynamic_cast<const CIRCall*>( s->Src() ) != 0 ) {
@@ -80,7 +82,7 @@ const IIRStm* DoStm( const CIRMove* s )
 }
 
 //часть рекурсии для обработки CExp
-const IIRStm* DoStm( const CIRExp* s )
+const IIRStm* CCanon::DoStm( const CIRExp* s )
 {
     if ( dynamic_cast<const CIRCall*>( s->exp ) != 0 ) {
         //оборачиваем вызов функции, результат будет же отброшен, т.к. CExp
@@ -92,7 +94,7 @@ const IIRStm* DoStm( const CIRExp* s )
 
 //часть рекурсии stmt, в первых случаях все корректно и просто рекурсивный вызов для детей
 //иначе проверяем stmt на осмысленность(CExp) или reorder
-const IIRStm* DoStm( const IIRStm* s )
+const IIRStm* CCanon::DoStm( const IIRStm* s )
 {
     if ( dynamic_cast<const CIRSeq*>( s ) != 0 ) {
         return DoStm( dynamic_cast<const CIRSeq*>( s ) );
@@ -110,7 +112,7 @@ const IIRStm* DoStm( const IIRStm* s )
 }
 
 //восстанавливаем и упрощаем дерево со stmt в вершине
-const IIRStm* ReorderStm( const IIRStm* s )
+const IIRStm* CCanon::ReorderStm( const IIRStm* s )
 {
     if ( s == nullptr ) {
         return 0;
@@ -121,15 +123,21 @@ const IIRStm* ReorderStm( const IIRStm* s )
 
 //получает некоторый eseq и упрощает его, через проверку на некоммутативность
 //вроде как в простейшем примере из презентации
-const CIRESeq* DoExp( const CIRESeq* e )
+const CIRESeq* CCanon::DoExp( const CIRESeq* e )
 {
+    if (e == nullptr) {
+        return nullptr;
+    }
     const IIRStm* stmt = DoStm( e->stm );
     const CIRESeq* b = DoExp( dynamic_cast<const CIRESeq*>(e->exp) );
+    if (b == nullptr) {
+        return new CIRESeq(SimplifySeq(stmt, nullptr), nullptr);
+    }
     return new CIRESeq( SimplifySeq( stmt, b->stm ), b->exp );
 }
 
 //чтобы пользоваться простейшим упрощением, нужно уметь приводить exp к eseq
-const CIRESeq* DoExp( const IIRExp* e )
+const CIRESeq* CCanon::DoExp( const IIRExp* e )
 {
     //если это eseq, то просто пытаемся что-то поменять рекурсивно.
     //иначе это умеет делать специальный reorder
@@ -142,7 +150,7 @@ const CIRESeq* DoExp( const IIRExp* e )
 
 //вернет корректный eseq, при этом вынеся вроде бы все stmt, которые надо сначала
 //посчитать, чтобы вычислять exp.
-const CIRESeq* ReorderExp( const IIRExp* e )
+const CIRESeq* CCanon::ReorderExp( const IIRExp* e )
 {
     const CIRStmExpList* x = Reorder( e->Kids() );
     return new CIRESeq( x->stm, e->Build( x->exprs ) );
@@ -153,7 +161,7 @@ const CIRESeq* ReorderExp( const IIRExp* e )
 //Tree.Stm – все действия, которые должны быть проделаны до начала вычислений 
 //(или 𝐸𝑋𝑃(𝐶𝑂𝑁𝑆𝑇(0)), а так же некоммутирующие подвыражения.
 //Tree.ExpList – выражения без Tree.Stm’ов
-const CIRStmExpList* Reorder( const CIRExpList* exprs )
+const CIRStmExpList* CCanon::Reorder( const CIRExpList* exprs )
 {
     if ( exprs == nullptr || exprs->head == nullptr ) {
         return nopNull;
@@ -170,7 +178,7 @@ const CIRStmExpList* Reorder( const CIRExpList* exprs )
             //и рекурсивно обрабатываем сам список
             const CIRStmExpList* bb = Reorder( dynamic_cast< const CIRExpList* >( exprs->tail ) );
             //если коммутируют stmt и expr в вершинах, то упрощаем (simplify) и подвешиваем вершины
-            if ( Commute( bb->stm, aa->exp ) ) {
+            if ( IsCommutable( bb->stm, aa->exp ) ) {
                 return new CIRStmExpList( SimplifySeq( aa->stm, bb->stm ),
                     new CIRExpList( aa->exp, bb->exprs ) );
             } else {
@@ -188,13 +196,15 @@ const CIRStmExpList* Reorder( const CIRExpList* exprs )
 }
 
 //работа со списками
-const CIRSeq* Linear( const CIRSeq* s, const CIRSeq* l )
+const CIRSeq* CCanon::Linear( const CIRSeq* s, const CIRSeq* l )
 {
-    return Linear( dynamic_cast<const CIRSeq*>( s->left ), Linear( dynamic_cast<const CIRSeq*> (s->right ), l ) );
+    return s ?
+      Linear( s->left, Linear( s->right, l ) ) :
+      nullptr;
 }
 
 //два seq переподвешиваем, чтобы получить все seq на одной ветке
-const CIRSeq* Linear( const IIRStm* s, const CIRSeq* l )
+const CIRSeq* CCanon::Linear( const IIRStm* s, const CIRSeq* l )
 {
     if ( dynamic_cast<const CIRSeq*>( s ) != 0 ) {
         return Linear( dynamic_cast<const CIRSeq*>( s ), l );
@@ -207,11 +217,7 @@ const CIRSeq* Linear( const IIRStm* s, const CIRSeq* l )
     }
 }
 
-const CIRSeq* Linearize( const IIRStm* s )
+const CIRSeq* CCanon::Linearize( const IIRStm* s )
 {
-    if ( s == nullptr ) {
-        return 0;
-    } else {
-        return Linear( DoStm( s ), 0 );
-    }
+    return s ? Linear( DoStm( s ), nullptr ) : nullptr;
 }

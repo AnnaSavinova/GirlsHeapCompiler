@@ -5,7 +5,7 @@ class CLabel;
 
 class CIRJump : public IIRStm {
 public:
-    CIRJump( CLabel* _label );
+    CIRJump( const CLabel* _label );
     const CIRExpList* Kids() const;
     const IIRStm* Build( const CIRExpList* ) const;
     ~CIRJump();

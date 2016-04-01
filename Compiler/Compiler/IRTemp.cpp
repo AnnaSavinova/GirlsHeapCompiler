@@ -11,7 +11,7 @@ const CIRExpList * CIRTemp::Kids() const
 
 const IIRExp * CIRTemp::Build( const CIRExpList * ) const
 {
-    return nullptr;
+    return new CIRTemp(temp);
 }
 
 CIRTemp::~CIRTemp()

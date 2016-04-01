@@ -6,12 +6,12 @@ CIRMem::CIRMem(const IIRExp * _expression) : exp(_expression)
 
 const CIRExpList * CIRMem::Kids() const
 {
-    return nullptr;
+    return new CIRExpList(exp, nullptr);
 }
 
-const IIRExp * CIRMem::Build( const CIRExpList * ) const
+const IIRExp * CIRMem::Build( const CIRExpList * kids ) const
 {
-    return nullptr;
+    return new CIRMem(kids->head);
 }
 
 CIRMem::~CIRMem()

@@ -4,7 +4,7 @@
 
 class CIRCjump : public IIRStm {
 public:
-    CIRCjump( EBinOp relop, IIRExp* left, IIRExp* right, CLabel* ifTrue, CLabel* ifFalse );
+    CIRCjump( EBinOp relop, const IIRExp* left, const IIRExp* right, CLabel* ifTrue, CLabel* ifFalse );
     ~CIRCjump();
     const CIRExpList* Kids() const;
     const IIRStm* Build( const CIRExpList* ) const;

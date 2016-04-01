@@ -6,12 +6,14 @@ CIRMove::CIRMove( const IIRExp* _dst, const IIRExp* _src ) : dst( _dst ), src( _
 
 const CIRExpList * CIRMove::Kids() const
 {
-    return nullptr;
+  std::cout << "MOVE KIDS " << std::endl;
+  return new CIRExpList(dst, new CIRExpList(src, nullptr));
 }
 
-const IIRStm * CIRMove::Build( const CIRExpList * ) const
+const IIRStm * CIRMove::Build( const CIRExpList * kids ) const
 {
-    return nullptr;
+  std::cout << kids->head << " " << kids->tail->head;
+  return new CIRMove(kids->head, kids->tail->head);
 }
 
 CIRMove::~CIRMove()
