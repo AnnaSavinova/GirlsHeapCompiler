@@ -1,9 +1,5 @@
 ﻿#include "IRCanonizator.h"
 
-const IIRStm* ReorderStm( const IIRStm* s );
-const CIRStmExpList* Reorder( const CIRExpList* exprs );
-const CIRESeq* ReorderExp( const IIRExp* e );
-
 const CIRExpList* CIRMoveCall::Kids() const
 {
     return src->Kids();
@@ -58,9 +54,7 @@ bool CCanon::IsCommutable( const IIRStm* a, const IIRExp* b )
 //просто рекурсивный обход cseq
 const IIRStm* CCanon::DoStm( const CIRSeq* s )
 {
-    return s ?
-      SimplifySeq( DoStm( s->left ), DoStm( s->right ) ) :
-      nullptr;
+    return SimplifySeq( DoStm( s->left ), DoStm( s->right ) );
 }
 
 //рекурсивная обработка Move
@@ -219,5 +213,5 @@ const CIRSeq* CCanon::Linear( const IIRStm* s, const CIRSeq* l )
 
 const CIRSeq* CCanon::Linearize( const IIRStm* s )
 {
-    return s ? Linear( DoStm( s ), nullptr ) : nullptr;
+    return Linear( DoStm( s ), nullptr );
 }
