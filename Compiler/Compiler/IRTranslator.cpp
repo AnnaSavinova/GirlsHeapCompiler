@@ -89,11 +89,11 @@ void CIRTranslator::Visit( const CConstructor * constructor )
 
     IIRExp* allocationSize = new CIRBinOp( MUL, new CIRConst( CFrame::GetWordSize() ), new CIRConst( fieldsNumber ) );
     CIRCall* mallocCall = new CIRCall( mallocName, new CIRExpList( allocationSize, nullptr ) );
-    //CIRTemp* tmp = new CIRTemp( frames.top()->GetReturnValue() );  TODO: разобраться, что за tmp
-    CIRTemp* tmp = new CIRTemp( new CTemp() );
-    IIRStm* mallocValue = new CIRMove( tmp, mallocCall );
+    CIRTemp* tmp = new CIRTemp( frames.top()->GetReturnValue() ); 
+    //CIRTemp* tmp = new CIRTemp( new CTemp() );
+    //IIRStm* mallocValue = new CIRMove( tmp, mallocCall );
     IIRStm* memsetCall = new CIRExp( new CIRCall( memsetName, new CIRExpList( tmp, new CIRExpList( new CIRConst( 0 ), new CIRExpList( allocationSize, nullptr ) ) ) ) );
-    exps.push( new CIRESeq( new CIRSeq( mallocValue, memsetCall), tmp ) );
+    exps.push( new CIRESeq( new CIRSeq( new CIRExp( mallocCall ), memsetCall), tmp ) );
     lastObjectClass = symbTable->FindClass( constructor->Id() );
 }
 
@@ -187,6 +187,9 @@ void CIRTranslator::Visit( const CMainClass * mainClass )
 {
     CSymbol* id = mainClass->Id();
     IIRStm* statements = nullptr;
+    frames.push( new CFrame( new CSymbol( mainClass->Id()->String() + "___main" ) ) );
+    frames.top()->AddField( new CSymbol( "this" ), 0 );
+
     if( symbTable->FindClass( id ) == nullptr ) {
         std::cerr << "At line " << mainClass->Line() << ": undefined class " << id->String() << std::endl;
     } else {
@@ -197,8 +200,6 @@ void CIRTranslator::Visit( const CMainClass * mainClass )
             stms.pop();
         }
     }
-    frames.push( new CFrame( new CSymbol( mainClass->Id()->String() + "___main" ) ) );
-    frames.top()->AddField( new CSymbol( "this" ), 0 );
     frames.top()->SetRootStatement( statements );
 }
 
@@ -281,10 +282,10 @@ void CIRTranslator::Visit( const CMethodDeclList * methodDecls )
 void CIRTranslator::Visit( const CNewInt * newInt )
 {
     newInt->Expression()->Accept( this );
-    IIRExp* count = exps.top();
+    IIRExp* arrayLength = exps.top();
     exps.pop();
 
-    IIRExp* allocationSize = new CIRBinOp( PLUS, count, new CIRConst( 1 ) );
+    IIRExp* allocationSize = new CIRBinOp( PLUS, arrayLength, new CIRConst( 1 ) );
     IIRExp* realSize = new CIRBinOp( MUL, allocationSize, new CIRConst( CFrame::GetWordSize() ) );
 
     CLabel* mallocLabel = new CLabel( "malloc" );
@@ -294,17 +295,17 @@ void CIRTranslator::Visit( const CNewInt * newInt )
     IIRExp* memsetName = new CIRName( memsetLabel );
 
     IIRExp* mallocCall = new CIRCall( mallocName, new CIRExpList( realSize, nullptr ) );
-    //CIRTemp* tmp = new CIRTemp( frames.top()->GetReturnValue() ); TODO: разобраться, что должно быть в tmp
-    //CIRTemp* tmp = new CIRTemp( new CTemp() );
-    //IIRStm* first = new CIRExp( mallocCall );
-    CIRTemp* allocationStart = new CIRTemp( new CTemp() );
-    IIRStm* mallocValue = new CIRMove( allocationStart, mallocCall );
-    IIRExp* realStart = new CIRBinOp( PLUS, allocationStart, new CIRConst( CFrame::GetWordSize() ) );
-    IIRStm* memsetCall = new CIRExp( new CIRCall( memsetName, new CIRExpList( realStart, new CIRExpList( new CIRConst( 0 ), new CIRExpList( realSize, nullptr ) ) ) ) );
-    //TODO: а вдруг тут нужен CIRMem??
-    //TODO: какой size мы кладем?
-    IIRStm* sizeSave = new CIRMove( allocationStart, realSize );
-    exps.push( new CIRESeq( new CIRSeq( mallocValue, memsetCall ), allocationStart ) );
+    CIRTemp* allocationStart = new CIRTemp( frames.top()->GetReturnValue() ); // память, которую вернул malloc 
+    
+    //IIRStm* mallocValue = new CIRMove( allocationStart, mallocCall );
+    
+    IIRExp* realStart = new CIRBinOp( PLUS, allocationStart, new CIRConst( CFrame::GetWordSize() ) ); // память, сдвинутая на байт (т.к. в нулевую ячейку мы пишем длину массива)
+    
+    IIRStm* memsetCall = new CIRExp( new CIRCall( memsetName, new CIRExpList( realStart, new CIRExpList( new CIRConst( 0 ), new CIRExpList( realSize, nullptr ) ) ) ) ); // заполняем нулями память с 1ой ячейки
+    
+    IIRStm* sizeSave = new CIRMove( allocationStart, arrayLength ); // пишем в нулевую ячейку длину массива
+
+    exps.push( new CIRESeq( new CIRSeq( new CIRSeq( new CIRExp( mallocCall ), memsetCall ), sizeSave ), allocationStart ) ); // можно возвращать realStart
 }
 
 void CIRTranslator::Visit( const CNumber * number )

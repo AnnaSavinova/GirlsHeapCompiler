@@ -2312,7 +2312,7 @@ int main()
 	while( !frames.empty() ) {
 		CCanon canonizer;
 		CFrame* frame = frames.top();
-		frame->SetRootStatement(canonizer.Linearize(frame->GetRoot()));
+		frame->SetRootStatement(canonizer.Linearize(frame->GetRoot())); // линеаризация IR-дерева фрейма
 		frames.pop();
 		CIRTreePrettyVisitor IRTreePrettyPrinter( std::string( "IRTree_" ) + frame->GetName() + std::string( ".dot" ) );
 		frame->GetRoot()->Accept( &IRTreePrettyPrinter );
