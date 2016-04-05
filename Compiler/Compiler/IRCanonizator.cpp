@@ -123,7 +123,7 @@ const CIRESeq* CCanon::DoExp( const CIRESeq* e )
         return nullptr;
     }
     const IIRStm* stmt = DoStm( e->stm );
-    const CIRESeq* b = DoExp( dynamic_cast<const CIRESeq*>(e->exp) );
+    const CIRESeq* b = DoExp( e->exp );
     if (b == nullptr) {
         return new CIRESeq(SimplifySeq(stmt, nullptr), nullptr);
     }
@@ -170,7 +170,7 @@ const CIRStmExpList* CCanon::Reorder( const CIRExpList* exprs )
             //иначе обрабатываем сам expr
             const CIRESeq* aa = DoExp( a );
             //и рекурсивно обрабатываем сам список
-            const CIRStmExpList* bb = Reorder( dynamic_cast< const CIRExpList* >( exprs->tail ) );
+            const CIRStmExpList* bb = Reorder( static_cast< const CIRExpList* >( exprs->tail ) );
             //если коммутируют stmt и expr в вершинах, то упрощаем (simplify) и подвешиваем вершины
             if ( IsCommutable( bb->stm, aa->exp ) ) {
                 return new CIRStmExpList( SimplifySeq( aa->stm, bb->stm ),
@@ -192,9 +192,7 @@ const CIRStmExpList* CCanon::Reorder( const CIRExpList* exprs )
 //работа со списками
 const CIRSeq* CCanon::Linear( const CIRSeq* s, const CIRSeq* l )
 {
-    return s ?
-      Linear( s->left, Linear( s->right, l ) ) :
-      nullptr;
+    return Linear( s->left, Linear( s->right, l ) );
 }
 
 //два seq переподвешиваем, чтобы получить все seq на одной ветке
