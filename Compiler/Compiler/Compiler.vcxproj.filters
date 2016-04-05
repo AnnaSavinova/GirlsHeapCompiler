@@ -163,6 +163,9 @@
     <ClCompile Include="IRCanonizator.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
+    <ClCompile Include="IRBlockDecompositor.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -352,6 +355,9 @@
       <Filter>Заголовочные файлы\IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRCanonizator.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="IRBlockDecompositor.h">
       <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
   </ItemGroup>

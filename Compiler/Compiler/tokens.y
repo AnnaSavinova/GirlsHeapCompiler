@@ -9,6 +9,7 @@
 #include "IRTranslator.h"
 #include "IRCanonizator.h"
 #include "IRTreePrettyPrinter.h"
+#include "IRBlockDecompositor.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -272,8 +273,9 @@ int main()
 	std::stack< CFrame* > frames = IRTranslator.GetFramesList();
 	while( !frames.empty() ) {
 		CCanon canonizer;
+		CTracer tracer;
 		CFrame* frame = frames.top();
-		frame->SetRootStatement(canonizer.Linearize(frame->GetRoot())); // линеаризация IR-дерева фрейма
+		frame->SetRootStatement(tracer.Transform(canonizer.Linearize(frame->GetRoot()))); // линеаризация IR-дерева фрейма
 		frames.pop();
 		CIRTreePrettyVisitor IRTreePrettyPrinter( std::string( "IRTree_" ) + frame->GetName() + std::string( ".dot" ) );
 		frame->GetRoot()->Accept( &IRTreePrettyPrinter );

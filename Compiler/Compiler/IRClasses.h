@@ -3,7 +3,7 @@
 #include "IIRSubtreeWrapper.h"
 #include "IRBinOp.h"
 #include "IRCall.h"
-#include "IRCjump.h"
+#include "IRCJump.h"
 #include "IRConst.h"
 #include "IREnums.h"
 #include "IRSeq.h"

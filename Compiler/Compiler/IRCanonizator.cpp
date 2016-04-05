@@ -134,7 +134,6 @@ const CIRStmExpList* CCanon::Reorder( const CIRExpList* exprs )
     } else {
         const IIRExp* a = exprs->head;
         if ( dynamic_cast<const CIRCall*>( a ) != 0 ) {
-            //встретили функцию, запишем результат в Temp и вернем его, обернув в Eseq
             CTemp* t = new CTemp();
             IIRExp* e = new CIRESeq( new CIRMove( new CIRTemp( t ), a ), new CIRTemp( t ) );
             return Reorder( new CIRExpList( e, exprs->tail ) );
