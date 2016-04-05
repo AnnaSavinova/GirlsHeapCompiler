@@ -6,7 +6,6 @@ CIRBinOp::CIRBinOp(EBinOp _operation, const IIRExp * _left, const IIRExp * _righ
 
 const CIRExpList * CIRBinOp::Kids() const
 {
-    std::cout << "BIONP KIDS " << std::endl;
     return new CIRExpList(left, new CIRExpList(right, nullptr));
 }
 
