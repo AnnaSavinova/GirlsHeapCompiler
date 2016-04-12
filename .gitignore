@@ -58,3 +58,4 @@ bld/
 !win_bison.exe
 
 Compiler/Compiler/enc_*
+Compiler/Compiler/Compiler.VC.opendb
