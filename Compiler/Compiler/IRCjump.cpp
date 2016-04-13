@@ -10,10 +10,10 @@ CIRCjump::~CIRCjump()
 
 const CIRExpList * CIRCjump::Kids() const
 {
-    return nullptr;
+    return new CIRExpList( left, new CIRExpList( right, nullptr ) );
 }
 
-const IIRStm * CIRCjump::Build( const CIRExpList* ) const
+const IIRStm * CIRCjump::Build( const CIRExpList* kids) const
 {
-    return nullptr;
+    return new CIRCjump( relop, kids->head, kids->tail->head, ifTrue, ifFalse );
 }
