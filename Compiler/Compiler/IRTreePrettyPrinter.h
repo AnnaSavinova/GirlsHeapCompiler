@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Digrapg.h"
+#include "Digraph.h"
 
 class IIRStm;
 class IIRExp;

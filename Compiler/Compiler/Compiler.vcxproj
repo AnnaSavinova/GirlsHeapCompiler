@@ -73,7 +73,7 @@
     <ClCompile Include="ClassDecl.cpp" />
     <ClCompile Include="ClassDeclList.cpp" />
     <ClCompile Include="Constructor.cpp" />
-    <ClCompile Include="Digrapg.cpp" />
+    <ClCompile Include="Digraph.cpp" />
     <ClCompile Include="ElementAssignment.cpp" />
     <ClCompile Include="ExpList.cpp" />
     <ClCompile Include="FormalList.cpp" />
@@ -138,7 +138,7 @@
     <ClInclude Include="ClassDeclList.h" />
     <ClInclude Include="classes.h" />
     <ClInclude Include="Constructor.h" />
-    <ClInclude Include="Digrapg.h" />
+    <ClInclude Include="Digraph.h" />
     <ClInclude Include="ElementAssignment.h" />
     <ClInclude Include="ExpList.h" />
     <ClInclude Include="FormalList.h" />

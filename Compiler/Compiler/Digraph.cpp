@@ -1,4 +1,4 @@
-#include "Digrapg.h"
+#include "Digraph.h"
 
 #include <ostream>
 #include <fstream>
