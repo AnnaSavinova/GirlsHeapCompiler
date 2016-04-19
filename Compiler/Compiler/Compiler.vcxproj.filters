@@ -166,9 +166,6 @@
     <ClCompile Include="IRBlockDecompositor.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
-    <ClCompile Include="Instruction.cpp">
-      <Filter>CodeGeneration</Filter>
-    </ClCompile>
     <ClCompile Include="Temp.cpp">
       <Filter>Исходный код\Common</Filter>
     </ClCompile>
