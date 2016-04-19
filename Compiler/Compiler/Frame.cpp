@@ -86,26 +86,6 @@ void CFrame::SetRootStatement( const IIRStm * _root )
     root = _root;
 }
 
-CLabel::CLabel() : name( std::to_string( nextUniqueId++ ) )
-{}
-
-CLabel::CLabel( const std::string& s ) : name( s )
-{}
-
-const std::string & CLabel::Name() const
-{
-    return name;
-}
-
-CTemp::CTemp() : name( std::to_string( nextUniqueId++ ) )
-{}
-
-CTemp::CTemp( const CSymbol * symbol ) : name( symbol->String() )
-{}
-
-CTemp::~CTemp()
-{}
-
 const IIRExp * CInReg::GetExp( const CTemp * framePtr ) const
 {
     throw std::logic_error( "CInReg::GetExp can't be called!" );

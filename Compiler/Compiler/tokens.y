@@ -275,7 +275,7 @@ int main()
 		CCanon canonizer;
 		CTracer tracer;
 		CFrame* frame = frames.top();
-		frame->SetRootStatement(/*tracer.Transform*/ (canonizer.Linearize(frame->GetRoot()))); // линеаризация IR-дерева фрейма
+		frame->SetRootStatement(tracer.Transform (canonizer.Linearize(frame->GetRoot()))); // линеаризация IR-дерева фрейма
 		frames.pop();
 		CIRTreePrettyVisitor IRTreePrettyPrinter( std::string( "graph\\IRTree_" ) + frame->GetName() + std::string( ".dot" ) );
 		frame->GetRoot()->Accept( &IRTreePrettyPrinter );

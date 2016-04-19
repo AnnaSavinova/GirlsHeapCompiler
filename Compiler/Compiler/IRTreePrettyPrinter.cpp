@@ -98,7 +98,7 @@ void CIRTreePrettyVisitor::Visit( const CIRName* node )
 
 void CIRTreePrettyVisitor::Visit( const CIRTemp* node )
 {
-    nextNameWithId( string( "temp_" ) + node->temp->Name() );
+    nextNameWithId( node->temp->Name() );
 }
 
 void CIRTreePrettyVisitor::Visit( const CIRBinOp* node )
@@ -197,18 +197,17 @@ void CIRTreePrettyVisitor::Visit( const CIRExpList* node )
 
 void CIRTreePrettyVisitor::Visit( const CIRLabel* node )
 {
-    if( node->label->Name() == "tempLabel1" ) {
-        int a = 1;
-    }
-    nextNameWithId( string( "label:" ) + node->label->Name() );
+    nextNameWithId( node->label->Name() );
 }
 
 void CIRTreePrettyVisitor::Visit( const CIRMoveCall * node )
 {
+    throw std::logic_error( "Not implemented" );
 }
 
 void CIRTreePrettyVisitor::Visit( const CIRExpCall * node )
 {
+    throw std::logic_error( "Not implemented" );
 }
 
 
