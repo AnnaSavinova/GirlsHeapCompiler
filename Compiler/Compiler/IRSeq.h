@@ -13,6 +13,19 @@ public:
         printer->Visit( this );
     }
 
+    void PopBack()
+    {
+      CIRSeq* lastLastVertex = 0;
+      CIRSeq* lastVertex = this;
+      CIRSeq* curVertex = const_cast<CIRSeq*>(dynamic_cast<const CIRSeq*>(right));
+      while (curVertex) {
+        lastLastVertex = lastVertex;
+        lastVertex = curVertex;
+        curVertex = const_cast<CIRSeq*>(dynamic_cast<const CIRSeq*>(curVertex->right));
+      }
+      lastLastVertex->right = nullptr;
+    }
+
     const IIRStm* left;
     const IIRStm* right;
 };

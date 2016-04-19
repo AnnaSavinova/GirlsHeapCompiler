@@ -36,3 +36,23 @@ private:
     std::string name;
 
 };
+
+class CTempList {
+public: 
+    CTempList( CTemp * _head, CTempList * _tail );
+    const CTemp* getHead();
+    const CTempList* getTail();
+private:
+    CTemp * head;
+    CTempList * tail;
+};
+
+class CLabelList {
+public:
+    CLabelList( CLabel * _head, CLabelList * _tail );
+    const CLabel* getHead();
+    const CLabelList* getTail();
+private:
+    CLabel * head;
+    CLabelList * tail;
+};

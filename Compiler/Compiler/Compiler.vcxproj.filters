@@ -163,6 +163,15 @@
     <ClCompile Include="Digraph.cpp">
       <Filter>Исходный код\Visitors</Filter>
     </ClCompile>
+    <ClCompile Include="IRBlockDecompositor.cpp">
+      <Filter>Исходный код\Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="Instruction.cpp">
+      <Filter>CodeGeneration</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp.cpp">
+      <Filter>Исходный код\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -354,6 +363,12 @@
     <ClInclude Include="Digraph.h">
       <Filter>Заголовочные файлы\Visitors</Filter>
     </ClInclude>
+    <ClInclude Include="IRBlockDecompositor.h">
+      <Filter>Заголовочные файлы\Visitors</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>CodeGeneration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">
@@ -385,6 +400,9 @@
     </Filter>
     <Filter Include="Исходный код\IRT">
       <UniqueIdentifier>{08f7f830-113e-4ac1-9389-e0fa6cc015a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodeGeneration">
+      <UniqueIdentifier>{7287f157-b5ea-4c05-9e3b-9ac4f81b4187}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
