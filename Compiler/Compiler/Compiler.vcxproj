@@ -80,6 +80,7 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Id.cpp" />
     <ClCompile Include="IIRExp.cpp" />
+    <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="IRBinOp.cpp" />
     <ClCompile Include="IRBlockDecompositor.cpp" />
     <ClCompile Include="IRCall.cpp" />
@@ -115,6 +116,7 @@
     <ClCompile Include="StatementList.cpp" />
     <ClCompile Include="SymbolsTable.cpp" />
     <ClCompile Include="SymbTableBuilder.cpp" />
+    <ClCompile Include="Temp.cpp" />
     <ClCompile Include="tokens.flex.cpp" />
     <ClCompile Include="tokens.tab.cpp" />
     <ClCompile Include="Type.cpp" />
@@ -148,6 +150,7 @@
     <ClInclude Include="IIRExp.h" />
     <ClInclude Include="IIRStm.h" />
     <ClInclude Include="IIRSubtreeWrapper.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="IRBinOp.h" />
     <ClInclude Include="IRBlockDecompositor.h" />
     <ClInclude Include="IRCall.h" />
