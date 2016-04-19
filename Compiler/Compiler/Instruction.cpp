@@ -2,9 +2,9 @@
 
 
 
-IInstruction::IInstruction()
+CodeGeneration::IInstruction::IInstruction()
 {}
 
 
-IInstruction::~IInstruction()
+CodeGeneration::IInstruction::~IInstruction()
 {}
