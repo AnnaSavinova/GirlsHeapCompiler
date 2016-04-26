@@ -2,12 +2,4 @@
 
 namespace CodeGeneration
 {
-
-    CAsmTreeMaker::CAsmTreeMaker( CFrame* _frame )
-    {}
-
-
-    CAsmTreeMaker::~CAsmTreeMaker()
-    {}
-
 }
