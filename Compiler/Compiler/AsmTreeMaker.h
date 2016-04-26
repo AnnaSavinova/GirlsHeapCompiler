@@ -13,7 +13,7 @@ namespace CodeGeneration
         CAsmTreeMaker( CFrame* _frame ) :
             frame( _frame ), isInitialized( false ) {};
 
-        void InitializeTree( CIRSeq* cmdList );
+        void InitializeTree( const CIRSeq* cmdList ) const;
         bool IsInitialized() { return isInitialized; };
 
         std::list<IInstruction*> GetAsmInstruction() { return instruction; };
@@ -24,22 +24,22 @@ namespace CodeGeneration
         bool isInitialized;
         CFrame* frame;
 
-        void munchStm( IIRStm* vertex );
+        void munchStm( const IIRStm* vertex ) const;
         
-        void munchStm( CIRCjump* vertex );
-        void munchStm( CIRJump* vertex );
-        void munchStm( CIRLabel* vertex );
-        void munchStm( CIRSeq* vertex );
-        void munchStm( CIRMove* vertex );
-        void munchStm( CIRExp* vertex );
+        void munchStm( const CIRCjump* vertex ) const;
+        void munchStm( const CIRJump* vertex ) const;
+        void munchStm( const CIRLabel* vertex ) const;
+        void munchStm( const CIRSeq* vertex ) const;
+        void munchStm( const CIRMove* vertex ) const;
+        void munchStm( const CIRExp* vertex ) const;
 
-        CTemp* munchExp( IIRExp* expr );
+        CTemp* munchExp( const IIRExp* expr ) const;
 
-        CTemp* munchExp( CIRConst* expr );
-        CTemp* munchExp( CIRTemp* expr );
-        CTemp* munchExp( CIRBinOp* expr );
-        CTemp* munchExp( CIRMem* expr );
-        CTemp* munchExp( CIRCall* expr );
+        CTemp* munchExp( const CIRConst* expr ) const;
+        CTemp* munchExp( const CIRTemp* expr ) const;
+        CTemp* munchExp( const CIRBinOp* expr ) const;
+        CTemp* munchExp( const CIRMem* expr ) const;
+        CTemp* munchExp( const CIRCall* expr ) const;
 
         CTemp* munchExpBinopLess( CIRBinOp* expr );
 
