@@ -47,8 +47,44 @@ namespace CodeGeneration {
 
         std::string Format( const std::map<std::string, std::string> varsMapping )
         {
-            //TODO: implement 
-            throw std::logic_error( "Format in COperAsm is not implemented YET" );
+          std::string res = AsmCode;
+          std::string comment = AsmCode;
+          auto curr = dst;
+          int index = 0;
+          while (curr != 0) {
+            std::string toReplace = "'d" + std::to_string(index);
+            while (res.find(toReplace) != std::string::npos) {
+              res.replace(res.find(toReplace), toReplace.length(), varsMapping.find(curr->getHead()->Name())->second);
+              comment.replace(comment.find(toReplace), toReplace.length(), curr->getHead()->Name());
+            }
+            curr = curr->getTail();
+            ++index;
+          }
+          curr = src;
+          index = 0;
+          while (curr != 0) {
+            std::string toReplace = "'s" + std::to_string(index);
+            while (res.find(toReplace) != std::string::npos) {
+              res.replace(res.find(toReplace), toReplace.length(), varsMapping.find(curr->getHead()->Name())->second);
+              comment.replace(comment.find(toReplace), toReplace.length(), curr->getHead()->Name());
+            }
+            curr = curr->getTail();
+            ++index;
+          }
+          auto lbl = jump;
+          index = 0;
+          while (lbl != 0) {
+            std::string toReplace = "'l" + std::to_string(index);
+            while (res.find(toReplace) != std::string::npos) {
+              res.replace(res.find(toReplace), toReplace.length(), lbl->getHead()->Name());
+              comment.replace(comment.find(toReplace), toReplace.length(), lbl->getHead()->Name());
+            }
+            lbl = lbl->getTail();
+            ++index;
+          }
+          res[res.length() - 1] = ' ';
+          res = res + "; \t" + comment;
+          return res;
         }
     private:
         CTempList* dst;
