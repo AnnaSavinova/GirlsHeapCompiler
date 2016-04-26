@@ -1,10 +1,13 @@
 #include "AsmTreeMaker.h"
 
+namespace CodeGeneration
+{
+
+    CAsmTreeMaker::CAsmTreeMaker( CFrame* _frame )
+    {}
 
 
-CAsmTreeMaker::CAsmTreeMaker()
-{}
+    CAsmTreeMaker::~CAsmTreeMaker()
+    {}
 
-
-CAsmTreeMaker::~CAsmTreeMaker()
-{}
+}
