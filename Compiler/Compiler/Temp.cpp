@@ -8,7 +8,7 @@ const CLabel * CLabelList::getHead()
     return head;
 }
 
-const CLabelList * CLabelList::getTail()
+CLabelList * CLabelList::getTail()
 {
     return tail;
 }
@@ -21,7 +21,7 @@ const CTemp * CTempList::getHead()
     return head;
 }
 
-const CTempList * CTempList::getTail()
+CTempList * CTempList::getTail()
 {
     return tail;
 }
