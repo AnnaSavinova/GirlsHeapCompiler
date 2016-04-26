@@ -68,6 +68,7 @@
     <Flex Include="tokens.l" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AsmTreeMaker.cpp" />
     <ClCompile Include="AssignmentStatement.cpp" />
     <ClCompile Include="BinExp.cpp" />
     <ClCompile Include="ClassDecl.cpp" />
@@ -134,6 +135,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AsmTreeMaker.h" />
     <ClInclude Include="AssignmentStatement.h" />
     <ClInclude Include="BinExp.h" />
     <ClInclude Include="ClassDecl.h" />
