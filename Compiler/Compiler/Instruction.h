@@ -47,7 +47,7 @@ namespace CodeGeneration {
 
         std::string Format( const std::map<std::string, std::string> varsMapping )
         {
-            //TODO: implement
+            //TODO: implement 
             throw std::logic_error( "Format in COperAsm is not implemented YET" );
         }
     private:
@@ -89,7 +89,7 @@ namespace CodeGeneration {
 
         std::string Format( const std::map<std::string, std::string> varsMapping )
         {
-            return label->Name();
+            return label->Name() + ":\n";
         }
 
     private:
