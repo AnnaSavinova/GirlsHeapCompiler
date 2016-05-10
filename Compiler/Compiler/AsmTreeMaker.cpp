@@ -162,7 +162,6 @@ namespace CodeGeneration {
     {
         const CTemp* tmp = munchExp( expr->exp );
 	    CTemp* fpTmp = new CTemp();
-	    //func.push_back( new CMove( "mov 'd0, 's0\n", new CTempList( fpTmp, 0 ), new CTempList( stackFrame->GetFramePointer(), 0 ) ) );
 	    CTemp* resTmp = new CTemp();
 	    instruction.push_back( new CMoveAsm( "mov 'd0, ['s1]\n", new CTempList( resTmp, 0 ),
 		new CTempList( fpTmp, new CTempList( tmp, 0 ) ) ) );
@@ -171,9 +170,22 @@ namespace CodeGeneration {
     }
     const CTemp * CAsmTreeMaker::munchExp( const CIRCall * expr ) const
     {
-        return nullptr;
+        const CIRName* name = dynamic_cast<const CIRName*>( expr->func );
+        assert( name != 0 );
+        const CIRExpList* argList = dynamic_cast<const CIRExpList*>( expr->args );
+        const CTempList* argsList = munchArgs( argList );
+        while( argsList != 0 ) {
+            if( argsList->GetHead() != nullptr ) {
+                instruction.push_back( new COperAsm( "push 's0\n", 0, new CTempList( argsList->GetHead(), 0 ) ) );
+                argsList = argsList->GetTail();
+            } else {
+                break;
+            }
+        }
+        instruction.push_back( new COperAsm( "call 'l0\n", 0, 0, new CLabelList( name->label, 0 ) ) );
+        return new CTemp();
     }
-    const CTemp * CAsmTreeMaker::munchExpBinopLess( CIRBinOp * expr )
+    const CTemp * CAsmTreeMaker::munchExpBinopLess( const CIRBinOp * expr ) const
     {
         CTemp* tmp = new CTemp();
         instruction.push_back( new COperAsm( "mov 'd0, 0\n", new CTempList( tmp, 0 ), 0, 0 ) );
@@ -195,7 +207,8 @@ namespace CodeGeneration {
 
         return tmp;
     }
-    CTempList * CAsmTreeMaker::munchArgs( CExpList * exprList )
+
+    const CTempList * CAsmTreeMaker::munchArgs( const CIRExpList * exprList ) const
     {
         return nullptr;
     }

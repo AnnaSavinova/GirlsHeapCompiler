@@ -40,8 +40,8 @@ private:
 class CTempList {
 public: 
     CTempList( const CTemp * _head, const CTempList * _tail );
-    const CTemp* getHead() const;
-    const CTempList* getTail() const;
+    const CTemp* GetHead() const;
+    const CTempList* GetTail() const;
 private:
     const CTemp * head;
     const CTempList * tail;
@@ -50,8 +50,8 @@ private:
 class CLabelList {
 public:
     CLabelList( const CLabel * _head, const CLabelList * _tail );
-    const CLabel* getHead();
-    const CLabelList* getTail();
+    const CLabel* GetHead();
+    const CLabelList* GetTail();
 private:
     const CLabel * head;
     const CLabelList * tail;

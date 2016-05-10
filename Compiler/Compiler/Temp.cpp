@@ -3,12 +3,12 @@
 CLabelList::CLabelList( const CLabel * _head, const CLabelList * _tail ): head(_head), tail(_tail)
 {}
 
-const CLabel * CLabelList::getHead()
+const CLabel * CLabelList::GetHead()
 {
     return head;
 }
 
-const CLabelList * CLabelList::getTail()
+const CLabelList * CLabelList::GetTail()
 {
     return tail;
 }
@@ -16,12 +16,12 @@ const CLabelList * CLabelList::getTail()
 CTempList::CTempList( const CTemp * _head, const CTempList * _tail ) : head( _head ), tail( _tail )
 {}
 
-const CTemp * CTempList::getHead() const
+const CTemp * CTempList::GetHead() const
 {
     return head;
 }
 
-const CTempList * CTempList::getTail() const
+const CTempList * CTempList::GetTail() const
 {
     return tail;
 }

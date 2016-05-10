@@ -53,10 +53,10 @@ namespace CodeGeneration
             while( curr != 0 ) {
                 std::string toReplace = "'d" + std::to_string( index );
                 while( res.find( toReplace ) != std::string::npos ) {
-                    res.replace( res.find( toReplace ), toReplace.length(), varsMapping.find( curr->getHead()->Name() )->second );
-                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->getHead()->Name() );
+                    res.replace( res.find( toReplace ), toReplace.length(), varsMapping.find( curr->GetHead()->Name() )->second );
+                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->GetHead()->Name() );
                 }
-                curr = const_cast< CTempList* >( curr->getTail() );
+                curr = const_cast< CTempList* >( curr->GetTail() );
                 ++index;
             }
             curr = src;
@@ -64,10 +64,10 @@ namespace CodeGeneration
             while( curr != 0 ) {
                 std::string toReplace = "'s" + std::to_string( index );
                 while( res.find( toReplace ) != std::string::npos ) {
-                    res.replace( res.find( toReplace ), toReplace.length(), varsMapping.find( curr->getHead()->Name() )->second );
-                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->getHead()->Name() );
+                    res.replace( res.find( toReplace ), toReplace.length(), varsMapping.find( curr->GetHead()->Name() )->second );
+                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->GetHead()->Name() );
                 }
-                curr = const_cast< CTempList* >( curr->getTail() );
+                curr = const_cast< CTempList* >( curr->GetTail() );
                 ++index;
             }
             CLabelList* lbl = jump;
@@ -75,10 +75,10 @@ namespace CodeGeneration
             while( lbl != 0 ) {
                 std::string toReplace = "'l" + std::to_string( index );
                 while( res.find( toReplace ) != std::string::npos ) {
-                    res.replace( res.find( toReplace ), toReplace.length(), lbl->getHead()->Name() );
-                    comment.replace( comment.find( toReplace ), toReplace.length(), lbl->getHead()->Name() );
+                    res.replace( res.find( toReplace ), toReplace.length(), lbl->GetHead()->Name() );
+                    comment.replace( comment.find( toReplace ), toReplace.length(), lbl->GetHead()->Name() );
                 }
-                lbl = const_cast< CLabelList * > ( lbl->getTail() );
+                lbl = const_cast< CLabelList * > ( lbl->GetTail() );
                 ++index;
             }
             res[res.length() - 1] = ' ';

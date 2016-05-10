@@ -41,8 +41,8 @@ namespace CodeGeneration
         const CTemp* munchExp( const CIRMem* expr ) const;
         const CTemp* munchExp( const CIRCall* expr ) const;
 
-        const CTemp* munchExpBinopLess( CIRBinOp* expr );
+        const CTemp* munchExpBinopLess( const CIRBinOp* expr ) const;
 
-        CTempList* munchArgs( CExpList* exprList );
+        const CTempList* munchArgs( const CIRExpList* exprList ) const;
     };
 };
