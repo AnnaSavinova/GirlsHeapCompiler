@@ -45,6 +45,4 @@ namespace CodeGeneration
 
         CTempList* munchArgs( CExpList* exprList );
     };
-
-
 };
