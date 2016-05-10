@@ -49,10 +49,10 @@ private:
 
 class CLabelList {
 public:
-    CLabelList( CLabel * _head, CLabelList * _tail );
+    CLabelList( const CLabel * _head, const CLabelList * _tail );
     const CLabel* getHead();
-    CLabelList* getTail();
+    const CLabelList* getTail();
 private:
-    CLabel * head;
-    CLabelList * tail;
+    const CLabel * head;
+    const CLabelList * tail;
 };

@@ -7,9 +7,9 @@ namespace CodeGeneration {
     {
     public:
         std::string AsmCode;
-        virtual CTempList* UsedVars() const = 0;
-        virtual CTempList* DefindedVars() const = 0;
-        virtual CLabelList* JumpTargets() const = 0;
+        virtual const CTempList* UsedVars() const = 0;
+        virtual const CTempList* DefindedVars() const = 0;
+        virtual const CLabelList* JumpTargets() const = 0;
         virtual std::string Format( const std::map<std::string, std::string> varsMapping ) const = 0;
         IInstruction() {}
         ~IInstruction() {}
@@ -30,61 +30,61 @@ namespace CodeGeneration {
             AsmCode = _assem;
         }
 
-        CTempList* UsedVars() const
+        const CTempList* UsedVars() const
         {
             return src;
         }
 
-        CTempList* DefindedVars() const
+        const CTempList* DefindedVars() const
         {
             return dst;
         }
 
-        CLabelList* JumpTargets() const
+        const CLabelList* JumpTargets() const
         {
             return jump;
         }
 
         std::string Format( const std::map<std::string, std::string> varsMapping ) const
         {
-          std::string res = AsmCode;
-          std::string comment = AsmCode;
-          auto curr = dst;
-          int index = 0;
-          while (curr != 0) {
-            std::string toReplace = "'d" + std::to_string(index);
-            while (res.find(toReplace) != std::string::npos) {
-              res.replace(res.find(toReplace), toReplace.length(), varsMapping.find(curr->getHead()->Name())->second);
-              comment.replace(comment.find(toReplace), toReplace.length(), curr->getHead()->Name());
+            std::string res = AsmCode;
+            std::string comment = AsmCode;
+            auto curr = dst;
+            int index = 0;
+            while( curr != 0 ) {
+                std::string toReplace = "'d" + std::to_string( index );
+                while( res.find( toReplace ) != std::string::npos ) {
+                    res.replace( res.find( toReplace ), toReplace.length(), varsMapping.find( curr->getHead()->Name() )->second );
+                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->getHead()->Name() );
+                }
+                curr = curr->getTail();
+                ++index;
             }
-            curr = curr->getTail();
-            ++index;
-          }
-          curr = src;
-          index = 0;
-          while (curr != 0) {
-            std::string toReplace = "'s" + std::to_string(index);
-            while (res.find(toReplace) != std::string::npos) {
-              res.replace(res.find(toReplace), toReplace.length(), varsMapping.find(curr->getHead()->Name())->second);
-              comment.replace(comment.find(toReplace), toReplace.length(), curr->getHead()->Name());
+            curr = src;
+            index = 0;
+            while( curr != 0 ) {
+                std::string toReplace = "'s" + std::to_string( index );
+                while( res.find( toReplace ) != std::string::npos ) {
+                    res.replace( res.find( toReplace ), toReplace.length(), varsMapping.find( curr->getHead()->Name() )->second );
+                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->getHead()->Name() );
+                }
+                curr = curr->getTail();
+                ++index;
             }
-            curr = curr->getTail();
-            ++index;
-          }
-          auto lbl = jump;
-          index = 0;
-          while (lbl != 0) {
-            std::string toReplace = "'l" + std::to_string(index);
-            while (res.find(toReplace) != std::string::npos) {
-              res.replace(res.find(toReplace), toReplace.length(), lbl->getHead()->Name());
-              comment.replace(comment.find(toReplace), toReplace.length(), lbl->getHead()->Name());
+            CLabelList* lbl = jump;
+            index = 0;
+            while( lbl != 0 ) {
+                std::string toReplace = "'l" + std::to_string( index );
+                while( res.find( toReplace ) != std::string::npos ) {
+                    res.replace( res.find( toReplace ), toReplace.length(), lbl->getHead()->Name() );
+                    comment.replace( comment.find( toReplace ), toReplace.length(), lbl->getHead()->Name() );
+                }
+                lbl = const_cast< CLabelList * > ( lbl->getTail() );
+                ++index;
             }
-            lbl = lbl->getTail();
-            ++index;
-          }
-          res[res.length() - 1] = ' ';
-          res = res + "; \t" + comment;
-          return res;
+            res[res.length() - 1] = ' ';
+            res = res + "; \t" + comment;
+            return res;
         }
     private:
         CTempList* dst;
@@ -95,9 +95,10 @@ namespace CodeGeneration {
     class CMoveAsm : public COperAsm
     {
     public:
-        CMoveAsm( std::string _assem, CTemp* _dst, CTemp* _src ) : 
+        CMoveAsm( std::string _assem, CTemp* _dst, CTemp* _src ) :
             COperAsm( _assem, new CTempList( _dst, nullptr ), new CTempList( _src, nullptr ), nullptr )
-        {};
+        {
+        };
     };
 
     class CLabelAsm : public IInstruction

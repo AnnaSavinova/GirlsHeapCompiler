@@ -1,6 +1,6 @@
 #include "Temp.h"
 
-CLabelList::CLabelList( CLabel * _head, CLabelList * _tail ): head(_head), tail(_tail)
+CLabelList::CLabelList( const CLabel * _head, const CLabelList * _tail ): head(_head), tail(_tail)
 {}
 
 const CLabel * CLabelList::getHead()
@@ -8,7 +8,7 @@ const CLabel * CLabelList::getHead()
     return head;
 }
 
-CLabelList * CLabelList::getTail()
+const CLabelList * CLabelList::getTail()
 {
     return tail;
 }
