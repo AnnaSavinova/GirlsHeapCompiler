@@ -49,7 +49,7 @@ namespace CodeGeneration
 
     void CAsmTreeMaker::munchStm( const CIRLabel * vertex ) const
     {
-        const IInstruction* asmInstr = new CLabelAsm( new CLabelList( label->label, 0 ) );
+        IInstruction* asmInstr = new CLabelAsm( vertex->label );
         instruction.push_back( asmInstr );
     }
 
@@ -65,6 +65,7 @@ namespace CodeGeneration
     {}
     void CAsmTreeMaker::munchStm( const CIRExp * vertex ) const
     {}
+
     CTemp * CAsmTreeMaker::munchExp( const IIRExp * expr ) const
     {
         if( dynamic_cast<const CIRConst*>( expr ) != 0 ) {
@@ -85,6 +86,7 @@ namespace CodeGeneration
         assert( false );
         return 0;
     }
+
     CTemp * CAsmTreeMaker::munchExp( const CIRConst * expr ) const
     {
         CTemp* newTemp = new CTemp();

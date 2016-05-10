@@ -103,7 +103,7 @@ namespace CodeGeneration {
     class CLabelAsm : public IInstruction
     {
     public:
-        CLabelAsm( std::string _assem, CLabel* _label ) : label( _label )
+        CLabelAsm( const CLabel* _label, std::string _assem = "" ) : label( _label )
         {
             AsmCode = _assem;
         }
@@ -129,7 +129,7 @@ namespace CodeGeneration {
         }
 
     private:
-        CLabel* label;
+        const CLabel* label;
     };
 
 } // namespace CodeGeneration
