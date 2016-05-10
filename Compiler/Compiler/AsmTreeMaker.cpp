@@ -7,7 +7,7 @@ namespace CodeGeneration
         const CIRSeq* next = cmdList;
         while( next != 0 ) {
             munchStm( next->left );
-            next = dynamic_cast<const CIRSeq*>( next->right );
+            next = dynamic_cast< const CIRSeq* >( next->right );
         }
     }
     void CAsmTreeMaker::munchStm( const IIRStm* vertex ) const
@@ -69,28 +69,28 @@ namespace CodeGeneration
     void CAsmTreeMaker::munchStm( const CIRExp * vertex ) const
     {}
 
-    CTemp * CAsmTreeMaker::munchExp( const IIRExp * expr ) const
+    const CTemp * CAsmTreeMaker::munchExp( const IIRExp * expr ) const
     {
-        if( dynamic_cast<const CIRConst*>( expr ) != 0 ) {
-            return munchExp( dynamic_cast<const CIRConst*>( expr ) );
+        if( dynamic_cast< const CIRConst* >( expr ) != 0 ) {
+            return munchExp( dynamic_cast< const CIRConst* >( expr ) );
         }
-        if( dynamic_cast<const CIRTemp*>( expr ) != 0 ) {
-            return munchExp( dynamic_cast<const CIRTemp*>( expr ) );
+        if( dynamic_cast< const CIRTemp* >( expr ) != 0 ) {
+            return munchExp( dynamic_cast< const CIRTemp* >( expr ) );
         }
-        if( dynamic_cast<const CIRBinOp*>( expr ) != 0 ) {
-            return munchExp( dynamic_cast<const CIRBinOp*>( expr ) );
+        if( dynamic_cast< const CIRBinOp* >( expr ) != 0 ) {
+            return munchExp( dynamic_cast< const CIRBinOp* >( expr ) );
         }
-        if( dynamic_cast<const CIRMem*>( expr ) != 0 ) {
-            return munchExp( dynamic_cast<const CIRMem*>( expr ) );
+        if( dynamic_cast< const CIRMem* >( expr ) != 0 ) {
+            return munchExp( dynamic_cast< const CIRMem* >( expr ) );
         }
-        if( dynamic_cast<const CIRCall*>( expr ) != 0 ) {
-            return munchExp( dynamic_cast<const CIRCall*>( expr ) );
+        if( dynamic_cast< const CIRCall* >( expr ) != 0 ) {
+            return munchExp( dynamic_cast< const CIRCall* >( expr ) );
         }
         assert( false );
         return 0;
     }
 
-    CTemp * CAsmTreeMaker::munchExp( const CIRConst * expr ) const
+    const CTemp * CAsmTreeMaker::munchExp( const CIRConst * expr ) const
     {
         CTemp* newTemp = new CTemp();
         std::string asmCmd = "mov 'd0, ";
@@ -100,25 +100,44 @@ namespace CodeGeneration
         instruction.push_back( asmInstruction );
         return newTemp;
     }
-    CTemp * CAsmTreeMaker::munchExp( const CIRTemp * expr ) const
+    const CTemp * CAsmTreeMaker::munchExp( const CIRTemp * expr ) const
+    {
+        return expr->temp;
+    }
+    const CTemp * CAsmTreeMaker::munchExp( const CIRBinOp * expr ) const
+    {
+        throw std::logic_error( "Не реализован метод CAsmTreeMaker::munchExp( const CIRBinOp * expr )" );
+        return nullptr;
+    }
+    const  CTemp* CAsmTreeMaker::munchExp( const CIRMem * expr ) const
     {
         return nullptr;
     }
-    CTemp * CAsmTreeMaker::munchExp( const CIRBinOp * expr ) const
+    const CTemp * CAsmTreeMaker::munchExp( const CIRCall * expr ) const
     {
         return nullptr;
     }
-    CTemp * CAsmTreeMaker::munchExp( const CIRMem * expr ) const
+    const CTemp * CAsmTreeMaker::munchExpBinopLess( CIRBinOp * expr )
     {
-        return nullptr;
-    }
-    CTemp * CAsmTreeMaker::munchExp( const CIRCall * expr ) const
-    {
-        return nullptr;
-    }
-    CTemp * CAsmTreeMaker::munchExpBinopLess( CIRBinOp * expr )
-    {
-        return nullptr;
+        CTemp* tmp = new CTemp();
+        instruction.push_back( new COperAsm( "mov 'd0, 0\n", new CTempList( tmp, 0 ), 0, 0 ) );
+
+        CTemp* left = new CTemp();
+        CTemp* right = new CTemp();
+        instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", left, munchExp( expr->left ) ) );
+        instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", right, munchExp( expr->right ) ) );
+
+        CTempList* source = new CTempList( left, new CTempList( right, 0 ) );
+
+        instruction.push_back( new COperAsm( "cmp 's0, s1\n", 0, source ) );
+
+        CLabel* label = new CLabel();
+
+        instruction.push_back( new COperAsm( "jnl 'l0\n", 0, 0, new CLabelList( label, 0 ) ) );
+        instruction.push_back( new COperAsm( "mov 'd0, 1\n", new CTempList( tmp, 0 ), 0 ) );
+        instruction.push_back( new CLabelAsm( label ) );
+
+        return tmp;
     }
     CTempList * CAsmTreeMaker::munchArgs( CExpList * exprList )
     {

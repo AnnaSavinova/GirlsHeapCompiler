@@ -33,15 +33,15 @@ namespace CodeGeneration
         void munchStm( const CIRMove* vertex ) const;
         void munchStm( const CIRExp* vertex ) const;
 
-        CTemp* munchExp( const IIRExp* expr ) const;
+        const CTemp* munchExp( const IIRExp* expr ) const;
 
-        CTemp* munchExp( const CIRConst* expr ) const;
-        CTemp* munchExp( const CIRTemp* expr ) const;
-        CTemp* munchExp( const CIRBinOp* expr ) const;
-        CTemp* munchExp( const CIRMem* expr ) const;
-        CTemp* munchExp( const CIRCall* expr ) const;
+        const CTemp* munchExp( const CIRConst* expr ) const;
+        const CTemp* munchExp( const CIRTemp* expr ) const;
+        const CTemp* munchExp( const CIRBinOp* expr ) const;
+        const CTemp* munchExp( const CIRMem* expr ) const;
+        const CTemp* munchExp( const CIRCall* expr ) const;
 
-        CTemp* munchExpBinopLess( CIRBinOp* expr );
+        const CTemp* munchExpBinopLess( CIRBinOp* expr );
 
         CTempList* munchArgs( CExpList* exprList );
     };

@@ -39,12 +39,12 @@ private:
 
 class CTempList {
 public: 
-    CTempList( CTemp * _head, CTempList * _tail );
-    const CTemp* getHead();
-    CTempList* getTail();
+    CTempList( const CTemp * _head, const CTempList * _tail );
+    const CTemp* getHead() const;
+    const CTempList* getTail() const;
 private:
-    CTemp * head;
-    CTempList * tail;
+    const CTemp * head;
+    const CTempList * tail;
 };
 
 class CLabelList {

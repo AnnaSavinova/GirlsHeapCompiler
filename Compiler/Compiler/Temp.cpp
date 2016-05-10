@@ -13,15 +13,15 @@ const CLabelList * CLabelList::getTail()
     return tail;
 }
 
-CTempList::CTempList( CTemp * _head, CTempList * _tail ) : head( _head ), tail( _tail )
+CTempList::CTempList( const CTemp * _head, const CTempList * _tail ) : head( _head ), tail( _tail )
 {}
 
-const CTemp * CTempList::getHead()
+const CTemp * CTempList::getHead() const
 {
     return head;
 }
 
-CTempList * CTempList::getTail()
+const CTempList * CTempList::getTail() const
 {
     return tail;
 }
