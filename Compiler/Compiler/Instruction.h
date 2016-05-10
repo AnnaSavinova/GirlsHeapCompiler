@@ -45,7 +45,7 @@ namespace CodeGeneration {
             return jump;
         }
 
-        std::string Format( const std::map<std::string, std::string> varsMapping )
+        std::string Format( const std::map<std::string, std::string> varsMapping ) const
         {
           std::string res = AsmCode;
           std::string comment = AsmCode;
@@ -123,7 +123,7 @@ namespace CodeGeneration {
             return new CLabelList( label, nullptr );
         }
 
-        std::string Format( const std::map<std::string, std::string> varsMapping )
+        std::string Format( const std::map<std::string, std::string> varsMapping ) const
         {
             return label->Name() + ":\n";
         }

@@ -67,11 +67,33 @@ namespace CodeGeneration
     {}
     CTemp * CAsmTreeMaker::munchExp( const IIRExp * expr ) const
     {
-        return nullptr;
+        if( dynamic_cast<const CIRConst*>( expr ) != 0 ) {
+            return munchExp( dynamic_cast<const CIRConst*>( expr ) );
+        }
+        if( dynamic_cast<const CIRTemp*>( expr ) != 0 ) {
+            return munchExp( dynamic_cast<const CIRTemp*>( expr ) );
+        }
+        if( dynamic_cast<const CIRBinOp*>( expr ) != 0 ) {
+            return munchExp( dynamic_cast<const CIRBinOp*>( expr ) );
+        }
+        if( dynamic_cast<const CIRMem*>( expr ) != 0 ) {
+            return munchExp( dynamic_cast<const CIRMem*>( expr ) );
+        }
+        if( dynamic_cast<const CIRCall*>( expr ) != 0 ) {
+            return munchExp( dynamic_cast<const CIRCall*>( expr ) );
+        }
+        assert( false );
+        return 0;
     }
     CTemp * CAsmTreeMaker::munchExp( const CIRConst * expr ) const
     {
-        return nullptr;
+        CTemp* newTemp = new CTemp();
+        std::string asmCmd = "mov 'd0, ";
+        asmCmd += std::to_string( expr->value );
+        asmCmd += "\n";
+        IInstruction* asmInstruction = new CMoveAsm( asmCmd, newTemp, 0 );
+        instruction.push_back( asmInstruction );
+        return newTemp;
     }
     CTemp * CAsmTreeMaker::munchExp( const CIRTemp * expr ) const
     {
