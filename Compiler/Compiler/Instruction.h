@@ -96,6 +96,9 @@ namespace CodeGeneration
         CMoveAsm( std::string _assem, const CTemp* _dst, const CTemp* _src ) :
             COperAsm( _assem, new CTempList( _dst, nullptr ), new CTempList( _src, nullptr ), nullptr )
         {};
+        CMoveAsm( std::string _assem, CTempList* _dst, CTempList* _src ) :
+            COperAsm( _assem, _dst, _src, nullptr )
+        {};
     };
 
     class CLabelAsm : public IInstruction {

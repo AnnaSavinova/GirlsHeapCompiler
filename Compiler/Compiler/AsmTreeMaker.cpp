@@ -111,7 +111,14 @@ namespace CodeGeneration
     }
     const  CTemp* CAsmTreeMaker::munchExp( const CIRMem * expr ) const
     {
-        return nullptr;
+        const CTemp* tmp = munchExp( expr->exp );
+	    CTemp* fpTmp = new CTemp();
+	    //func.push_back( new CMove( "mov 'd0, 's0\n", new CTempList( fpTmp, 0 ), new CTempList( stackFrame->GetFramePointer(), 0 ) ) );
+	    CTemp* resTmp = new CTemp();
+	    instruction.push_back( new CMoveAsm( "mov 'd0, ['s1]\n", new CTempList( resTmp, 0 ),
+		new CTempList( fpTmp, new CTempList( tmp, 0 ) ) ) );
+
+	    return resTmp;
     }
     const CTemp * CAsmTreeMaker::munchExp( const CIRCall * expr ) const
     {
