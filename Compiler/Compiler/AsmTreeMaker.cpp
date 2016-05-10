@@ -1,7 +1,6 @@
 #include "AsmTreeMaker.h"
 
-namespace CodeGeneration
-{
+namespace CodeGeneration {
     void CAsmTreeMaker::InitializeTree( const CIRSeq * cmdList ) const
     {
         const CIRSeq* next = cmdList;
@@ -12,28 +11,28 @@ namespace CodeGeneration
     }
     void CAsmTreeMaker::munchStm( const IIRStm* vertex ) const
     {
-        if( dynamic_cast<const CIRSeq*>(vertex) != 0 ) {
-            munchStm( dynamic_cast<const CIRSeq*>(vertex) );
+        if( dynamic_cast< const CIRSeq* >(vertex) != 0 ) {
+            munchStm( dynamic_cast< const CIRSeq* >(vertex) );
             return;
         }
-        if( dynamic_cast<const CIRMove*>(vertex) != 0 ) {
-            munchStm( dynamic_cast<const CIRMove*>(vertex) );
+        if( dynamic_cast< const CIRMove* >(vertex) != 0 ) {
+            munchStm( dynamic_cast< const CIRMove* >(vertex) );
             return;
         }
-        if( dynamic_cast<const CIRLabel*>(vertex) != 0 ) {
-            munchStm( dynamic_cast<const CIRLabel*>(vertex) );
+        if( dynamic_cast< const CIRLabel* >(vertex) != 0 ) {
+            munchStm( dynamic_cast< const CIRLabel* >(vertex) );
             return;
         }
-        if( dynamic_cast<const CIRCjump*>(vertex) != 0 ) {
-            munchStm( dynamic_cast<const CIRCjump*>(vertex) );
+        if( dynamic_cast< const CIRCjump* >(vertex) != 0 ) {
+            munchStm( dynamic_cast< const CIRCjump* >(vertex) );
             return;
         }
-        if( dynamic_cast<const CIRExp*>(vertex) != 0 ) {
-            munchStm( dynamic_cast<const CIRExp*>(vertex) );
+        if( dynamic_cast< const CIRExp* >(vertex) != 0 ) {
+            munchStm( dynamic_cast< const CIRExp* >(vertex) );
             return;
         }
-        if( dynamic_cast<const CIRJump*>(vertex) != 0 ) {
-            munchStm( dynamic_cast<const CIRJump*>(vertex) );
+        if( dynamic_cast< const CIRJump* >(vertex) != 0 ) {
+            munchStm( dynamic_cast< const CIRJump* >(vertex) );
             return;
         }
         assert( false );
@@ -59,15 +58,65 @@ namespace CodeGeneration
     void CAsmTreeMaker::munchStm( const CIRSeq * vertex ) const
     {
         munchStm( vertex->left );
-        if ( vertex->right != nullptr ) {
+        if( vertex->right != nullptr ) {
             munchStm( vertex->right );
         }
     }
-  
+
     void CAsmTreeMaker::munchStm( const CIRMove * vertex ) const
-    {}
+    {
+        //Temp->Mem
+        if( dynamic_cast< const CIRMem* >( vertex->Dst() ) ) {
+            // NO MEM <- MEM in x86
+            const CIRMem* memDst = dynamic_cast< const CIRMem* >( vertex->Dst() );
+
+            if( dynamic_cast< const CIRBinOp* >( memDst->exp ) ) {
+                const CIRBinOp* binOp = dynamic_cast< const CIRBinOp* >( memDst->exp );
+
+                // MEM[+(expr,const)] <- Temp
+                if( binOp->operation == EBinOp::PLUS ) {
+
+                    if( dynamic_cast< const CIRConst* >( binOp->left ) != 0 ) {
+                        const CIRConst* constant = dynamic_cast< const CIRConst* >( binOp->left );
+
+                        std::string cmd = "mov ['d0+";
+                        cmd += std::to_string( constant->value );
+                        cmd += "],'s0\n";
+                        IInstruction* asmInst = new CMoveAsm( cmd, munchExp( binOp->right ), munchExp( vertex->Src() ));
+                        instruction.push_back( asmInst );
+                        return;
+
+                    } else if( dynamic_cast< const CIRConst* >( binOp->right ) != 0 ) {
+                        const CIRConst* constant = dynamic_cast< const CIRConst* >( binOp->right );
+
+                        std::string cmd = "mov ['d0+";
+                        cmd += std::to_string( constant->value );
+                        cmd += "], 's0\n";
+                        IInstruction* asmInst = new CMoveAsm( cmd, munchExp( binOp->left ), munchExp( vertex->Src() ) );
+                        instruction.push_back( asmInst );
+                        return;
+                    }
+                }
+            }
+            std::string cmd = "mov ['d0], 's0\n";
+            IInstruction* asmInst = new CMoveAsm( cmd, munchExp( memDst->exp ), munchExp( vertex->Src() ) );
+            instruction.push_back( asmInst );
+            return;
+        } else if( dynamic_cast< const CIRTemp* >( vertex->Dst() ) ) {
+            // Temp <- Temp; Temp <- Mem
+            const CIRTemp* tmp = dynamic_cast< const CIRTemp* >( vertex->Dst() );
+
+            std::string cmd = "mov 'd0, 's0\n";
+            IInstruction* asmInst = new CMoveAsm( cmd, tmp->temp, munchExp( vertex->Src() ) );
+            instruction.push_back( asmInst );
+            return;
+        }
+    }
+
     void CAsmTreeMaker::munchStm( const CIRExp * vertex ) const
-    {}
+    {
+        munchExp( vertex->exp );
+    }
 
     const CTemp * CAsmTreeMaker::munchExp( const IIRExp * expr ) const
     {
