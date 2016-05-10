@@ -20,7 +20,7 @@ namespace CodeGeneration
         CFrame* GetFrame() { return frame; };
 
     private:
-        std::list<IInstruction*> instruction;
+        mutable std::list<IInstruction*> instruction;
         bool isInitialized;
         CFrame* frame;
 
