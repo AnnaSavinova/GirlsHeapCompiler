@@ -66,6 +66,22 @@ const CTemp* CFrame::GetFramePointer() const
     return framePointer;
 }
 
+const CTemp* CFrame::GetEax() const
+{
+    //TODO переписать на нормальный регистр
+
+    CSymbol* sEax = symbolStorage.Get( "Eax" );
+    return new CTemp( sEax );
+}
+
+const CTemp* CFrame::GetEdx() const
+{
+    //TODO переписать на нормальный регистр
+
+    CSymbol* sEdx = symbolStorage.Get( "Edx" );
+    return new CTemp( sEdx );
+}
+
 int CFrame::GetWordSize()
 {
     return wordSize;

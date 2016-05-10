@@ -62,6 +62,10 @@ public:
     //Доступ к формальным параметрам
     const IAccess* GetField( std::string ) const;
     const CTemp* GetFramePointer() const;
+
+    const CTemp* GetEax() const;
+    const CTemp* GetEdx() const;
+
     static int GetWordSize();
     const CTemp* GetThisPointer() const;
     const CTemp* GetReturnValue() const;
@@ -74,6 +78,10 @@ public:
 private:
     std::map< std::string, const IAccess * > fields;
     const CTemp* framePointer;
+    
+    const CTemp* eax;
+    const CTemp* edx;
+
     const CTemp* thisPointer;
     const CTemp* returnValue;
     static int wordSize;

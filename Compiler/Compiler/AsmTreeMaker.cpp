@@ -194,8 +194,86 @@ namespace CodeGeneration {
     }
     const CTemp * CAsmTreeMaker::munchExp( const CIRBinOp * expr ) const
     {
-        throw std::logic_error( "Не реализован метод CAsmTreeMaker::munchExp( const CIRBinOp * expr )" );
-        return nullptr;
+        std::string command;
+        CTempList* usedRegisters = 0;
+        switch( expr->operation ) {
+            case EBinOp::PLUS:
+                command = "add";
+                usedRegisters = new CTempList( frame->GetEax(), 0 );
+                break;
+            case EBinOp::MINUS:
+                command = "sub";
+                usedRegisters = new CTempList( frame->GetEax(), 0 );
+                break;
+            case EBinOp::MUL:
+                command = "mul";
+                usedRegisters = new CTempList( frame->GetEax(), new CTempList( frame->GetEdx(), 0 ) );
+                break;
+            case EBinOp::DIV:
+                command = "div";
+                usedRegisters = new CTempList( frame->GetEax(), new CTempList( frame->GetEdx(), 0 ) );
+                break;
+            case EBinOp::LESS:
+                return munchExpBinopLess( expr );
+
+            default:
+                assert( false );
+        }
+        if( dynamic_cast<const CIRConst*>( expr->left ) != 0 && dynamic_cast<const CIRConst*>( expr->right ) != 0 ) {
+            // const + const
+            int leftValue = dynamic_cast<const CIRConst*>( expr->left )->value;
+            int rightValue = dynamic_cast<const CIRConst*>( expr->right )->value;
+            CTemp* tmp = new CTemp();
+            CTempList* tmplist = new CTempList( tmp, 0 );
+            instruction.push_back( new CMoveAsm( "mov 'd0, " + std::to_string( leftValue ) + "\n", usedRegisters, 0 ) );
+            if( expr->operation == EBinOp::DIV ) {
+                instruction.push_back( new CMoveAsm( "mov 'd0, 0\n", new CTempList( frame->GetEdx(), 0 ), 0 ) );
+            }
+            instruction.push_back( new COperAsm( command + " " + std::to_string( rightValue ) + "\n", usedRegisters, 0 ) );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmplist, usedRegisters ) );
+            return tmp;
+        } else if( dynamic_cast<const CIRConst*>( expr->left ) != 0 ) {
+            // const + some
+            int leftValue = dynamic_cast<const CIRConst*>( expr->left )->value;
+            CTemp* tmp1 = new CTemp();
+            CTempList* tmpList1 = new CTempList( tmp1, 0 );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmpList1,
+                new CTempList( munchExp( expr->right ), 0 ) ) );
+            CTemp* tmp2 = new CTemp();
+            instruction.push_back( new CMoveAsm( "mov 'd0, " + std::to_string( leftValue ) + "\n", usedRegisters, 0 ) );
+            if( expr->operation == EBinOp::DIV ) {
+                instruction.push_back( new CMoveAsm( "mov 'd0, 0\n", new CTempList( frame->GetEdx(), 0 ), 0 ) );
+            }
+            instruction.push_back( new COperAsm( command + " 's0\n", usedRegisters, tmpList1 ) );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", new CTempList( tmp2, 0 ), usedRegisters ) );
+            return tmp2;
+        } else if( dynamic_cast<const CIRConst*>( expr->right ) != 0 ) {
+            // some + const
+            int rightValue = dynamic_cast<const CIRConst*>( expr->right )->value;
+            CTemp* tmp1 = new CTemp();
+            CTempList* tmpList1 = new CTempList( tmp1, 0 );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", usedRegisters, new CTempList( munchExp( expr->left ), 0 ) ) );
+            if( expr->operation == EBinOp::DIV ) {
+                instruction.push_back( new CMoveAsm( "mov 'd0, 0\n", new CTempList( frame->GetEdx(), 0 ), 0 ) );
+            }
+            instruction.push_back( new COperAsm( command + " " + std::to_string( rightValue ) + "\n", usedRegisters, 0 ) );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmpList1, usedRegisters ) );
+            return tmp1;
+        } else {
+            // some + some
+            CTemp* tmp1 = new CTemp();
+            CTempList* tmpList1 = new CTempList( tmp1, 0 );
+            CTemp* tmp2 = new CTemp();
+            CTempList* tmpList2 = new CTempList( tmp2, 0 );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmpList2, new CTempList( munchExp( expr->right ), 0 ) ) );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", usedRegisters, new CTempList( munchExp( expr->left ), 0 ) ) );
+            if( expr->operation == EBinOp::DIV ) {
+                instruction.push_back( new CMoveAsm( "mov 'd0, 0\n", new CTempList( frame->GetEdx(), 0 ), 0 ) );
+            }
+            instruction.push_back( new COperAsm( command + " 's0\n", usedRegisters, tmpList2 ) );
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmpList1, usedRegisters ) );
+            return tmp1;
+        }
     }
     const  CTemp* CAsmTreeMaker::munchExp( const CIRMem * expr ) const
     {
@@ -213,13 +291,9 @@ namespace CodeGeneration {
         assert( name != 0 );
         const CIRExpList* argList = dynamic_cast<const CIRExpList*>( expr->args );
         const CTempList* argsList = munchArgs( argList );
-        while( argsList != 0 ) {
-            if( argsList->GetHead() != nullptr ) {
-                instruction.push_back( new COperAsm( "push 's0\n", 0, new CTempList( argsList->GetHead(), 0 ) ) );
-                argsList = argsList->GetTail();
-            } else {
-                break;
-            }
+        while( argsList != 0 && argsList->GetHead() != nullptr ) {
+            instruction.push_back( new COperAsm( "push 's0\n", 0, new CTempList( argsList->GetHead(), 0 ) ) );
+            argsList = argsList->GetTail();
         }
         instruction.push_back( new COperAsm( "call 'l0\n", 0, 0, new CLabelList( name->label, 0 ) ) );
         return new CTemp();
@@ -249,7 +323,20 @@ namespace CodeGeneration {
 
     const CTempList * CAsmTreeMaker::munchArgs( const CIRExpList * exprList ) const
     {
-        return nullptr;
+        if( exprList == 0 ) {
+            return 0;
+        }
+        
+        CTempList* argsTempList = 0;
+        while( exprList != 0 ) {
+            CTemp* tmp = new CTemp();
+            instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", new CTempList( tmp, 0 ),
+                new CTempList( munchExp( exprList->head ), 0 ) ) );
+
+            exprList = dynamic_cast<const CIRExpList*>( exprList->tail );
+            argsTempList = new CTempList( tmp, argsTempList );
+        }
+        return argsTempList;
     }
 
 
