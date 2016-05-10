@@ -40,7 +40,46 @@ namespace CodeGeneration {
 
     void CAsmTreeMaker::munchStm( const CIRCjump * vertex ) const
     {
-
+        const CTemp* regLeft = munchExp( vertex->left );
+        const CTemp* regRight = munchExp( vertex->right );
+        CTempList* tmpList = new CTempList( regLeft, new CTempList( regRight, nullptr ) );
+        instruction.push_back( new COperAsm( "cmp 's0, 's1\n", nullptr, tmpList ) );
+        CLabelList* trueList = new CLabelList( vertex->ifTrue, 0 );
+        switch( vertex->relop ) {
+            case EBinOp::EQ:
+                instruction.push_back( new COperAsm( "je 'l0\n", 0, 0, trueList ) );
+                break;
+            case EBinOp::GT:
+                instruction.push_back( new COperAsm( "jg 'l0\n", 0, 0, trueList ) );
+                break;
+            case EBinOp::LESS:
+                instruction.push_back( new COperAsm( "jle 'l0\n", 0, 0, trueList ) );
+                break;
+            case EBinOp::NE:
+                instruction.push_back( new COperAsm( "jne 'l0\n", 0, 0, trueList ) );
+                break;
+            // ничего другого у нас вроде нет...
+            //case GE:
+            //    instruction.push_back( new COperAsm( "jge 'l0\n", 0, 0, trueList ) );
+            //    break;
+            //case LT:
+            //    instruction.push_back( new COperAsm( "jl 'l0\n", 0, 0, trueList ) );
+            //    break;
+            //case UGE:
+            //    instruction.push_back( new COperAsm( "jl 'l0\n", 0, 0, trueList ) );
+            //    break;
+            //case UGT:
+            //    instruction.push_back( new COperAsm( "jle 'l0\n", 0, 0, trueList ) );
+            //    break;
+            //case ULE:
+            //    instruction.push_back( new COperAsm( "jg 'l0\n", 0, 0, trueList ) );
+            //    break;
+            //case ULT:
+            //    instruction.push_back( new COperAsm( "jge 'l0\n", 0, 0, trueList ) );
+            //    break;
+            default:
+                assert( false );
+        }
     }
 
     void CAsmTreeMaker::munchStm( const CIRJump * vertex ) const
