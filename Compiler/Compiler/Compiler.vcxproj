@@ -101,6 +101,7 @@
     <ClCompile Include="IRTranslator.cpp" />
     <ClCompile Include="IRTreePrettyPrinter.cpp" />
     <ClCompile Include="LengthExp.cpp" />
+    <ClCompile Include="LifetimeAnalysis.cpp" />
     <ClCompile Include="MainClass.cpp" />
     <ClCompile Include="MethodCall.cpp" />
     <ClCompile Include="MethodDecl.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="IRTreePrettyPrinter.h" />
     <ClInclude Include="IVisitor.h" />
     <ClInclude Include="LengthExp.h" />
+    <ClInclude Include="LifetimeAnalysis.h" />
     <ClInclude Include="MainClass.h" />
     <ClInclude Include="MethodCall.h" />
     <ClInclude Include="MethodDecl.h" />

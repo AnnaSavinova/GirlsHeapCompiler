@@ -10,6 +10,7 @@
 #include "IRCanonizator.h"
 #include "IRTreePrettyPrinter.h"
 #include "IRBlockDecompositor.h"
+#include "AsmTreeMaker.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -280,6 +281,22 @@ int main()
 		CIRTreePrettyVisitor IRTreePrettyPrinter( std::string( "graph\\IRTree_" ) + frame->GetName() + std::string( ".dot" ) );
 		frame->GetRoot()->Accept( &IRTreePrettyPrinter );
 		IRTreePrettyPrinter.Flush();
+	}
+
+	frames = IRTranslator.GetFramesList();
+	while( !frames.empty() ) {
+		CCanon canonizer;
+		CTracer tracer;
+		CFrame* frame = frames.top();
+		frame->SetRootStatement( tracer.Transform ( canonizer.Linearize( frame->GetRoot() ) ) );
+		CodeGeneration::CAsmTreeMaker asmTreeMaker( frame );
+		asmTreeMaker.InitializeTree( frame->GetRoot() );
+		auto instructions = asmTreeMaker.GetAsmInstruction();
+		for ( auto instr = instructions.begin(); instr != instructions.end(); instr++  )
+        {
+            std::cout << (*instr)->AsmCode << "\n";
+        }
+		frames.pop();
 	}
 
 	system("pause");

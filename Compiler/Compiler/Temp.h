@@ -50,8 +50,8 @@ private:
 class CLabelList {
 public:
     CLabelList( const CLabel * _head, const CLabelList * _tail );
-    const CLabel* GetHead();
-    const CLabelList* GetTail();
+    const CLabel* GetHead() const;
+    const CLabelList* GetTail() const;
 private:
     const CLabel * head;
     const CLabelList * tail;

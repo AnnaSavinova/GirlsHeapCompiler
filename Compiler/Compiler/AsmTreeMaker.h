@@ -13,7 +13,7 @@ namespace CodeGeneration
         CAsmTreeMaker( CFrame* _frame ) :
             frame( _frame ), isInitialized( false ) {};
 
-        void InitializeTree( const CIRSeq* cmdList ) const;
+        void InitializeTree( const IIRStm* cmdList ) const;
         bool IsInitialized() { return isInitialized; };
 
         std::list<IInstruction*> GetAsmInstruction() { return instruction; };

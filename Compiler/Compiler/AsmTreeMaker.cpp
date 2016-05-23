@@ -1,9 +1,9 @@
 #include "AsmTreeMaker.h"
 
 namespace CodeGeneration {
-    void CAsmTreeMaker::InitializeTree( const CIRSeq * cmdList ) const
+    void CAsmTreeMaker::InitializeTree( const IIRStm * cmdList ) const
     {
-        const CIRSeq* next = cmdList;
+        const CIRSeq* next = dynamic_cast< const CIRSeq* >( cmdList );
         while( next != 0 ) {
             munchStm( next->left );
             next = dynamic_cast< const CIRSeq* >( next->right );
@@ -45,6 +45,7 @@ namespace CodeGeneration {
         CTempList* tmpList = new CTempList( regLeft, new CTempList( regRight, nullptr ) );
         instruction.push_back( new COperAsm( "cmp 's0, 's1\n", nullptr, tmpList ) );
         CLabelList* trueList = new CLabelList( vertex->ifTrue, 0 );
+
         switch( vertex->relop ) {
             case EBinOp::EQ:
                 instruction.push_back( new COperAsm( "je 'l0\n", 0, 0, trueList ) );

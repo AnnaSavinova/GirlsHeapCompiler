@@ -172,6 +172,9 @@
     <ClCompile Include="AsmTreeMaker.cpp">
       <Filter>CodeGeneration</Filter>
     </ClCompile>
+    <ClCompile Include="LifetimeAnalysis.cpp">
+      <Filter>CodeGeneration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
@@ -370,6 +373,9 @@
       <Filter>CodeGeneration</Filter>
     </ClInclude>
     <ClInclude Include="AsmTreeMaker.h">
+      <Filter>CodeGeneration</Filter>
+    </ClInclude>
+    <ClInclude Include="LifetimeAnalysis.h">
       <Filter>CodeGeneration</Filter>
     </ClInclude>
   </ItemGroup>

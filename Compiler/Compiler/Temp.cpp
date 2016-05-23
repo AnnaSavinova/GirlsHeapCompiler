@@ -3,12 +3,12 @@
 CLabelList::CLabelList( const CLabel * _head, const CLabelList * _tail ): head(_head), tail(_tail)
 {}
 
-const CLabel * CLabelList::GetHead()
+const CLabel * CLabelList::GetHead() const
 {
     return head;
 }
 
-const CLabelList * CLabelList::GetTail()
+const CLabelList * CLabelList::GetTail() const
 {
     return tail;
 }

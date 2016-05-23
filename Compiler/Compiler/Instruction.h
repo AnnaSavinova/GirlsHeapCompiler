@@ -8,7 +8,7 @@ namespace CodeGeneration
     public:
         std::string AsmCode;
         virtual const CTempList* UsedVars() const = 0;
-        virtual const CTempList* DefindedVars() const = 0;
+        virtual const CTempList* DefinedVars() const = 0;
         virtual const CLabelList* JumpTargets() const = 0;
         virtual std::string Format( const std::map<std::string, std::string> varsMapping ) const = 0;
         IInstruction() {}
@@ -17,7 +17,7 @@ namespace CodeGeneration
 
     class COperAsm : public IInstruction {
     public:
-        COperAsm( std::string _assem, CTempList* _dst, CTempList* _src,
+        COperAsm( std::string _assem, const CTempList* _dst, const CTempList* _src,
             CLabelList* _jump ) : dst( _dst ), src( _src ), jump( _jump )
         {
             AsmCode = _assem;
@@ -29,12 +29,16 @@ namespace CodeGeneration
             AsmCode = _assem;
         }
 
+        std::string GetOperator() const { 
+            return AsmCode.substr( 0, AsmCode.find( ' ' ) ); 
+        }
+
         const CTempList* UsedVars() const
         {
             return src;
         }
 
-        const CTempList* DefindedVars() const
+        const CTempList* DefinedVars() const
         {
             return dst;
         }
@@ -48,7 +52,7 @@ namespace CodeGeneration
         {
             std::string res = AsmCode;
             std::string comment = AsmCode;
-            CTempList* curr = dst;
+            CTempList* curr = const_cast<CTempList*>( dst );
             int index = 0;
             while( curr != 0 ) {
                 std::string toReplace = "'d" + std::to_string( index );
@@ -59,7 +63,7 @@ namespace CodeGeneration
                 curr = const_cast< CTempList* >( curr->GetTail() );
                 ++index;
             }
-            curr = src;
+            curr = const_cast<CTempList*>(src);
             index = 0;
             while( curr != 0 ) {
                 std::string toReplace = "'s" + std::to_string( index );
@@ -86,8 +90,8 @@ namespace CodeGeneration
             return res;
         }
     private:
-        CTempList* dst;
-        CTempList* src;
+        const CTempList* dst;
+        const CTempList* src;
         CLabelList* jump;
     };
 
@@ -96,7 +100,7 @@ namespace CodeGeneration
         CMoveAsm( std::string _assem, const CTemp* _dst, const CTemp* _src ) :
             COperAsm( _assem, new CTempList( _dst, nullptr ), new CTempList( _src, nullptr ), nullptr )
         {};
-        CMoveAsm( std::string _assem, CTempList* _dst, CTempList* _src ) :
+        CMoveAsm( std::string _assem, const CTempList* _dst, const CTempList* _src ) :
             COperAsm( _assem, _dst, _src, nullptr )
         {};
     };
@@ -113,7 +117,7 @@ namespace CodeGeneration
             throw std::logic_error( "LabelAsm shouldn't have usedVars" );
         }
 
-        CTempList* DefindedVars() const
+        CTempList* DefinedVars() const
         {
             throw std::logic_error( "LabelAsm shouldn't have definedVars" );
         }
