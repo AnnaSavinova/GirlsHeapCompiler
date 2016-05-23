@@ -2333,12 +2333,16 @@ int main()
 		CTracer tracer;
 		CFrame* frame = frames.top();
 
+		std::cout << frame->GetName() << std::endl;
 		out.open( std::string( "asm\\Asm_" ) + frame->GetName() + std::string( ".asm" ), std::ofstream::out );
 
 		frame->SetRootStatement( tracer.Transform ( canonizer.Linearize( frame->GetRoot() ) ) );
 		CodeGeneration::CAsmTreeMaker asmTreeMaker( frame );
 		asmTreeMaker.InitializeTree( frame->GetRoot() );
-
+		auto instructions = asmTreeMaker.GetAsmInstruction();
+		for( auto instruction : instructions ) {
+			std::cout << instruction->AsmCode;
+		}
 		CodeGeneration::CInterferenceGraph graph( asmTreeMaker.GetAsmInstruction(), frame->GetRegisters() );
 
 		auto code = graph.GetCode();
@@ -2347,6 +2351,8 @@ int main()
 		for( auto cmd : code ) {
 			out << cmd->Format( colors );
 		}
+
+		
 
 		frames.pop();
 		

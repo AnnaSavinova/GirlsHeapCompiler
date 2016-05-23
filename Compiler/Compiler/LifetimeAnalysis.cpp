@@ -108,7 +108,7 @@ namespace CodeGeneration
 
         std::vector<int> CTopSort::res = std::vector<int>();
         std::vector<char> CTopSort::marked = std::vector<char>();
-    } // anonymous namespace
+    } //  namespace
 
 
     CLiveInOutCalculator::CLiveInOutCalculator( const std::list<IInstruction*>& asmFunction ) :

@@ -1,6 +1,7 @@
 #include "AsmTreeMaker.h"
 
-namespace CodeGeneration {
+namespace CodeGeneration
+{
     void CAsmTreeMaker::InitializeTree( const IIRStm * cmdList ) const
     {
         const CIRSeq* next = dynamic_cast< const CIRSeq* >( cmdList );
@@ -11,28 +12,28 @@ namespace CodeGeneration {
     }
     void CAsmTreeMaker::munchStm( const IIRStm* vertex ) const
     {
-        if( dynamic_cast< const CIRSeq* >(vertex) != 0 ) {
-            munchStm( dynamic_cast< const CIRSeq* >(vertex) );
+        if( dynamic_cast< const CIRSeq* >( vertex ) != 0 ) {
+            munchStm( dynamic_cast< const CIRSeq* >( vertex ) );
             return;
         }
-        if( dynamic_cast< const CIRMove* >(vertex) != 0 ) {
-            munchStm( dynamic_cast< const CIRMove* >(vertex) );
+        if( dynamic_cast< const CIRMove* >( vertex ) != 0 ) {
+            munchStm( dynamic_cast< const CIRMove* >( vertex ) );
             return;
         }
-        if( dynamic_cast< const CIRLabel* >(vertex) != 0 ) {
-            munchStm( dynamic_cast< const CIRLabel* >(vertex) );
+        if( dynamic_cast< const CIRLabel* >( vertex ) != 0 ) {
+            munchStm( dynamic_cast< const CIRLabel* >( vertex ) );
             return;
         }
-        if( dynamic_cast< const CIRCjump* >(vertex) != 0 ) {
-            munchStm( dynamic_cast< const CIRCjump* >(vertex) );
+        if( dynamic_cast< const CIRCjump* >( vertex ) != 0 ) {
+            munchStm( dynamic_cast< const CIRCjump* >( vertex ) );
             return;
         }
-        if( dynamic_cast< const CIRExp* >(vertex) != 0 ) {
-            munchStm( dynamic_cast< const CIRExp* >(vertex) );
+        if( dynamic_cast< const CIRExp* >( vertex ) != 0 ) {
+            munchStm( dynamic_cast< const CIRExp* >( vertex ) );
             return;
         }
-        if( dynamic_cast< const CIRJump* >(vertex) != 0 ) {
-            munchStm( dynamic_cast< const CIRJump* >(vertex) );
+        if( dynamic_cast< const CIRJump* >( vertex ) != 0 ) {
+            munchStm( dynamic_cast< const CIRJump* >( vertex ) );
             return;
         }
         assert( false );
@@ -59,25 +60,25 @@ namespace CodeGeneration {
             case EBinOp::NE:
                 instruction.push_back( new COperAsm( "jne 'l0\n", 0, 0, trueList ) );
                 break;
-            // ничего другого у нас вроде нет...
-            //case GE:
-            //    instruction.push_back( new COperAsm( "jge 'l0\n", 0, 0, trueList ) );
-            //    break;
-            //case LT:
-            //    instruction.push_back( new COperAsm( "jl 'l0\n", 0, 0, trueList ) );
-            //    break;
-            //case UGE:
-            //    instruction.push_back( new COperAsm( "jl 'l0\n", 0, 0, trueList ) );
-            //    break;
-            //case UGT:
-            //    instruction.push_back( new COperAsm( "jle 'l0\n", 0, 0, trueList ) );
-            //    break;
-            //case ULE:
-            //    instruction.push_back( new COperAsm( "jg 'l0\n", 0, 0, trueList ) );
-            //    break;
-            //case ULT:
-            //    instruction.push_back( new COperAsm( "jge 'l0\n", 0, 0, trueList ) );
-            //    break;
+                // ничего другого у нас вроде нет...
+                //case GE:
+                //    instruction.push_back( new COperAsm( "jge 'l0\n", 0, 0, trueList ) );
+                //    break;
+                //case LT:
+                //    instruction.push_back( new COperAsm( "jl 'l0\n", 0, 0, trueList ) );
+                //    break;
+                //case UGE:
+                //    instruction.push_back( new COperAsm( "jl 'l0\n", 0, 0, trueList ) );
+                //    break;
+                //case UGT:
+                //    instruction.push_back( new COperAsm( "jle 'l0\n", 0, 0, trueList ) );
+                //    break;
+                //case ULE:
+                //    instruction.push_back( new COperAsm( "jg 'l0\n", 0, 0, trueList ) );
+                //    break;
+                //case ULT:
+                //    instruction.push_back( new COperAsm( "jge 'l0\n", 0, 0, trueList ) );
+                //    break;
             default:
                 assert( false );
         }
@@ -122,7 +123,7 @@ namespace CodeGeneration {
                         std::string cmd = "mov ['d0+";
                         cmd += std::to_string( constant->value );
                         cmd += "],'s0\n";
-                        IInstruction* asmInst = new CMoveAsm( cmd, munchExp( binOp->right ), munchExp( vertex->Src() ));
+                        IInstruction* asmInst = new CMoveAsm( cmd, munchExp( binOp->right ), munchExp( vertex->Src() ) );
                         instruction.push_back( asmInst );
                         return;
 
@@ -220,10 +221,10 @@ namespace CodeGeneration {
             default:
                 assert( false );
         }
-        if( dynamic_cast<const CIRConst*>( expr->left ) != 0 && dynamic_cast<const CIRConst*>( expr->right ) != 0 ) {
+        if( dynamic_cast< const CIRConst* >( expr->left ) != 0 && dynamic_cast< const CIRConst* >( expr->right ) != 0 ) {
             // const + const
-            int leftValue = dynamic_cast<const CIRConst*>( expr->left )->value;
-            int rightValue = dynamic_cast<const CIRConst*>( expr->right )->value;
+            int leftValue = dynamic_cast< const CIRConst* >( expr->left )->value;
+            int rightValue = dynamic_cast< const CIRConst* >( expr->right )->value;
             CTemp* tmp = new CTemp();
             CTempList* tmplist = new CTempList( tmp, 0 );
             instruction.push_back( new CMoveAsm( "mov 'd0, " + std::to_string( leftValue ) + "\n", usedRegisters, 0 ) );
@@ -233,9 +234,9 @@ namespace CodeGeneration {
             instruction.push_back( new COperAsm( command + " " + std::to_string( rightValue ) + "\n", usedRegisters, 0 ) );
             instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmplist, usedRegisters ) );
             return tmp;
-        } else if( dynamic_cast<const CIRConst*>( expr->left ) != 0 ) {
+        } else if( dynamic_cast< const CIRConst* >( expr->left ) != 0 ) {
             // const + some
-            int leftValue = dynamic_cast<const CIRConst*>( expr->left )->value;
+            int leftValue = dynamic_cast< const CIRConst* >( expr->left )->value;
             CTemp* tmp1 = new CTemp();
             CTempList* tmpList1 = new CTempList( tmp1, 0 );
             instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", tmpList1,
@@ -248,9 +249,9 @@ namespace CodeGeneration {
             instruction.push_back( new COperAsm( command + " 's0\n", usedRegisters, tmpList1 ) );
             instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", new CTempList( tmp2, 0 ), usedRegisters ) );
             return tmp2;
-        } else if( dynamic_cast<const CIRConst*>( expr->right ) != 0 ) {
+        } else if( dynamic_cast< const CIRConst* >( expr->right ) != 0 ) {
             // some + const
-            int rightValue = dynamic_cast<const CIRConst*>( expr->right )->value;
+            int rightValue = dynamic_cast< const CIRConst* >( expr->right )->value;
             CTemp* tmp1 = new CTemp();
             CTempList* tmpList1 = new CTempList( tmp1, 0 );
             instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", usedRegisters, new CTempList( munchExp( expr->left ), 0 ) ) );
@@ -279,18 +280,18 @@ namespace CodeGeneration {
     const  CTemp* CAsmTreeMaker::munchExp( const CIRMem * expr ) const
     {
         const CTemp* tmp = munchExp( expr->exp );
-	    CTemp* fpTmp = new CTemp();
-	    CTemp* resTmp = new CTemp();
-	    instruction.push_back( new CMoveAsm( "mov 'd0, ['s1]\n", new CTempList( resTmp, 0 ),
-		new CTempList( fpTmp, new CTempList( tmp, 0 ) ) ) );
+        CTemp* fpTmp = new CTemp();
+        CTemp* resTmp = new CTemp();
+        instruction.push_back( new CMoveAsm( "mov 'd0, ['s1]\n", new CTempList( resTmp, 0 ),
+            new CTempList( fpTmp, new CTempList( tmp, 0 ) ) ) );
 
-	    return resTmp;
+        return resTmp;
     }
     const CTemp * CAsmTreeMaker::munchExp( const CIRCall * expr ) const
     {
-        const CIRName* name = dynamic_cast<const CIRName*>( expr->func );
+        const CIRName* name = dynamic_cast< const CIRName* >( expr->func );
         assert( name != 0 );
-        const CIRExpList* argList = dynamic_cast<const CIRExpList*>( expr->args );
+        const CIRExpList* argList = dynamic_cast< const CIRExpList* >( expr->args );
         const CTempList* argsList = munchArgs( argList );
         while( argsList != 0 && argsList->GetHead() != nullptr ) {
             instruction.push_back( new COperAsm( "push 's0\n", 0, new CTempList( argsList->GetHead(), 0 ) ) );
@@ -327,14 +328,14 @@ namespace CodeGeneration {
         if( exprList == 0 ) {
             return 0;
         }
-        
+
         CTempList* argsTempList = 0;
         while( exprList != 0 ) {
             CTemp* tmp = new CTemp();
             instruction.push_back( new CMoveAsm( "mov 'd0, 's0\n", new CTempList( tmp, 0 ),
                 new CTempList( munchExp( exprList->head ), 0 ) ) );
 
-            exprList = dynamic_cast<const CIRExpList*>( exprList->tail );
+            exprList = dynamic_cast< const CIRExpList* >( exprList->tail );
             argsTempList = new CTempList( tmp, argsTempList );
         }
         return argsTempList;

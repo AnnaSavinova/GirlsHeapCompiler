@@ -15,7 +15,11 @@ namespace CodeGeneration
             int cmdIndex = 0;
             if( !uncoloredNodes.empty() ) {
                 std::cout << "REGENERATING!!!" << std::endl;
+                
                 regenerateCode();
+                for( auto cmd : asmFunction ) {
+                    std::cout << cmd->AsmCode;
+                }
                 uncoloredNodes.clear();
                 edges.clear();
                 nodes.clear();
@@ -48,7 +52,7 @@ namespace CodeGeneration
                         addEdge( a, b );
                     }
 
-                    /*const CMoveAsm* moveInst = dynamic_cast< const CMoveAsm* >( cmd );
+                    const CMoveAsm* moveInst = dynamic_cast< const CMoveAsm* >( cmd );
 
                     if( moveInst != nullptr && moveInst->UsedVars() != nullptr ) {
                         std::string b = ( moveInst->UsedVars()->GetHead() != nullptr ?
@@ -56,7 +60,7 @@ namespace CodeGeneration
                         addNode( a );
                         addNode( b );
                         addMoveEdge( a, b );
-                    }*/
+                    }
                 }
                 for( auto a : liveInOut.GetDefines( cmdIndex ) ) {
                     addNode( a );
