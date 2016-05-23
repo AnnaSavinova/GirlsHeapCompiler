@@ -1,373 +1,376 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="AssignmentStatement.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="BinExp.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="ClassDecl.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="ClassDeclList.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="Constructor.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="ElementAssignment.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="ExpList.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="FormalList.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="Id.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="IfStatement.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="LengthExp.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="MainClass.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodCall.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodDecl.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="MethodDeclList.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="NewInt.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="Number.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="PrintStatement.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="Program.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="StatementBlock.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="StatementList.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="Type.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="UnExp.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="VarDecl.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="VarDeclList.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="WhileStatement.cpp">
-      <Filter>Исходный код\Nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="PrettyPrinter.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbolsTable.cpp">
-      <Filter>Исходный код\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="tokens.flex.cpp">
-      <Filter>Исходный код\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="SymbTableBuilder.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="tokens.tab.cpp">
-      <Filter>Исходный код\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeChecker.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="Frame.cpp">
-      <Filter>Исходный код\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="IIRExp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRMove.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRExp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRCjump.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRJump.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRLabel.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRSeq.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRExpConverter.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRStmConverter.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTranslator.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="IRBinOp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRCall.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRConst.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRESeq.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRMem.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRName.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTemp.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRTreePrettyPrinter.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="IRConditionalWrapper.cpp">
-      <Filter>Исходный код\IRT</Filter>
-    </ClCompile>
-    <ClCompile Include="IRCanonizator.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="Digraph.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="IRBlockDecompositor.cpp">
-      <Filter>Исходный код\Visitors</Filter>
-    </ClCompile>
-    <ClCompile Include="Temp.cpp">
-      <Filter>Исходный код\Common</Filter>
-    </ClCompile>
     <ClCompile Include="AsmTreeMaker.cpp">
       <Filter>CodeGeneration</Filter>
     </ClCompile>
     <ClCompile Include="LifetimeAnalysis.cpp">
       <Filter>CodeGeneration</Filter>
     </ClCompile>
+    <ClCompile Include="RegisterDistribution.cpp">
+      <Filter>CodeGeneration</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolsTable.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="tokens.flex.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="tokens.tab.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="IIRExp.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRBinOp.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRCall.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRCjump.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRConditionalWrapper.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRConst.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRESeq.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRExp.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRExpConverter.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRJump.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRLabel.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRMem.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRMove.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRName.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRSeq.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRStmConverter.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTemp.cpp">
+      <Filter>IRT</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignmentStatement.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="BinExp.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassDecl.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassDeclList.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementAssignment.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpList.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="FormalList.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Id.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="IfStatement.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="LengthExp.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainClass.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodCall.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodDecl.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodDeclList.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="NewInt.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Number.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="PrintStatement.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="StatementBlock.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="StatementList.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Type.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnExp.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="VarDecl.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="VarDeclList.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="WhileStatement.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Digraph.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="IRBlockDecompositor.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="IRCanonizator.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTranslator.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="IRTreePrettyPrinter.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="PrettyPrinter.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbTableBuilder.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeChecker.cpp">
+      <Filter>Visitors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssignmentStatement.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="BinExp.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="ClassDecl.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="ClassDeclList.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Constructor.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="ElementAssignment.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="ExpList.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="FormalList.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Id.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="IfStatement.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="LengthExp.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="MainClass.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="MethodCall.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="MethodDecl.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="MethodDeclList.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="NewInt.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Number.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="PrintStatement.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Program.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="StatementBlock.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="StatementList.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="UnExp.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="VarDecl.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="VarDeclList.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="WhileStatement.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="PrettyPrinter.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="SymbTableBuilder.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="classes.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Grammar.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Symbol.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="SymbolsTable.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="tokens.tab.hpp">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="TypeChecker.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="IVisitor.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="ThisMethodCall.h">
-      <Filter>Заголовочные файлы\Nodes</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
     <ClInclude Include="Frame.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="IIRExp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IIRStm.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRMove.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRExp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRCjump.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRJump.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRLabel.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRSeq.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IIRSubtreeWrapper.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRExpConverter.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IREnums.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRStmConverter.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRTranslator.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="IRBinOp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRCall.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRConst.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRESeq.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRMem.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRName.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRTemp.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRClasses.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="IRTreePrettyPrinter.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="Temp.h">
-      <Filter>Заголовочные файлы\Common</Filter>
+      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="IRConditionalWrapper.h">
-      <Filter>Заголовочные файлы\IRT</Filter>
+      <Filter>IRT</Filter>
     </ClInclude>
     <ClInclude Include="IRCanonizator.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="Digraph.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="IRBlockDecompositor.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Visitors</Filter>
     </ClInclude>
     <ClInclude Include="Instruction.h">
       <Filter>CodeGeneration</Filter>
@@ -378,6 +381,9 @@
     <ClInclude Include="LifetimeAnalysis.h">
       <Filter>CodeGeneration</Filter>
     </ClInclude>
+    <ClInclude Include="RegisterDistribution.h">
+      <Filter>CodeGeneration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Заголовочные файлы">
@@ -386,42 +392,30 @@
     <Filter Include="Исходный код">
       <UniqueIdentifier>{ad54d104-1740-4005-ac7b-660adcfcfd61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Nodes">
-      <UniqueIdentifier>{5d25ff74-3de8-4f3b-aff1-a19efea8bab5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Заголовочные файлы\Visitors">
-      <UniqueIdentifier>{f9b17409-4221-4026-bc95-739e48bc5c4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Заголовочные файлы\Common">
-      <UniqueIdentifier>{f1a488d8-1ec1-407f-b252-afadcb340b21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходный код\Nodes">
-      <UniqueIdentifier>{c18da726-a255-486e-95d0-fe0999ac0570}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходный код\Visitors">
-      <UniqueIdentifier>{a7335352-8d6e-4132-8876-3f1eb6f1efcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходный код\Common">
-      <UniqueIdentifier>{51d003aa-c697-4406-84b6-e6657cc5aefd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Заголовочные файлы\IRT">
-      <UniqueIdentifier>{028db168-29bf-436b-816a-1e84dd483815}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходный код\IRT">
-      <UniqueIdentifier>{08f7f830-113e-4ac1-9389-e0fa6cc015a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CodeGeneration">
       <UniqueIdentifier>{7287f157-b5ea-4c05-9e3b-9ac4f81b4187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{f1a488d8-1ec1-407f-b252-afadcb340b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IRT">
+      <UniqueIdentifier>{028db168-29bf-436b-816a-1e84dd483815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nodes">
+      <UniqueIdentifier>{5d25ff74-3de8-4f3b-aff1-a19efea8bab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Visitors">
+      <UniqueIdentifier>{f9b17409-4221-4026-bc95-739e48bc5c4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Flex Include="tokens.l">
-      <Filter>Исходный код\Common</Filter>
+      <Filter>Common</Filter>
     </Flex>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="tokens.y">
-      <Filter>Исходный код\Common</Filter>
+      <Filter>Common</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

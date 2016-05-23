@@ -113,6 +113,7 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="IfStatement.cpp" />
     <ClCompile Include="PrintStatement.cpp" />
+    <ClCompile Include="RegisterDistribution.cpp" />
     <ClCompile Include="StatementBlock.cpp" />
     <ClCompile Include="StatementList.cpp" />
     <ClCompile Include="SymbolsTable.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="Grammar.h" />
     <ClInclude Include="PrintStatement.h" />
+    <ClInclude Include="RegisterDistribution.h" />
     <ClInclude Include="StatementBlock.h" />
     <ClInclude Include="StatementList.h" />
     <ClInclude Include="Symbol.h" />
