@@ -75,6 +75,8 @@ public:
 
     std::string GetName() { return name->String(); }
     const IIRStm* GetRoot() { return root; }
+    std::vector< std::string >& GetRegisters() { return registers; }
+
 private:
     std::map< std::string, const IAccess * > fields;
     const CTemp* framePointer;
@@ -87,4 +89,6 @@ private:
     static int wordSize;
     const CSymbol* name;
     const IIRStm* root;
+
+    std::vector< std::string > registers;
 };

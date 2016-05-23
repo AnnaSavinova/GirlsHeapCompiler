@@ -85,7 +85,7 @@ namespace CodeGeneration {
 
     void CAsmTreeMaker::munchStm( const CIRJump * vertex ) const
     {
-        IInstruction* asmInstr = new COperAsm( "jmp 'j0\n", nullptr, nullptr, new CLabelList( vertex->label, nullptr ) );
+        IInstruction* asmInstr = new COperAsm( "jmp 'l0\n", nullptr, nullptr, new CLabelList( vertex->label, nullptr ) );
         instruction.push_back( asmInstr );
     }
 

@@ -42,14 +42,14 @@ namespace CodeGeneration {
     public:
         // Конструктор
         // принимает на вход map где ключ - имя функции а значение - список ассемблерных команд
-        explicit CWorkFlowGraph( const std::list<const IInstruction*>& asmFunction );
+        explicit CWorkFlowGraph( const std::list<IInstruction*>& asmFunction );
 
     private:
         // соответствие между метками и вершинами графа
         std::map<std::string, int> labels;
 
-        void buildLabelMap( const std::list<const IInstruction*>& asmFunction );
-        void addEdges( const std::list<const IInstruction*>& asmFunction );
+        void buildLabelMap( const std::list< IInstruction*>& asmFunction );
+        void addEdges( const std::list< IInstruction*>& asmFunction );
     };
 
 
@@ -59,7 +59,7 @@ namespace CodeGeneration {
     public:
         // Конструктор
         // принимает на вход map где ключ - имя функции а значение - список ассемблерных команд
-        explicit CLiveInOutCalculator( const std::list<const IInstruction*>& asmFunction );
+        explicit CLiveInOutCalculator( const std::list<IInstruction*>& asmFunction );
 
         // получить список live-in переменных для некоторой вершины/инструкции
         const std::set<std::string>& GetLiveIn( int nodeIndex ) const;
@@ -85,11 +85,11 @@ namespace CodeGeneration {
         std::vector<std::set<std::string>> uses;
 
         // вектор с ассемблерными командами
-        std::vector<const IInstruction*> commands;
+        std::vector<IInstruction*> commands;
 
         bool theSame( const std::set<std::string>& x, const std::set<std::string>& y ) const;
-        void buildCommands( const std::list<const IInstruction*>& asmFunction );
-        void buildDefines( const std::list<const IInstruction*>& asmFunction );
-        void buildUses( const std::list<const IInstruction*>& asmFunction );
+        void buildCommands( const std::list<IInstruction*>& asmFunction );
+        void buildDefines( const std::list<IInstruction*>& asmFunction );
+        void buildUses( const std::list<IInstruction*>& asmFunction );
     };
 } // namespace CodeGeneration

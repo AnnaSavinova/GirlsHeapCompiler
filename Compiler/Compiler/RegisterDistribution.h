@@ -29,15 +29,15 @@ namespace CodeGeneration {
     class CInterferenceGraph
     {
     public:
-        explicit CInterferenceGraph( const std::list<const IInstruction*>& asmFunction, const std::vector<const std::string>& registers );
+        explicit CInterferenceGraph( const std::list<IInstruction*>& asmFunction, const std::vector<std::string>& registers );
 
-        const std::list<const IInstruction*>& GetCode() const;
+        const std::list<IInstruction*>& GetCode() const;
 
         std::map<std::string, std::string> GetColors();
 
     private:
         // код функции
-        std::list<const IInstruction*> asmFunction;
+        std::list<IInstruction*> asmFunction;
 
         // таблица инцидентности
         std::vector<std::vector<TEdgeType>> edges;
@@ -52,7 +52,7 @@ namespace CodeGeneration {
         CLiveInOutCalculator liveInOut;
 
         // список доступных регистров
-        std::vector<const std::string> registers;
+        std::vector<std::string> registers;
 
         // стек убранных вершин
         std::stack<int> pulledNodes;

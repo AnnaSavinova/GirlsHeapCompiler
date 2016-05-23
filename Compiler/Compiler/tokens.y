@@ -3,6 +3,7 @@
 /* Секция с кодом, который попадет в парсер.*/
 %{
 #include <iostream>
+#include <fstream>
 #include "PrettyPrinter.h"
 #include "SymbTableBuilder.h"
 #include "TypeChecker.h"
@@ -11,6 +12,7 @@
 #include "IRTreePrettyPrinter.h"
 #include "IRBlockDecompositor.h"
 #include "AsmTreeMaker.h"
+#include "RegisterDistribution.h"
 
 extern "C" int yylex();
 extern int yylineno;
@@ -283,21 +285,35 @@ int main()
 		IRTreePrettyPrinter.Flush();
 	}
 
+
 	frames = IRTranslator.GetFramesList();
 	while( !frames.empty() ) {
+		std::ofstream out;
+		
 		CCanon canonizer;
 		CTracer tracer;
 		CFrame* frame = frames.top();
+
+		out.open( std::string( "asm\\Asm_" ) + frame->GetName() + std::string( ".asm" ), std::ofstream::out );
+
 		frame->SetRootStatement( tracer.Transform ( canonizer.Linearize( frame->GetRoot() ) ) );
 		CodeGeneration::CAsmTreeMaker asmTreeMaker( frame );
 		asmTreeMaker.InitializeTree( frame->GetRoot() );
-		auto instructions = asmTreeMaker.GetAsmInstruction();
-		for ( auto instr = instructions.begin(); instr != instructions.end(); instr++  )
-        {
-            std::cout << (*instr)->AsmCode << "\n";
-        }
+
+		CodeGeneration::CInterferenceGraph graph( asmTreeMaker.GetAsmInstruction(), frame->GetRegisters() );
+
+		auto code = graph.GetCode();
+		auto colors = graph.GetColors();
+
+		for( auto cmd : code ) {
+			out << cmd->Format( colors );
+		}
+
 		frames.pop();
+		
+		out.close();
 	}
+
 
 	system("pause");
 	return 0;

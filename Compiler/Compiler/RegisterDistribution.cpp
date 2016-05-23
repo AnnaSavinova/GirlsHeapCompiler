@@ -3,10 +3,11 @@
 #include <assert.h>
 #include <iostream>
 
-namespace CodeGeneration {
+namespace CodeGeneration
+{
 
-    CInterferenceGraph::CInterferenceGraph( const std::list<const IInstruction*>& _asmFunction,
-        const std::vector<const std::string>& registers ) : asmFunction( _asmFunction ), liveInOut( asmFunction ),
+    CInterferenceGraph::CInterferenceGraph( const std::list<IInstruction*>& _asmFunction,
+        const std::vector<std::string>& registers ) : asmFunction( _asmFunction ), liveInOut( asmFunction ),
         registers( registers )
     {
         do {
@@ -25,7 +26,7 @@ namespace CodeGeneration {
                 liveInOut = CLiveInOutCalculator( asmFunction );
             }
             for( auto cmd : asmFunction ) {
-                if( dynamic_cast< const CMoveAsm* >(cmd) == nullptr ) {
+                if( dynamic_cast< CMoveAsm* >( cmd ) == nullptr ) {
                     // для каждой не move инструкции добавить ребра между всеми такими переменными a и b
                     // где a принадлежит определяемым в данной инструкции переменным
                     // b - из множества liveOut
@@ -40,18 +41,22 @@ namespace CodeGeneration {
                     // для каждой move инструкции добавить ребра между всеми такими переменными a и b
                     // где a - куда делается MOVE (c->a)
                     // b из множества liveOut
-                    std::string a = dynamic_cast< const CMoveAsm* >(cmd)->DefinedVars()->GetHead()->Name();
+                    std::string a = dynamic_cast< CMoveAsm* >( cmd )->DefinedVars()->GetHead()->Name();
                     for( auto b : liveInOut.GetLiveOut( cmdIndex ) ) {
                         addNode( a );
                         addNode( b );
                         addEdge( a, b );
                     }
-                    if( dynamic_cast< const CMoveAsm* >(cmd)->UsedVars() != nullptr ) {
-                        std::string b = dynamic_cast< const CMoveAsm* >(cmd)->UsedVars()->GetHead()->Name();
+
+                    /*const CMoveAsm* moveInst = dynamic_cast< const CMoveAsm* >( cmd );
+
+                    if( moveInst != nullptr && moveInst->UsedVars() != nullptr ) {
+                        std::string b = ( moveInst->UsedVars()->GetHead() != nullptr ?
+                            moveInst->UsedVars()->GetHead()->Name() : "UNDEFINED" );
                         addNode( a );
                         addNode( b );
                         addMoveEdge( a, b );
-                    }
+                    }*/
                 }
                 for( auto a : liveInOut.GetDefines( cmdIndex ) ) {
                     addNode( a );
@@ -236,14 +241,14 @@ namespace CodeGeneration {
     // перегенерировать код, чтобы появилась раскраска
     void CInterferenceGraph::regenerateCode()
     {
-        std::list<const IInstruction*> newCode;
+        std::list<IInstruction*> newCode;
         for( auto it : asmFunction ) {
             if( it->UsedVars() != nullptr  &&  it->UsedVars()->GetHead() != nullptr  &&
                 nodeMap.find( it->UsedVars()->GetHead()->Name() ) != nodeMap.end() ) {
                 int varIndex = nodeMap.find( it->UsedVars()->GetHead()->Name() )->second;
                 if( uncoloredNodes.find( varIndex ) != uncoloredNodes.end() ) {
                     bool isMove = false;
-                    if( dynamic_cast< const CodeGeneration::CMoveAsm* >(it) != nullptr ) {
+                    if( dynamic_cast< CodeGeneration::CMoveAsm* >( it ) != nullptr ) {
                         isMove = true;
                     }
                     CTemp* buff = new CTemp();
@@ -251,7 +256,7 @@ namespace CodeGeneration {
                     if( isMove ) {
                         newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", it->DefinedVars(), new CTempList( buff, nullptr ) ) );
                     } else {
-                        const COperAsm* cmd = dynamic_cast< const COperAsm* >(it);
+                        const COperAsm* cmd = dynamic_cast< COperAsm* >( it );
                         newCode.push_back( new COperAsm( cmd->GetOperator() + " 's0\n", it->DefinedVars(), new CTempList( buff, 0 ) ) );
                     }
                 } else {
@@ -268,7 +273,7 @@ namespace CodeGeneration {
                 nodeMap.find( it->DefinedVars()->GetHead()->Name() ) != nodeMap.end() ) {
                 int varIndex = nodeMap.find( it->DefinedVars()->GetHead()->Name() )->second;
                 if( uncoloredNodes.find( varIndex ) != uncoloredNodes.end() ) {
-                    const CodeGeneration::CMoveAsm* cmd = dynamic_cast< const CodeGeneration::CMoveAsm* >(it);
+                    const CodeGeneration::CMoveAsm* cmd = dynamic_cast< CodeGeneration::CMoveAsm* >( it );
                     assert( cmd != nullptr );
                     CTemp* buff = new CTemp();
                     newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", new CTempList( buff, 0 ), it->UsedVars() ) );
@@ -284,7 +289,7 @@ namespace CodeGeneration {
     }
 
 
-    const std::list<const IInstruction*>& CInterferenceGraph::GetCode() const
+    const std::list<IInstruction*>& CInterferenceGraph::GetCode() const
     {
         return asmFunction;
     }

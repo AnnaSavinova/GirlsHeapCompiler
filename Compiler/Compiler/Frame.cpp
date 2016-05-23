@@ -31,6 +31,15 @@ CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, con
         AddField( argument.second->Name(), new CInFrame( inFrameNum++ ) );
     }
 
+    registers.push_back( "EAX" );
+    registers.push_back( "EBX" );
+    registers.push_back( "ECX" );
+    registers.push_back( "EDX" );
+    registers.push_back( "ESI" );
+    registers.push_back( "EDI" );
+    // registers.emplace_back( "ESP" );
+    // registers.emplace_back( "EBP" );
+
 }
 
 CFrame::CFrame( const CSymbol * _name ) : name(_name)
@@ -39,6 +48,16 @@ CFrame::CFrame( const CSymbol * _name ) : name(_name)
     framePointer = new CTemp( new CSymbol( functionDecoratedName + "___framePointer" ) );
     thisPointer = new CTemp( new CSymbol( functionDecoratedName + "___thisPointer" ) );
     returnValue = new CTemp( new CSymbol( functionDecoratedName + "___returnValue" ) );
+
+
+    registers.push_back( "EAX" );
+    registers.push_back( "EBX" );
+    registers.push_back( "ECX" );
+    registers.push_back( "EDX" );
+    registers.push_back( "ESI" );
+    registers.push_back( "EDI" );
+    // registers.emplace_back( "ESP" );
+    // registers.emplace_back( "EBP" );
 }
 
 void CFrame::AddField( const CSymbol * name, const IAccess * access )

@@ -23,7 +23,7 @@ namespace CodeGeneration
             AsmCode = _assem;
         }
 
-        COperAsm( std::string _assem, CTempList* _dst, CTempList* _src ) :
+        COperAsm( std::string _assem, const CTempList* _dst, const CTempList* _src ) :
             dst( _dst ), src( _src ), jump( nullptr )
         {
             AsmCode = _assem;
@@ -114,12 +114,12 @@ namespace CodeGeneration
 
         CTempList* UsedVars() const
         {
-            throw std::logic_error( "LabelAsm shouldn't have usedVars" );
+            return nullptr;
         }
 
         CTempList* DefinedVars() const
         {
-            throw std::logic_error( "LabelAsm shouldn't have definedVars" );
+            return nullptr;
         }
 
         CLabelList* JumpTargets() const

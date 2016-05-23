@@ -1,7 +1,8 @@
 #include "LifetimeAnalysis.h"
 #include <iterator>
 
-namespace CodeGeneration {
+namespace CodeGeneration
+{
 
     CGraph::CGraph( int size ) : nodes( size ) {}
 
@@ -25,19 +26,19 @@ namespace CodeGeneration {
     }
 
 
-    CWorkFlowGraph::CWorkFlowGraph( const std::list<const IInstruction*>& asmFunction ) : CGraph( asmFunction.size() )
+    CWorkFlowGraph::CWorkFlowGraph( const std::list<IInstruction*>& asmFunction ) : CGraph( asmFunction.size() )
     {
         buildLabelMap( asmFunction );
         addEdges( asmFunction );
     }
 
     // составляет соответствие между метками и вершинами графа
-    void CWorkFlowGraph::buildLabelMap( const std::list<const IInstruction*>& asmFunction )
+    void CWorkFlowGraph::buildLabelMap( const std::list<IInstruction*>& asmFunction )
     {
         int nodeIndex = 0;
         for( auto cmd : asmFunction ) {
             // Проверка, ялвяется ли интрукция меткой
-            const CLabelAsm* label = dynamic_cast<const CLabelAsm*>(cmd);
+            const CLabelAsm* label = dynamic_cast< const CLabelAsm* >( cmd );
             if( label != nullptr ) {
                 // если инструкция является меткой то добавим ее в соответствие
                 assert( label->JumpTargets() != nullptr );
@@ -50,11 +51,11 @@ namespace CodeGeneration {
 
 
     // добавляет ребра в граф
-    void CWorkFlowGraph::addEdges( const std::list<const IInstruction*>& asmFunction )
+    void CWorkFlowGraph::addEdges( const std::list< IInstruction*>& asmFunction )
     {
         int nodeIndex = 0;
         for( auto cmd : asmFunction ) {
-            const COperAsm* oper = dynamic_cast<const COperAsm*>(cmd);
+            const COperAsm* oper = dynamic_cast< const COperAsm* >( cmd );
             if( oper != nullptr  &&  oper->JumpTargets() != nullptr  &&  oper->JumpTargets()->GetHead() != nullptr ) {
                 AddEdge( nodeIndex, labels[oper->JumpTargets()->GetHead()->Name()] );
             }
@@ -65,9 +66,9 @@ namespace CodeGeneration {
         }
     }
 
-    namespace {
-        class CTopSort
-        {
+    namespace
+    {
+        class CTopSort {
         public:
             // Топологическая сортировка графа, начиная с вершины start
             // притом недостижимые вершины игнорируются
@@ -110,7 +111,7 @@ namespace CodeGeneration {
     } // anonymous namespace
 
 
-    CLiveInOutCalculator::CLiveInOutCalculator( const std::list<const IInstruction*>& asmFunction ) :
+    CLiveInOutCalculator::CLiveInOutCalculator( const std::list<IInstruction*>& asmFunction ) :
         workflow( asmFunction ), liveIn( workflow.Size() ), liveOut( workflow.Size() )
     {
         bool setsChanged = true;
@@ -217,14 +218,14 @@ namespace CodeGeneration {
     }
 
 
-    void CLiveInOutCalculator::buildCommands( const std::list<const IInstruction*>& asmFunction )
+    void CLiveInOutCalculator::buildCommands( const std::list<IInstruction*>& asmFunction )
     {
         commands.clear();
         std::copy( asmFunction.begin(), asmFunction.end(), std::back_inserter( commands ) );
     }
 
 
-    void CLiveInOutCalculator::buildDefines( const std::list<const IInstruction*>& asmFunction )
+    void CLiveInOutCalculator::buildDefines( const std::list<IInstruction*>& asmFunction )
     {
         defines.resize( asmFunction.size() );
         int cmdIndex = 0;
@@ -239,7 +240,7 @@ namespace CodeGeneration {
     }
 
 
-    void CLiveInOutCalculator::buildUses( const std::list<const IInstruction*>& asmFunction )
+    void CLiveInOutCalculator::buildUses( const std::list<IInstruction*>& asmFunction )
     {
         uses.resize( asmFunction.size() );
         int cmdIndex = 0;
