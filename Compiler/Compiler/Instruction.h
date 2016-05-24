@@ -83,6 +83,10 @@ namespace CodeGeneration
                 ++index;
             }
 
+            if( comment.find( "\n" ) != std::string::npos ) {
+                comment.replace( comment.find( "\n" ), 1, "" );
+            }
+
             comment += ";";
             return comment;
         }
