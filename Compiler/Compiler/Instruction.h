@@ -10,6 +10,7 @@ namespace CodeGeneration
         virtual const CTempList* UsedVars() const = 0;
         virtual const CTempList* DefinedVars() const = 0;
         virtual const CLabelList* JumpTargets() const = 0;
+        virtual std::string Format() const = 0;
         virtual std::string Format( const std::map<std::string, std::string> varsMapping ) const = 0;
         IInstruction() {}
         ~IInstruction() {}
@@ -46,6 +47,43 @@ namespace CodeGeneration
         const CLabelList* JumpTargets() const
         {
             return jump;
+        }
+
+        std::string Format() const
+        {
+            std::string comment = AsmCode;
+            CTempList* curr = const_cast<CTempList*>( dst );
+            int index = 0;
+            while( curr != 0 ) {
+                std::string toReplace = "'d" + std::to_string( index );
+                while( comment.find( toReplace ) != std::string::npos ) {
+                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->GetHead()->Name() );
+                }
+                curr = const_cast< CTempList* >( curr->GetTail() );
+                ++index;
+            }
+            curr = const_cast<CTempList*>( src );
+            index = 0;
+            while( curr != 0 ) {
+                std::string toReplace = "'s" + std::to_string( index );
+                while( comment.find( toReplace ) != std::string::npos ) {
+                    comment.replace( comment.find( toReplace ), toReplace.length(), curr->GetHead()->Name() );
+                }
+                curr = const_cast< CTempList* >( curr->GetTail() );
+                ++index;
+            }
+            CLabelList* lbl = jump;
+            index = 0;
+            while( lbl != 0 ) {
+                std::string toReplace = "'l" + std::to_string( index );
+                while( comment.find( toReplace ) != std::string::npos ) {
+                    comment.replace( comment.find( toReplace ), toReplace.length(), lbl->GetHead()->Name() );
+                }
+                lbl = const_cast< CLabelList * > ( lbl->GetTail() );
+                ++index;
+            }
+            comment[comment.length() - 1] = ';';
+            return comment;
         }
 
         std::string Format( const std::map<std::string, std::string> varsMapping ) const
@@ -125,6 +163,11 @@ namespace CodeGeneration
         CLabelList* JumpTargets() const
         {
             return new CLabelList( label, nullptr );
+        }
+
+        std::string Format() const
+        {
+            return label->Name() + ":\n";
         }
 
         std::string Format( const std::map<std::string, std::string> varsMapping ) const

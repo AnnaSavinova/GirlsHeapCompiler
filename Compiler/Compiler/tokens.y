@@ -304,16 +304,18 @@ int main()
 		for( auto instruction : instructions ) {
 			std::cout << instruction->AsmCode;
 		}
-		CodeGeneration::CInterferenceGraph graph( asmTreeMaker.GetAsmInstruction(), frame->GetRegisters() );
+		//CodeGeneration::CInterferenceGraph graph( asmTreeMaker.GetAsmInstruction(), frame->GetRegisters() );
 
-		auto code = graph.GetCode();
-		auto colors = graph.GetColors();
+		//auto code = graph.GetCode();
+		//auto colors = graph.GetColors();
 
-		for( auto cmd : code ) {
+		/*for( auto cmd : code ) {
 			out << cmd->Format( colors );
-		}
+		}*/
 
-		
+		for( auto cmd : instructions ) {
+			out << cmd->Format() << std::endl;
+		}
 
 		frames.pop();
 		
