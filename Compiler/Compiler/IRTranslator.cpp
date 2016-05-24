@@ -81,22 +81,59 @@ void CIRTranslator::Visit( const CConstructor * constructor )
         classInfo = symbTable->FindClass( classInfo->BaseClassName() );
     }
 
-    CLabel* mallocLabel = new CLabel( "malloc" );
-    IIRExp* mallocName = new CIRName( mallocLabel );
+    //CLabel* mallocLabel = new CLabel( "malloc" );
+    //IIRExp* mallocName = new CIRName( mallocLabel );
 
-    CLabel* memsetLabel = new CLabel( "memset" );
-    IIRExp* memsetName = new CIRName( memsetLabel );
+    //CLabel* memsetLabel = new CLabel( "memset" );
+    //IIRExp* memsetName = new CIRName( memsetLabel );
 
     IIRExp* allocationSize = new CIRBinOp( MUL, new CIRConst( CFrame::GetWordSize() ), new CIRConst( fieldsNumber ) );
-    CIRCall* mallocCall = new CIRCall( mallocName, new CIRExpList( allocationSize, nullptr ) );
+    IIRExp* temp = new CIRTemp( new CTemp() );
+
+    IIRExp* mallocCall = new CIRCall(
+        (new CIRName( new CLabel( "malloc" ) )),
+        new CIRExpList( { allocationSize } ) );
+
+    IIRStm* allocateMemory = new CIRMove( temp, mallocCall );
+
+    IIRStm* clearMemory = new CIRExp( new CIRCall(
+        new CIRName( new CLabel( "memset" ) ),
+        new CIRExpList( { temp, new CIRConst( 0 ) } ) ) );
+
+
+//    CIRCall* mallocCall = new CIRCall( mallocName, new CIRExpList( allocationSize, nullptr ) );
     //CIRTemp* tmp = new CIRTemp( frames.top()->GetReturnValue() );  TODO: разобратьс€, что за tmp
     //CIRTemp* tmp = new CIRTemp( new CTemp() );
     //IIRStm* mallocValue = new CIRMove( tmp, mallocCall );
     //IIRStm* memsetCall = new CIRExp( 
-    CIRCall* memsetCall = new CIRCall( memsetName, new CIRExpList( mallocCall, new CIRExpList( new CIRConst( 0 ), new CIRExpList( allocationSize, nullptr ) ) ) );
+    //CIRCall* memsetCall = new CIRCall( memsetName, new CIRExpList( mallocCall, new CIRExpList( new CIRConst( 0 ), new CIRExpList( allocationSize, nullptr ) ) ) );
     //exps.push( new CIRESeq( new CIRSeq( mallocValue, memsetCall), tmp ) );
-    exps.push( memsetCall );
+    //exps.push( memsetCall );
+
+
+    /*newInt->Expression()->Accept( this );
+    IIRExp* arrayLength = exps.top();
+    exps.pop();
+
+    IIRExp* allocationSize = new CIRMem(
+        new CIRBinOp( MUL,
+        new CIRBinOp( PLUS, arrayLength, new CIRConst( 1 ) ),
+        new CIRConst( CFrame::GetWordSize() ) ) );
+
+    
+
+    IIRExp* mallocCall( new CIRCall(
+        (new CIRName( new CLabel( "malloc" ) )),
+        new CIRExpList( { allocationSize } ) ) );
+
+
+  
+
+    IIRStm* moveSize = new CIRMove( temp, arrayLength );
+*/
+    exps.push( new CIRESeq( new CIRSeq( allocateMemory, clearMemory ), temp ) );
     lastObjectClass = symbTable->FindClass( constructor->Id() );
+
 }
 
 void CIRTranslator::Visit( const CElementAssignment * elemAssign )
@@ -286,27 +323,47 @@ void CIRTranslator::Visit( const CNewInt * newInt )
     IIRExp* arrayLength = exps.top();
     exps.pop();
 
-    IIRExp* allocationSize = new CIRBinOp( PLUS, arrayLength, new CIRConst( 1 ) );
-    IIRExp* realSize = new CIRBinOp( MUL, allocationSize, new CIRConst( CFrame::GetWordSize() ) );
+    IIRExp* allocationSize = 
+        new CIRBinOp( MUL,
+        new CIRBinOp( PLUS, arrayLength, new CIRConst( 1 ) ),
+        new CIRConst( CFrame::GetWordSize() ) );
 
-    CLabel* mallocLabel = new CLabel( "malloc" );
-    IIRExp* mallocName = new CIRName( mallocLabel );
+    IIRExp* temp = new CIRTemp( new CTemp() );
 
-    CLabel* memsetLabel = new CLabel( "memset" );
-    IIRExp* memsetName = new CIRName( memsetLabel );
+    IIRExp* mallocCall( new CIRCall(
+        ( new CIRName( new CLabel( "malloc" ) ) ),
+        new CIRExpList( { allocationSize } ) ) );
+//    IIRExp* allocationSize = new CIRBinOp( PLUS, arrayLength, new CIRConst( 1 ) );
+//    IIRExp* realSize = new CIRBinOp( MUL, allocationSize, new CIRConst( CFrame::GetWordSize() ) );
 
-    IIRExp* mallocCall = new CIRCall( mallocName, new CIRExpList( realSize, nullptr ) );
+//    CLabel* mallocLabel = new CLabel( "malloc" );
+//    IIRExp* mallocName = new CIRName( mallocLabel );
+
+    //CLabel* memsetLabel = new CLabel( "memset" );
+    //IIRExp* memsetName = new CIRName( memsetLabel );
+
+    IIRStm* allocateMemory = new CIRMove( temp, mallocCall );
+
+    IIRStm* clearMemory = new CIRExp( new CIRCall(
+        new CIRName( new CLabel( "memset" ) ),
+        new CIRExpList( { new CIRConst( 0 ), allocationSize } ) ) );
+    
+    IIRStm* moveSize = new CIRMove( temp, arrayLength );
+
+    exps.push( new CIRESeq( new CIRSeq( allocateMemory, new CIRSeq( clearMemory, moveSize ) ), temp ) );
+
+//    IIRExp* mallocCall = new CIRCall( mallocName, new CIRExpList( realSize, nullptr ) );
     //CIRTemp* allocationStart = new CIRTemp( frames.top()->GetReturnValue() ); // пам€ть, которую вернул malloc 
     
     //IIRStm* mallocValue = new CIRMove( allocationStart, mallocCall );
     
-    IIRExp* realStart = new CIRBinOp( PLUS, mallocCall, new CIRConst( CFrame::GetWordSize() ) ); // пам€ть, сдвинута€ на байт (т.к. в нулевую €чейку мы пишем длину массива)
-    
-    CIRCall* memsetCall = new CIRCall( memsetName, new CIRExpList( realStart, new CIRExpList( new CIRConst( 0 ), new CIRExpList( realSize, nullptr ) ) ) ); // заполн€ем нул€ми пам€ть с 1ой €чейки
-    
-    IIRStm* sizeSave = new CIRMove( mallocCall, arrayLength ); // пишем в нулевую €чейку длину массива
+    //IIRExp* realStart = new CIRBinOp( PLUS, mallocCall, new CIRConst( CFrame::GetWordSize() ) ); // пам€ть, сдвинута€ на байт (т.к. в нулевую €чейку мы пишем длину массива)
+    //
+    //CIRCall* memsetCall = new CIRCall( memsetName, new CIRExpList( realStart, new CIRExpList( new CIRConst( 0 ), new CIRExpList( realSize, nullptr ) ) ) ); // заполн€ем нул€ми пам€ть с 1ой €чейки
+    //
+    //IIRStm* sizeSave = new CIRMove( mallocCall, arrayLength ); // пишем в нулевую €чейку длину массива
 
-    exps.push( new CIRESeq( sizeSave, memsetCall ) ); // можно возвращать realStart
+    //exps.push( new CIRESeq( sizeSave, memsetCall ) ); // можно возвращать realStart
 }
 
 void CIRTranslator::Visit( const CNumber * number )

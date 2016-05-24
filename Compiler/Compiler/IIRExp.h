@@ -20,6 +20,20 @@ public:
 	CIRExpList( std::vector<IIRExp*>& vectorExp );
 	~CIRExpList();
 
+    CIRExpList( const std::vector<const IIRExp *> args )
+    {
+        if( args.empty() ) {
+            head = nullptr;
+            tail = nullptr;
+        }
+        CIRExpList* newTail = new CIRExpList( args.back(), nullptr );
+        for( int i = args.size() - 2; i > 0; --i ) {
+            newTail = new CIRExpList( args[i], newTail );
+        }
+        head = args[0];
+        tail = newTail;
+    }
+
     void Accept( CIRTreePrettyVisitor* printer ) const
     {
         printer->Visit( this );
