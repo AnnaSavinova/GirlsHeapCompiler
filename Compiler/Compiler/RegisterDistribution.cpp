@@ -35,17 +35,6 @@ namespace CodeGeneration
                     //At any non-move instruction that defines a variable a, where the live-out variables are
                     //    b1, …, bj, add interference edges( a, b1 ), …, (a, bj).
 
-                    /*auto definedVars = dynamic_cast< CMoveAsm* >(cmd)->DefinedVars();
-                    while( definedVars->GetHead() != nullptr ) {
-                        std::string a = definedVars->GetHead()->Name();
-                        for( auto b : liveInOut.GetLiveOut( cmdIndex ) ) {
-                            addNode( a );
-                            addNode( b );
-                            addEdge( a, b );
-                        }
-                        definedVars = definedVars->GetTail();
-                    }*/
-
                     // для каждой не move инструкции добавить ребра между всеми такими переменными a и b
                     // где a принадлежит определяемым в данной инструкции переменным
                     // b - из множества liveOut
@@ -287,7 +276,7 @@ namespace CodeGeneration
                     CTemp* buff = new CTemp();
                     newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", new CTempList( buff, nullptr ), it->UsedVars() ) );
                     if( isMove ) {
-                        newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", it->DefinedVars(), new CTempList( buff, nullptr ) ) );
+                        newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", it->DefinedVars()->GetHead(), buff ) );
                     } else {
                         const COperAsm* cmd = dynamic_cast< COperAsm* >( it );
                         newCode.push_back( new COperAsm( cmd->GetOperator() + " 's0\n", it->DefinedVars(), new CTempList( buff, nullptr ) ) );
@@ -309,8 +298,8 @@ namespace CodeGeneration
                     const CodeGeneration::CMoveAsm* cmd = dynamic_cast< CodeGeneration::CMoveAsm* >( it );
                     assert( cmd != nullptr );
                     CTemp* buff = new CTemp();
-                    newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", new CTempList( buff, 0 ), it->UsedVars() ) );
-                    newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", it->DefinedVars(), new CTempList( buff, 0 ) ) );
+                    newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", buff, it->UsedVars()->GetHead() ) );
+                    newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", it->DefinedVars()->GetHead(), buff ) );
                 } else {
                     newCode.push_back( it );
                 }
