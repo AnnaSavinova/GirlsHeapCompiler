@@ -7,15 +7,6 @@
 #include "Temp.h"
 #include <list>
 
-//class CClassInfo;
-//class CMethodInfo;
-//class IIRExp;
-//class IIRStm;
-//class CIRMem;
-//class CIRBinOp;
-//class CIRTemp;
-//class CIRConst;
-
 
 class IAccess {
 public:

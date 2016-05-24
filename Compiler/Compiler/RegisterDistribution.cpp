@@ -17,9 +17,9 @@ namespace CodeGeneration
                 std::cout << "REGENERATING!!!" << std::endl;
                 
                 regenerateCode();
-                for( auto cmd : asmFunction ) {
+                /*for( auto cmd : asmFunction ) {
                     std::cout << cmd->AsmCode;
-                }
+                }*/
                 uncoloredNodes.clear();
                 edges.clear();
                 nodes.clear();
@@ -31,6 +31,21 @@ namespace CodeGeneration
             }
             for( auto cmd : asmFunction ) {
                 if( dynamic_cast< CMoveAsm* >( cmd ) == nullptr ) {
+
+                    //At any non-move instruction that defines a variable a, where the live-out variables are
+                    //    b1, …, bj, add interference edges( a, b1 ), …, (a, bj).
+
+                    /*auto definedVars = dynamic_cast< CMoveAsm* >(cmd)->DefinedVars();
+                    while( definedVars->GetHead() != nullptr ) {
+                        std::string a = definedVars->GetHead()->Name();
+                        for( auto b : liveInOut.GetLiveOut( cmdIndex ) ) {
+                            addNode( a );
+                            addNode( b );
+                            addEdge( a, b );
+                        }
+                        definedVars = definedVars->GetTail();
+                    }*/
+
                     // для каждой не move инструкции добавить ребра между всеми такими переменными a и b
                     // где a принадлежит определяемым в данной инструкции переменным
                     // b - из множества liveOut
@@ -45,6 +60,9 @@ namespace CodeGeneration
                     // для каждой move инструкции добавить ребра между всеми такими переменными a и b
                     // где a - куда делается MOVE (c->a)
                     // b из множества liveOut
+
+                    //At a move instruction a ? c, where variables b1, …, bj are live-out, add interference
+                    //    edges( a, b1 ), …, (a, bj) for any bi that is not the same as c.
                     std::string a = dynamic_cast< CMoveAsm* >( cmd )->DefinedVars()->GetHead()->Name();
                     for( auto b : liveInOut.GetLiveOut( cmdIndex ) ) {
                         addNode( a );
@@ -54,9 +72,8 @@ namespace CodeGeneration
 
                     const CMoveAsm* moveInst = dynamic_cast< const CMoveAsm* >( cmd );
 
-                    if( moveInst != nullptr && moveInst->UsedVars() != nullptr ) {
-                        std::string b = ( moveInst->UsedVars()->GetHead() != nullptr ?
-                            moveInst->UsedVars()->GetHead()->Name() : "UNDEFINED" );
+                    if( moveInst != nullptr && moveInst->UsedVars() != nullptr && moveInst->UsedVars()->GetHead() != nullptr ) {
+                        std::string b = moveInst->UsedVars()->GetHead()->Name();
                         addNode( a );
                         addNode( b );
                         addMoveEdge( a, b );
@@ -122,14 +139,24 @@ namespace CodeGeneration
     bool CInterferenceGraph::paint()
     {
         addRegisterColors();
+        // похоже на Simplify
         while( hasNonColoredNonStackedNodes() ) {
+            // берем вершину с не более чем k соседями
             int node = getColorableNode();
+            // если нет таких, то кладем в стек, помечая, как потенциального кандидата
             if( node == -1 ) {
                 node = getMaxInterferingNode();
                 uncoloredNodes.insert( node );
             }
+            // кладем в стек
             pulledNodes.push( node );
             nodes[node].InStack = true;
+        }
+        // для потенциальных кандидатов
+        if( !uncoloredNodes.empty() ) {
+            // проверяем всех соседей..?
+            //int currNode = uncoloredNodes.top();
+
         }
         if( !uncoloredNodes.empty() ) {
             return false;
@@ -167,17 +194,19 @@ namespace CodeGeneration
         }
 
         for( auto it : nodeMap ) {
-            if( it.first.substr( it.first.length() - 3 ) == "_SP" ) {
-                // красим насильно в ESP
-                nodes[it.second].Color = 6;
-            }
-            if( it.first.substr( it.first.length() - 3 ) == "_FP" ) {
-                // красим насильно в EBP
-                nodes[it.second].Color = 7;
-            }
-            if( it.first.substr( it.first.length() - 3 ) == "_RV" ) {
-                // красим насильно в EDI
-                nodes[it.second].Color = 5;
+            if( it.first.length() > 11 ) {
+                if( it.first.substr( it.first.length() - 11 ) == "thisPointer" ) {
+                    // красим насильно в ESP
+                    nodes[it.second].Color = 6;
+                }
+                if( it.first.substr( it.first.length() - 12 ) == "framePointer" ) {
+                    // красим насильно в EBP
+                    nodes[it.second].Color = 7;
+                }
+                if( it.first.substr( it.first.length() - 11 ) == "returnValue" ) {
+                    // красим насильно в EDI
+                    nodes[it.second].Color = 5;
+                }
             }
         }
     }
@@ -261,7 +290,7 @@ namespace CodeGeneration
                         newCode.push_back( new CodeGeneration::CMoveAsm( "mov 'd0, 's0\n", it->DefinedVars(), new CTempList( buff, nullptr ) ) );
                     } else {
                         const COperAsm* cmd = dynamic_cast< COperAsm* >( it );
-                        newCode.push_back( new COperAsm( cmd->GetOperator() + " 's0\n", it->DefinedVars(), new CTempList( buff, 0 ) ) );
+                        newCode.push_back( new COperAsm( cmd->GetOperator() + " 's0\n", it->DefinedVars(), new CTempList( buff, nullptr ) ) );
                     }
                 } else {
                     newCode.push_back( it );

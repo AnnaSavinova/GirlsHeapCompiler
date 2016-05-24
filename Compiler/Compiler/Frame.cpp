@@ -37,9 +37,9 @@ CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, con
     registers.push_back( "EDX" );
     registers.push_back( "ESI" );
     registers.push_back( "EDI" );
-    // registers.emplace_back( "ESP" );
-    // registers.emplace_back( "EBP" );
 
+    eax = new CTemp( symbolStorage.Get( "EAX" ) );
+    edx = new CTemp( symbolStorage.Get( "EDX" ) );
 }
 
 CFrame::CFrame( const CSymbol * _name ) : name(_name)
@@ -56,8 +56,9 @@ CFrame::CFrame( const CSymbol * _name ) : name(_name)
     registers.push_back( "EDX" );
     registers.push_back( "ESI" );
     registers.push_back( "EDI" );
-    // registers.emplace_back( "ESP" );
-    // registers.emplace_back( "EBP" );
+
+    eax = new CTemp( symbolStorage.Get( "EAX" ) );
+    edx = new CTemp( symbolStorage.Get( "EDX" ) );
 }
 
 void CFrame::AddField( const CSymbol * name, const IAccess * access )
@@ -87,18 +88,12 @@ const CTemp* CFrame::GetFramePointer() const
 
 const CTemp* CFrame::GetEax() const
 {
-    //TODO переписать на нормальный регистр
-
-    CSymbol* sEax = symbolStorage.Get( "Eax" );
-    return new CTemp( sEax );
+    return eax;
 }
 
 const CTemp* CFrame::GetEdx() const
 {
-    //TODO переписать на нормальный регистр
-
-    CSymbol* sEdx = symbolStorage.Get( "Edx" );
-    return new CTemp( sEdx );
+    return edx;
 }
 
 int CFrame::GetWordSize()
