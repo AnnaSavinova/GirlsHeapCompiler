@@ -29,6 +29,7 @@ CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, con
     // добавляем локальные переменные метода
     for( auto argument : method->LocalArgs() ) {
         AddField( argument.second->Name(), new CInFrame( inFrameNum++ ) );
+        localsCount = method->LocalArgs().size();
     }
 
     registers.push_back( "EAX" );
@@ -42,7 +43,7 @@ CFrame::CFrame( const CClassInfo * currentClass, const CMethodInfo * method, con
     edx = new CTemp( symbolStorage.Get( "EDX" ) );
 }
 
-CFrame::CFrame( const CSymbol * _name ) : name(_name)
+CFrame::CFrame( const CSymbol * _name ) : name( _name )
 {
     std::string functionDecoratedName = name->String();
     framePointer = new CTemp( new CSymbol( functionDecoratedName + "___framePointer" ) );
@@ -59,6 +60,8 @@ CFrame::CFrame( const CSymbol * _name ) : name(_name)
 
     eax = new CTemp( symbolStorage.Get( "EAX" ) );
     edx = new CTemp( symbolStorage.Get( "EDX" ) );
+
+    localsCount = 0;
 }
 
 void CFrame::AddField( const CSymbol * name, const IAccess * access )

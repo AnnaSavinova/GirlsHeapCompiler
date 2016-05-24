@@ -1,5 +1,6 @@
 #include "LifetimeAnalysis.h"
 #include <iterator>
+#include "Temp.h"
 
 namespace CodeGeneration
 {
@@ -253,5 +254,57 @@ namespace CodeGeneration
             ++cmdIndex;
         }
     }
+
+    CPrologEpilogBuilder::CPrologEpilogBuilder( std::list<IInstruction*> _instructions ) : instructions( _instructions )
+    {}
+
+    std::list<IInstruction*> CPrologEpilogBuilder::AddPrologAndEpilog( CFrame* frame )
+    {
+        addProlog( frame );
+        addEpilog( frame );
+        return instructions;
+    }
+
+    void CPrologEpilogBuilder::addEpilog( CFrame* frame )
+    {
+        std::list< IInstruction* > epilogList;
+        std::vector<std::string> regs( frame->GetRegisters() );
+        std::reverse( regs.begin(), regs.end() );
+        CLabel* labelBegin = new CLabel( "epilog begin" );
+        epilogList.push_back( new CodeGeneration::CLabelAsm( labelBegin ) );
+
+        int espShift = frame->GetWordSize() * frame->GetLocalsCount();
+        for( auto item : regs ) {
+            epilogList.push_back( new CodeGeneration::COperAsm( "pop " + item, nullptr, nullptr ) );
+        }
+        epilogList.push_back( new CodeGeneration::COperAsm( "add 'd0 " + std::to_string( espShift ), new CTempList( frame->GetThisPointer(), nullptr ), nullptr ) );
+        epilogList.push_back( new CodeGeneration::COperAsm( "pop 'd0 " + std::to_string( espShift ), new CTempList( frame->GetFramePointer(), nullptr ), nullptr ) );
+        epilogList.push_back( new CodeGeneration::COperAsm( "ret", nullptr, nullptr ) );
+
+        CLabel* labelEnd = new CLabel( "epilog end" );
+        epilogList.push_back( new CodeGeneration::CLabelAsm( labelEnd ) );
+        instructions.insert( instructions.end(), epilogList.begin(), epilogList.end() );
+    }
+
+    void CPrologEpilogBuilder::addProlog( CFrame* frame )
+    {
+        std::list< IInstruction* > prologList;
+        CLabel* labelBegin = new CLabel( "prolog begin" + frame->GetName() );
+        prologList.push_back( new CodeGeneration::CLabelAsm( labelBegin ) );
+        prologList.push_back( new CodeGeneration::COperAsm( "push 's0", nullptr, new CTempList( frame->GetFramePointer(), nullptr ) ) );
+        prologList.push_back( new CodeGeneration::COperAsm( "mov 'd0 's0", new CTempList( frame->GetFramePointer(), nullptr ), new CTempList( frame->GetThisPointer(), nullptr ) ) );
+        int espShift = frame->GetWordSize() * frame->GetLocalsCount();
+        prologList.push_back( new CodeGeneration::COperAsm( "sub 'd0 " + std::to_string( espShift ), new CTempList( frame->GetThisPointer(), nullptr ), nullptr ) );
+
+        for( auto regName : frame->GetRegisters() ) {
+            prologList.push_back( new CodeGeneration::COperAsm( "push " + regName, nullptr, nullptr ) );
+        }
+        CLabel* labelEnd = new CLabel( "prolog end" );
+        prologList.push_back( new CodeGeneration::CLabelAsm( labelEnd ) );
+
+        instructions.insert( instructions.begin(), prologList.begin(), prologList.end() );
+    }
+
+
 
 } // namespace CodeGeneration

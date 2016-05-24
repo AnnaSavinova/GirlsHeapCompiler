@@ -15,8 +15,7 @@ public:
 };
 
 
-class CInFrame : public IAccess
-{
+class CInFrame : public IAccess {
 public:
     explicit CInFrame( int _offset );
     const IIRExp* GetExp( const CTemp* framePtr ) const;
@@ -25,8 +24,7 @@ private:
     int offset;
 };
 
-class CInObject : public IAccess
-{
+class CInObject : public IAccess {
 public:
     explicit CInObject( int _offset );
     const IIRExp* GetExp( const CTemp* thisPointer ) const;
@@ -36,8 +34,7 @@ private:
 
 };
 
-class CInReg : public IAccess
-{
+class CInReg : public IAccess {
 public:
     const IIRExp* GetExp( const CTemp* framePointer ) const;
     ///~CInReg();
@@ -62,16 +59,17 @@ public:
     const CTemp* GetReturnValue() const;
 
     void AddField( const CSymbol* name, const IAccess* access );
-    void SetRootStatement( const IIRStm * _root);
+    void SetRootStatement( const IIRStm * _root );
 
     std::string GetName() { return name->String(); }
     const IIRStm* GetRoot() { return root; }
     std::vector< std::string >& GetRegisters() { return registers; }
+    int GetLocalsCount() { return localsCount; }
 
 private:
     std::map< std::string, const IAccess * > fields;
     const CTemp* framePointer;
-    
+
     const CTemp* eax;
     const CTemp* edx;
 
@@ -80,6 +78,8 @@ private:
     static int wordSize;
     const CSymbol* name;
     const IIRStm* root;
+
+    int localsCount;
 
     std::vector< std::string > registers;
 };

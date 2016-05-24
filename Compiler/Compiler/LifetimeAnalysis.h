@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "Instruction.h"
+#include "Frame.h"
 #include <set>
 
 namespace CodeGeneration {
@@ -91,5 +92,16 @@ namespace CodeGeneration {
         void buildCommands( const std::list<IInstruction*>& asmFunction );
         void buildDefines( const std::list<IInstruction*>& asmFunction );
         void buildUses( const std::list<IInstruction*>& asmFunction );
+    };
+
+    class CPrologEpilogBuilder {
+    public:
+        CPrologEpilogBuilder( std::list<IInstruction*> _instructions );
+
+        std::list<IInstruction*> AddPrologAndEpilog( CFrame* frame );
+    private:
+        void addEpilog( CFrame* frame );
+        void addProlog( CFrame* frame );
+        std::list<IInstruction*> instructions;
     };
 } // namespace CodeGeneration

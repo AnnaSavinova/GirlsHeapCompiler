@@ -82,7 +82,8 @@ namespace CodeGeneration
                 lbl = const_cast< CLabelList * > ( lbl->GetTail() );
                 ++index;
             }
-            comment[comment.length() - 1] = ';';
+
+            comment += ";";
             return comment;
         }
 

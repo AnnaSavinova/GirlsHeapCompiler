@@ -2343,7 +2343,10 @@ int main()
 		for( auto instruction : instructions ) {
 			std::cout << instruction->AsmCode;
 		}
-		//CodeGeneration::CInterferenceGraph graph( asmTreeMaker.GetAsmInstruction(), frame->GetRegisters() );
+
+		CodeGeneration::CPrologEpilogBuilder prologEpilogBuilder( instructions );
+		instructions = prologEpilogBuilder.AddPrologAndEpilog( frame );
+		//CodeGeneration::CInterferenceGraph graph( instructions, frame->GetRegisters() );
 
 		//auto code = graph.GetCode();
 		//auto colors = graph.GetColors();
